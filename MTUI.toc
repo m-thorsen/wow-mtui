@@ -1,5 +1,5 @@
 ## Interface: 80200
-## Title: mt_UI
+## Title: MTUI
 ## Version: 8.2.0
 ## Author: MT
 ## SavedVariables: MTUIDB
@@ -13,4 +13,3 @@ nameplates.lua
 actionbars.lua
 unitframes.lua
 misc.lua
-options.lua

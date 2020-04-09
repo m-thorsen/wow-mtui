@@ -124,7 +124,7 @@ local function ApplyReactColors(healthbar, unit)
 end
 
 function MTUI:InitializeUnitframes()
-    options = MTUI.db.profile.unitframes
+    options = MTUI.db.profile
     hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame)
     hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame)
     hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame)

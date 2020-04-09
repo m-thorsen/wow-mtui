@@ -26,7 +26,8 @@ function MTUI:MoveFrames()
 end
 
 function MTUI:ApplyBarTexture()
-    local texture = self.db.profile.barTexture
+    local texture = self.db.profile.mediaPath..self.db.profile.texture
+    print(texture)
 
     local UnitFrames = {
         PlayerFrame, PlayerFrameManaBar, PlayerFrameAlternateManaBar, PlayerFrameMyHealPredictionBar,
