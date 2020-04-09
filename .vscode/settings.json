@@ -1,8 +1,0 @@
-{
-    "Lua.diagnostics.globals": [
-        "MultiBarBottomLeftButton1"
-    ],
-    "Lua.diagnostics.disable": [
-        "undefined-global"
-    ]
-}
