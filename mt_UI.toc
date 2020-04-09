@@ -1,0 +1,16 @@
+## Interface: 80200
+## Title: mt_UI
+## Version: 8.2.0
+## Author: MT
+## SavedVariables: MTUIDB
+## OptionalDeps: Ace3
+## X-Embeds: Ace3
+
+embeds.xml
+
+core.lua
+nameplates.lua
+actionbars.lua
+unitframes.lua
+misc.lua
+options.lua
