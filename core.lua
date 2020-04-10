@@ -4,7 +4,7 @@ local defaults = {
     profile = {
         enableBars = true,
         moveFrames = true,
-        enableNames = true,
+        enableNameplateTweaks = true,
         enableUnitframes = true,
         mediaPath = "Interface/Addons/MTUI/Media/",
         texture = "Smooth",
@@ -15,6 +15,7 @@ local defaults = {
         actionbarTrackHeight = 10,
         unitframeOffsetY = 200,
         unitframeOffsetX = 250,
+        unitColorMod = 0.9,
     }
 }
 
@@ -28,7 +29,7 @@ function MTUI:OnInitialize()
 
     if (self.db.profile.moveFrames) then self:MoveFrames() end
     if (self.db.profile.enableBars) then self:InitializeBars() end
-    if (self.db.profile.enableNames) then self:InitializePlates() end
+    if (self.db.profile.enableNameplateTweaks) then self:InitializePlates() end
     if (self.db.profile.enableUnitframes) then self:InitializeUnitframes() end
     if (self.db.profile.enableTexture) then self:ApplyBarTexture() end
 
@@ -94,20 +95,20 @@ function MTUI:GetOptions()
                 end,
             },
             ae = {
-                order = 13,
+                order = 14,
                 type = "toggle",
                 name = "Nameplate tweaks",
                 width = "full",
                 get = function(info)
-                    return self.db.profile.enableNames
+                    return self.db.profile.enableNameplateTweaks
                 end,
                 set = function(info, value)
-                    self.db.profile.enableNames = value
+                    self.db.profile.enableNameplateTweaks = value
                     ReloadUI()
                 end,
             },
-            ae = {
-                order = 13,
+            af = {
+                order = 15,
                 type = "toggle",
                 name = "Smooth bar texture",
                 width = "full",

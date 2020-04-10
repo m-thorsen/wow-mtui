@@ -1,8 +1,9 @@
 local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI")
 
-local function GetRGB(c)
-    local color = _G[c:upper() .. "_FONT_COLOR"]
-    return color.r, color.g, color.b
+local options
+
+local function GetRgb(c)
+    return c.r, c.g, c.b
 end
 
 local function IsNameplate(unit)
@@ -19,52 +20,42 @@ local function IsHostileNPC(unit)
     return UnitIsEnemy("player", unit) and not UnitIsPlayer(unit)
 end
 
-local function UpdateName(self, ...)
+local function OnUpdateName(self, ...)
     if not IsNameplate(self.unit) then return end
 
-    self.healthBar:SetStatusBarTexture("Interface\\RaidFrame\\Raid-Bar-Resource-Fill")
-    self.castBar:SetStatusBarTexture("Interface\\RaidFrame\\Raid-Bar-Resource-Fill")
+    local texture = MTUI.db.profile.mediaPath..MTUI.db.profile.texture
+
+    self.healthBar:SetStatusBarTexture(texture)
+    self.castBar:SetStatusBarTexture(texture)
 
     if (ClassNameplateManaBarFrame) then
-        ClassNameplateManaBarFrame:SetStatusBarTexture("Interface\\RaidFrame\\Raid-Bar-Resource-Fill")
+        ClassNameplateManaBarFrame:SetStatusBarTexture(texture)
     end
 
-    if not IsHostileNPC(self.unit) then
-        return
-    end
-
-    if UnitThreatSituation("player", self.unit) == nil then
-        self.name:SetVertexColor(UnitSelectionColor(self.unit, true))
-    else
+    if not UnitIsPlayer(self.unit) and UnitThreatSituation("player", self.unit) ~= nil then
         self.name:SetVertexColor(1, 1, 1)
     end
 end
 
-local function UpdateStatusBar(self)
-    if not IsNameplate(self.unit) or not IsHostileNPC(self.unit) then return end
+local function OnUpdateStatusBar(self)
+    if not IsNameplate(self.unit) then return end
 
-    if threat == nil then
-        self.healthBar:SetStatusBarColor(UnitSelectionColor(self.unit, true))
-        -- frame.healthBar:SetScale(1)
-    elseif threat == 3 then
-        self.healthBar:SetStatusBarColor(GetRGB("RED"))
+    local r, g, b = UnitSelectionColor(self.unit)
+
+    if threat == 3 then
+        r, g, b = GetRgb(RED_FONT_COLOR)
     elseif threat == 2 then
-		self.healthBar:SetStatusBarColor(GetRGB("ORANGE"))
+        r, g, b = GetRgb(ORANGE_FONT_COLOR)
     elseif threat == 1 then
-		self.healthBar:SetStatusBarColor(GetRGB("YELLOW"))
-    else
-		self.healthBar:SetStatusBarColor(GetRGB("GREEN"))
+        r, g, b = GetRgb(YELLOW_FONT_COLOR)
     end
+
+    self.healthBar:SetStatusBarColor(r * options.unitColorMod, g * options.unitColorMod, b * options.unitColorMod)
 end
 
 function MTUI:InitializePlates()
-    -- SetCVar("nameplateOtherBottomInset", 0.1)
-    -- SetCVar("nameplateOtherTopInset", 0.1)
-    -- SetCVar("nameplateOverlapV", 0.5)
-    -- SetCVar("nameplateOverlapV", 0.5)
-    -- SetCVar("nameplateMotion", 1)
-    -- SetCVar("nameplateMotionSpeed", 0.5)
-    hooksecurefunc("CompactUnitFrame_UpdateHealthColor", UpdateStatusBar)
-    hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", UpdateStatusBar)
-    hooksecurefunc("CompactUnitFrame_UpdateName", UpdateName)
+    options = self.db.profile
+    hooksecurefunc("CompactUnitFrame_UpdateHealthColor", OnUpdateStatusBar)
+    hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", OnUpdateStatusBar)
+    hooksecurefunc("CompactUnitFrame_UpdateName", OnUpdateName)
 end

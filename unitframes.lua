@@ -1,7 +1,6 @@
 local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI")
 
 local options
-local colormod = 0.9
 
 local function ApplyCommonFrameTweaks(self)
     self.name:ClearAllPoints()
@@ -102,11 +101,11 @@ local function ApplyClassColors(healthbar, unit)
     if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
 		_, class = UnitClass(unit)
 		local c = RAID_CLASS_COLORS[class]
-		healthbar:SetStatusBarColor(c.r * colormod, c.g * colormod, c.b * colormod)
+		healthbar:SetStatusBarColor(c.r * options.unitColorMod, c.g * options.unitColorMod, c.b * options.unitColorMod)
 	elseif UnitIsPlayer(unit) and (not UnitIsConnected(unit)) then
 		healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
 	else
-		healthbar:SetStatusBarColor(0, 0.85 * colormod, 0)
+		healthbar:SetStatusBarColor(0, 0.85 * options.unitColorMod, 0)
 	end
 end
 
@@ -114,17 +113,17 @@ local function ApplyReactColors(healthbar, unit)
     if not UnitExists(unit) then return end
 
     if UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4 then
-        healthbar:SetStatusBarColor(0, 0.85 * colormod, 0)
+        healthbar:SetStatusBarColor(0, 0.85 * options.unitColorMod, 0)
     elseif UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
         healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
     elseif not UnitIsTapDenied(unit) then
         local r, g, b = UnitSelectionColor(unit)
-        healthbar:SetStatusBarColor(r * colormod, g * colormod, b * colormod)
+        healthbar:SetStatusBarColor(r * options.unitColorMod, g * options.unitColorMod, b * options.unitColorMod)
     end
 end
 
 function MTUI:InitializeUnitframes()
-    options = MTUI.db.profile
+    options = self.db.profile
     hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame)
     hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame)
     hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame)
