@@ -140,9 +140,9 @@ local function SetupTrackingBars(self, bar, barWidth, isTopBar, isDouble)
 
     if TRACK_HEIGHT == 0 then
         return self:Hide()
-    else
-        self:Show()
     end
+
+    self:Show()
 
     bar:SetHeight(TRACK_HEIGHT)
     bar.StatusBar:SetHeight(TRACK_HEIGHT * 0.8)
