@@ -42,24 +42,21 @@ function MTUI:InitializePlates()
     hooksecurefunc("CompactUnitFrame_UpdateName", function(frame, ...)
         if not IsNameplate(frame.unit) then return end
 
-        local texture = options.mediaPath..options.nameplateTexture
+        local texture = options.mediaPath..options.barTexture
         frame.healthBar:SetStatusBarTexture(texture)
         frame.castBar:SetStatusBarTexture(texture)
         if (ClassNameplateManaBarFrame) then
             ClassNameplateManaBarFrame:SetStatusBarTexture(texture)
         end
         frame.name:SetVertexColor(1, 1, 1)
-        frame.name:SetFont(UNIT_NAME_FONT, 8);
+        frame.name:SetFont(UNIT_NAME_FONT, 8)
     end)
 
     hooksecurefunc("DefaultCompactNamePlateFrameAnchorInternal", function(frame, ...)
         if not IsNameplate(frame.unit) then return end
 
-        frame.name:SetPoint("BOTTOM", frame.healthBar, "TOP", 0, 2)
-        frame.name:SetFont(UNIT_NAME_FONT, 7)
         frame.castBar.Text:SetFont(UNIT_NAME_FONT, 6)
-        frame.castBar.Text:SetPoint("TOP", frame.castBar, "BOTTOM", 0, 2)
-        frame.healthBar:SetHeight(5)
+        frame.healthBar:SetHeight(6)
         frame.selectionHighlight:Hide()
     end)
 end

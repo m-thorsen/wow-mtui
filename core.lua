@@ -8,7 +8,6 @@ local defaults = {
         enableUnitframes = true,
         mediaPath = "Interface/Addons/MTUI/Media/",
         barTexture = "Textures/Smooth",
-        nameplateTexture = "Textures/Smoothv2",
         enableTexture = true,
         actionbarScale = 1,
         actionbarRightOffsetY = 0,
