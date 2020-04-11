@@ -36,9 +36,6 @@ end
 function MTUI:InitializePlates()
     options = self.db.profile
 
-    SetCVar("nameplateMotionSpeed", 0.05)
-    SetCVar("ShowClassColorInNamePlate", 1)
-
     hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", UpdateStatusBarColor)
     hooksecurefunc("CompactUnitFrame_UpdateHealthColor", UpdateStatusBarColor)
 
