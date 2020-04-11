@@ -63,11 +63,12 @@ end
 local function StackBars()
     if InCombatLockdown() then return end
 
-    local BAR_Y = EDGE_OFFSET
+    local BAR_Y = EDGE_OFFSET - 1
 
     -- Tracking bars
-    StatusTrackingBarManager:SetPoint("BOTTOM", AB_FRAME, "BOTTOM", 0, BAR_Y + 1)
-    BAR_Y = BAR_Y + BTN_SPACING + StatusTrackingBarManager:GetHeight() - 1
+    StatusTrackingBarManager:ClearAllPoints()
+    StatusTrackingBarManager:SetPoint("BOTTOMLEFT", AB_FRAME, "BOTTOMLEFT", 0, BAR_Y)
+    BAR_Y = BAR_Y + BTN_SPACING + StatusTrackingBarManager:GetHeight() - 2
 
     -- Main bars
     ActionButton1:ClearAllPoints()
@@ -134,8 +135,8 @@ local function StackBars()
 end
 
 local function SetupTrackingBars(self, bar, barWidth, isTopBar, isDouble)
-    self:SetDoubleBarSize(bar, BAR_WIDTH + 3)
-    self:SetHeight(TRACK_HEIGHT * self:GetNumberVisibleBars())
+    self:SetDoubleBarSize(bar, BAR_WIDTH + 4)
+    self:SetSize(BAR_WIDTH, TRACK_HEIGHT * self:GetNumberVisibleBars())
 
     if TRACK_HEIGHT == 0 then
         return self:Hide()
