@@ -95,19 +95,19 @@ local function TweakTargetFrame(self)
     end
 end
 
-local function ApplyClassColors(healthbar, unit)
-    if not UnitExists(unit) then return end
+-- local function ApplyClassColors(healthbar, unit)
+--     if not UnitExists(unit) then return end
 
-    if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
-		_, class = UnitClass(unit)
-		local c = RAID_CLASS_COLORS[class]
-		healthbar:SetStatusBarColor(c.r * options.unitColorMod, c.g * options.unitColorMod, c.b * options.unitColorMod)
-	elseif UnitIsPlayer(unit) and (not UnitIsConnected(unit)) then
-		healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
-	else
-		healthbar:SetStatusBarColor(0, 0.85 * options.unitColorMod, 0)
-	end
-end
+--     if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
+-- 		local _, class = UnitClass(unit)
+--         local c = RAID_CLASS_COLORS[class]
+-- 		healthbar:SetStatusBarColor(c.r * options.unitColorMod, c.g * options.unitColorMod, c.b * options.unitColorMod)
+-- 	elseif UnitIsPlayer(unit) and (not UnitIsConnected(unit)) then
+-- 		healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
+-- 	else
+-- 		healthbar:SetStatusBarColor(0, 0.85 * options.unitColorMod, 0)
+-- 	end
+-- end
 
 local function ApplyReactColors(healthbar, unit)
     if not UnitExists(unit) then return end
