@@ -124,6 +124,9 @@ end
 
 function MTUI:InitializeUnitframes()
     options = self.db.profile
+
+    SetCVar("fullSizeFocusFrame", 0)
+
     hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame)
     hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame)
     hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame)

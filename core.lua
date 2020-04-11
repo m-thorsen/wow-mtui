@@ -31,9 +31,6 @@ function MTUI:OnInitialize()
     if (self.db.profile.enableNameplateTweaks) then self:InitializePlates() end
     if (self.db.profile.enableUnitframes) then self:InitializeUnitframes() end
     if (self.db.profile.enableTexture) then self:ApplyBarTexture() end
-
-    SetCVar("fullSizeFocusFrame", 0)
-    SetCVar("ShowClassColorInNamePlate", 1)
 end
 
 function MTUI:OnEnable() end
