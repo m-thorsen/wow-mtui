@@ -101,11 +101,11 @@ end
 --     if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
 -- 		local _, class = UnitClass(unit)
 --         local c = RAID_CLASS_COLORS[class]
--- 		healthbar:SetStatusBarColor(c.r * options.unitColorMod, c.g * options.unitColorMod, c.b * options.unitColorMod)
+-- 		healthbar:SetStatusBarColor(c.r, c.g, )
 -- 	elseif UnitIsPlayer(unit) and (not UnitIsConnected(unit)) then
 -- 		healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
 -- 	else
--- 		healthbar:SetStatusBarColor(0, 0.85 * options.unitColorMod, 0)
+-- 		healthbar:SetStatusBarColor(0, 0.85, 0)
 -- 	end
 -- end
 
@@ -113,12 +113,12 @@ local function ApplyReactColors(healthbar, unit)
     if not UnitExists(unit) then return end
 
     if UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4 then
-        healthbar:SetStatusBarColor(0, 0.85 * options.unitColorMod, 0)
+        healthbar:SetStatusBarColor(0, 0.85, 0)
     elseif UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
         healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
     elseif not UnitIsTapDenied(unit) then
         local r, g, b = UnitSelectionColor(unit)
-        healthbar:SetStatusBarColor(r * options.unitColorMod, g * options.unitColorMod, b * options.unitColorMod)
+        healthbar:SetStatusBarColor(r, g, b)
     end
 end
 

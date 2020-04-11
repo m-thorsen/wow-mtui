@@ -16,7 +16,7 @@ local function UpdateStatusBarColor(frame, ...)
     local r, g, b = UnitSelectionColor(frame.unit, true)
 
     if UnitReaction(frame.unit, "player") and UnitReaction(frame.unit, "player") > 4 then
-        frame.healthBar:SetStatusBarColor(0, 0.85 * options.unitColorMod, 0)
+        frame.healthBar:SetStatusBarColor(0, 0.85, 0)
     elseif UnitIsTapDenied(frame.unit) and not UnitPlayerControlled(frame.unit) then
         frame.healthBar:SetStatusBarColor(0.5, 0.5, 0.5)
     else
@@ -29,7 +29,7 @@ local function UpdateStatusBarColor(frame, ...)
         elseif threat == 1 then
             r, g, b = GetRgb(YELLOW_FONT_COLOR)
         end
-        frame.healthBar:SetStatusBarColor(r * options.unitColorMod, g * options.unitColorMod, b * options.unitColorMod)
+        frame.healthBar:SetStatusBarColor(r, g, b)
     end
 end
 
@@ -42,13 +42,12 @@ function MTUI:InitializePlates()
     hooksecurefunc("CompactUnitFrame_UpdateName", function(frame, ...)
         if not IsNameplate(frame.unit) then return end
 
-        local texture = options.mediaPath..options.texture
+        local texture = options.mediaPath..options.nameplateTexture
         frame.healthBar:SetStatusBarTexture(texture)
         frame.castBar:SetStatusBarTexture(texture)
         if (ClassNameplateManaBarFrame) then
             ClassNameplateManaBarFrame:SetStatusBarTexture(texture)
         end
-        frame.selectionHighlight:Hide()
         frame.name:SetVertexColor(1, 1, 1)
         frame.name:SetFont(UNIT_NAME_FONT, 8);
     end)
@@ -61,5 +60,6 @@ function MTUI:InitializePlates()
         frame.castBar.Text:SetFont(UNIT_NAME_FONT, 6)
         frame.castBar.Text:SetPoint("TOP", frame.castBar, "BOTTOM", 0, 2)
         frame.healthBar:SetHeight(5)
+        frame.selectionHighlight:Hide()
     end)
 end

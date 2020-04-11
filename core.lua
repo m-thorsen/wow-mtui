@@ -7,7 +7,8 @@ local defaults = {
         enableNameplateTweaks = true,
         enableUnitframes = true,
         mediaPath = "Interface/Addons/MTUI/Media/",
-        texture = "Textures/Smooth",
+        barTexture = "Textures/Smooth",
+        nameplateTexture = "Textures/Smoothv2",
         enableTexture = true,
         actionbarScale = 1,
         actionbarRightOffsetY = 0,
@@ -15,7 +16,6 @@ local defaults = {
         actionbarTrackHeight = 10,
         unitframeOffsetY = 200,
         unitframeOffsetX = 250,
-        unitColorMod = 0.9,
     }
 }
 
