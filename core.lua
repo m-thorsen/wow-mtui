@@ -31,6 +31,8 @@ function MTUI:OnInitialize()
     if (self.db.profile.enableNameplateTweaks) then self:InitializePlates() end
     if (self.db.profile.enableUnitframes) then self:InitializeUnitframes() end
     if (self.db.profile.enableTexture) then self:ApplyBarTexture() end
+
+    self:RemoveAnnoyances()
 end
 
 function MTUI:OnEnable() end

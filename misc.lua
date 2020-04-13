@@ -92,3 +92,10 @@ function MTUI:SkinCastingBar()
     -- CastingBarFrame.Border:SetPoint("TOPLEFT", -35, 30)
     -- CastingBarFrame.Border:SetPoint("BOTTOMRIGHT", 35, -30)
 end
+
+function MTUI:RemoveAnnoyances()
+    -- Hide annoying alerts
+    function MainMenuMicroButton_AreAlertsEffectivelyEnabled()
+        return false
+    end
+end
