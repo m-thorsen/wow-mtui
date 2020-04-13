@@ -67,7 +67,7 @@ local function StackBars()
 
     -- Tracking bars
     StatusTrackingBarManager:ClearAllPoints()
-    StatusTrackingBarManager:SetPoint("BOTTOMLEFT", AB_FRAME, "BOTTOMLEFT", 0, BAR_Y)
+    StatusTrackingBarManager:SetPoint("BOTTOMLEFT", AB_FRAME, "BOTTOMLEFT", -2, BAR_Y)
     BAR_Y = BAR_Y + BTN_SPACING + StatusTrackingBarManager:GetHeight() - 2
 
     -- Main bars
@@ -135,17 +135,19 @@ local function StackBars()
 end
 
 local function SetupTrackingBars(self, bar, barWidth, isTopBar, isDouble)
-    self:SetDoubleBarSize(bar, BAR_WIDTH + 4)
-    self:SetSize(BAR_WIDTH, TRACK_HEIGHT * self:GetNumberVisibleBars())
-
     if TRACK_HEIGHT == 0 then
         return self:Hide()
     end
 
+    local TRACK_WIDTH = BAR_WIDTH + 3
+    self:SetDoubleBarSize(bar, TRACK_WIDTH)
+    self:SetSize(TRACK_WIDTH, TRACK_HEIGHT * self:GetNumberVisibleBars())
     self:Show()
 
-    bar:SetHeight(TRACK_HEIGHT)
-    bar.StatusBar:SetHeight(TRACK_HEIGHT * 0.8)
+    bar:ClearAllPoints()
+    bar.StatusBar:ClearAllPoints()
+    bar:SetSize(TRACK_WIDTH, TRACK_HEIGHT)
+    bar.StatusBar:SetSize(TRACK_WIDTH, TRACK_HEIGHT)
     bar.StatusBar.Background:SetAlpha(0.5)
 
     if MTUI.db.profile.enableTexture then
@@ -153,16 +155,16 @@ local function SetupTrackingBars(self, bar, barWidth, isTopBar, isDouble)
     end
 
     if isDouble and isTopBar then
-        bar:SetPoint("BOTTOM", self, "BOTTOM", 0, TRACK_HEIGHT)
-        bar.StatusBar:SetPoint("BOTTOM", self, "BOTTOM", 0, TRACK_HEIGHT)
+        bar:SetPoint("TOP", self, "TOP", 0, 0)
+        bar.StatusBar:SetPoint("TOP", self, "TOP", 0, 0)
     else
         bar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
         bar.StatusBar:SetPoint("BOTTOM", self, "BOTTOM", 0, 0)
     end
 
     for _, b in next, { self.SingleBarSmallUpper, self.SingleBarLargeUpper, self.SingleBarSmall, self.SingleBarLarge } do
-        b:SetHeight(TRACK_HEIGHT)
-        b:SetVertexColor(0.75, 0.75, 0.75)
+        b:SetSize(TRACK_WIDTH, TRACK_HEIGHT)
+        b:SetVertexColor(0.7, 0.7, 0.7)
     end
 
     for _, b in next, { self.SingleBarSmallUpper, self.SingleBarLargeUpper } do
