@@ -14,6 +14,7 @@ end
 local function TweakPlayerFrame(self)
     PlayerFrameTexture:SetTexture(options.mediaPath .. "TargetFrame")
     PlayerStatusTexture:SetTexture(options.mediaPath .. "Player-Status")
+    PlayerStatusTexture:SetWidth(192)
     ApplyCommonFrameTweaks(self)
     self.healthbar:SetPoint("TOPRIGHT", -5, -24)
     self.name:Hide()

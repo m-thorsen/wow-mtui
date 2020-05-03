@@ -46,6 +46,7 @@ function MTUI:InitializePlates()
             local texture = options.mediaPath..options.barTexture
             frame.healthBar:SetStatusBarTexture(texture)
             frame.castBar:SetStatusBarTexture(texture)
+            frame.castBar.Flash:SetTexture(nil)
             if (ClassNameplateManaBarFrame) then
                 ClassNameplateManaBarFrame:SetStatusBarTexture(texture)
             end
@@ -59,8 +60,10 @@ function MTUI:InitializePlates()
         if not IsNameplate(frame.unit) then return end
 
         frame.castBar.Text:SetFont(UNIT_NAME_FONT, 6, nil)
-        frame.healthBar:SetHeight(5)
-        -- frame.selectionHighlight:Hide()
-        frame.selectionHighlight:SetVertexColor(1, 1, 1)
+        frame.healthBar:SetHeight(6)
+        frame.healthBar.border:SetScale(0.5)
+        frame.healthBar.border:SetAlpha(0.75)
+        -- frame.ClassificationFrame:SetPoint('RIGHT', frame.healthBar, 'LEFT', 3, 0)
+        frame.selectionHighlight:Hide()
     end)
 end
