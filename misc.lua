@@ -31,8 +31,15 @@ function MTUI:ApplyBarTexture()
     local UnitFrames = {
         PlayerFrame, PlayerFrameManaBar, PlayerFrameAlternateManaBar, PlayerFrameMyHealPredictionBar,
         TargetFrame, TargetFrameToT, FocusFrame, FocusFrameToT, PetFrame,
-        PartyMemberFrame1, PartyMemberFrame2, PartyMemberFrame3, PartyMemberFrame4,
     }
+
+    for i = 1, 4 do
+        table.insert(UnitFrames, "PartyMemberFrame"..i)
+    end
+
+    for i = 1, MAX_BOSS_FRAMES do
+        table.insert(UnitFrames, "Boss"..i.."TargetFrame")
+    end
 
     local UnitFrameRegions = {
         "healthbar", "manabar", "spellbar", "healAbsorbBar", "totalAbsorbBar",
