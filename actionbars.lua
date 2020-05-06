@@ -102,7 +102,7 @@ local function StackBars()
     StanceButton1:SetPoint("BOTTOMLEFT", AB_FRAME, "BOTTOMLEFT", -1, BAR_Y)
 
     -- Right bars
-    local offsetY = MTUI.db.profile.actionbarRightOffsetY
+    local offsetY = MTUI.db.global.actionbarRightOffsetY
     MultiBarRightButton1:ClearAllPoints()
     MultiBarRightButton1:SetPoint("TOPRIGHT", UIParent, "RIGHT", -EDGE_OFFSET, BAR_WIDTH / 2 + offsetY - 72)
     MultiBarLeftButton1:ClearAllPoints()
@@ -150,8 +150,8 @@ local function SetupTrackingBars(self, bar, barWidth, isTopBar, isDouble)
     bar.StatusBar:SetSize(TRACK_WIDTH, TRACK_HEIGHT)
     bar.StatusBar.Background:SetAlpha(0.5)
 
-    if MTUI.db.profile.enableTexture then
-        bar.StatusBar:SetStatusBarTexture(MTUI.db.profile.mediaPath..MTUI.db.profile.barTexture)
+    if MTUI.db.global.enableTexture then
+        bar.StatusBar:SetStatusBarTexture(MTUI.db.global.mediaPath..MTUI.db.global.barTexture)
     end
 
     if isDouble and isTopBar then
@@ -200,7 +200,7 @@ function MTUI:SetupFrames()
         PetActionBar, MicroButtonAndBagsBar, OverrideActionBar
     } do bar:SetParent(AB_FRAME) end
 
-    AB_FRAME:SetScale(self.db.profile.actionbarScale)
+    AB_FRAME:SetScale(self.db.global.actionbarScale)
     AB_FRAME:SetPoint("BOTTOM", 0, 0)
     AB_FRAME:SetSize(BAR_WIDTH, BTN_SIZE)
     AB_FRAME:Show()
@@ -217,8 +217,8 @@ end
 function MTUI:InitializeBars(triggerListeners)
     BTN_SIZE        = 36
     BTN_SIZE_SM     = 30 -- pet, stance etc
-    TRACK_HEIGHT    = self.db.profile.actionbarTrackHeight
-    BTN_SPACING     = self.db.profile.actionbarBtnSpacing + 4
+    TRACK_HEIGHT    = self.db.global.actionbarTrackHeight
+    BTN_SPACING     = self.db.global.actionbarBtnSpacing + 4
     BAR_WIDTH       = (BTN_SIZE + BTN_SPACING) * NUM_MULTIBAR_BUTTONS - BTN_SPACING
     PET_BAR_WIDTH   = (BTN_SIZE_SM + BTN_SPACING) * NUM_PET_ACTION_SLOTS - BTN_SPACING
     EDGE_OFFSET     = BTN_SPACING - 3

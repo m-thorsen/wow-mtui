@@ -34,7 +34,7 @@ local function UpdateStatusBarColor(frame, ...)
 end
 
 function MTUI:InitializePlates()
-    options = self.db.profile
+    options = self.db.global
 
     hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", UpdateStatusBarColor)
     hooksecurefunc("CompactUnitFrame_UpdateHealthColor", UpdateStatusBarColor)

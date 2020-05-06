@@ -1,7 +1,7 @@
 local MTUI = LibStub("AceAddon-3.0"):NewAddon("MTUI", "AceConsole-3.0")
 
 local defaults = {
-    profile = {
+    global = {
         enableBars = true,
         moveFrames = true,
         enableNameplateTweaks = true,
@@ -26,11 +26,11 @@ function MTUI:OnInitialize()
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MTUI", "MTUI")
     self:RegisterChatCommand("mtui", "ChatCommand")
 
-    if (self.db.profile.moveFrames) then self:MoveFrames() end
-    if (self.db.profile.enableBars) then self:InitializeBars() end
-    if (self.db.profile.enableNameplateTweaks) then self:InitializePlates() end
-    if (self.db.profile.enableUnitframes) then self:InitializeUnitframes() end
-    if (self.db.profile.enableTexture) then self:ApplyBarTexture() end
+    if (self.db.global.moveFrames) then self:MoveFrames() end
+    if (self.db.global.enableBars) then self:InitializeBars() end
+    if (self.db.global.enableNameplateTweaks) then self:InitializePlates() end
+    if (self.db.global.enableUnitframes) then self:InitializeUnitframes() end
+    if (self.db.global.enableTexture) then self:ApplyBarTexture() end
 
     self:RemoveAnnoyances()
 end
@@ -59,10 +59,10 @@ function MTUI:GetOptions()
                 name = "Actionbar tweaks",
                 width = "full",
                 get = function(info)
-                    return self.db.profile.enableBars
+                    return self.db.global.enableBars
                 end,
                 set = function(info, value)
-                    self.db.profile.enableBars = value
+                    self.db.global.enableBars = value
                     ReloadUI()
                 end,
             },
@@ -72,10 +72,10 @@ function MTUI:GetOptions()
                 name = "Move unit and quest log frames",
                 width = "full",
                 get = function(info)
-                    return self.db.profile.moveFrames
+                    return self.db.global.moveFrames
                 end,
                 set = function(info, value)
-                    self.db.profile.moveFrames = value
+                    self.db.global.moveFrames = value
                     ReloadUI()
                 end,
             },
@@ -85,10 +85,10 @@ function MTUI:GetOptions()
                 name = "Unitframe tweaks",
                 width = "full",
                 get = function(info)
-                    return self.db.profile.enableUnitframes
+                    return self.db.global.enableUnitframes
                 end,
                 set = function(info, value)
-                    self.db.profile.enableUnitframes = value
+                    self.db.global.enableUnitframes = value
                     ReloadUI()
                 end,
             },
@@ -98,10 +98,10 @@ function MTUI:GetOptions()
                 name = "Nameplate tweaks",
                 width = "full",
                 get = function(info)
-                    return self.db.profile.enableNameplateTweaks
+                    return self.db.global.enableNameplateTweaks
                 end,
                 set = function(info, value)
-                    self.db.profile.enableNameplateTweaks = value
+                    self.db.global.enableNameplateTweaks = value
                     ReloadUI()
                 end,
             },
@@ -111,10 +111,10 @@ function MTUI:GetOptions()
                 name = "Smooth bar texture",
                 width = "full",
                 get = function(info)
-                    return self.db.profile.enableTexture
+                    return self.db.global.enableTexture
                 end,
                 set = function(info, value)
-                    self.db.profile.enableTexture = value
+                    self.db.global.enableTexture = value
                     ReloadUI()
                 end,
             },
@@ -131,10 +131,10 @@ function MTUI:GetOptions()
                 max = 500,
                 step = 1,
                 get = function(info)
-                    return self.db.profile.unitframeOffsetX
+                    return self.db.global.unitframeOffsetX
                 end,
                 set = function(info, value)
-                    self.db.profile.unitframeOffsetX = value
+                    self.db.global.unitframeOffsetX = value
                     self:MoveFrames()
                 end,
             },
@@ -146,10 +146,10 @@ function MTUI:GetOptions()
                 max = 300,
                 step = 1,
                 get = function(info)
-                    return self.db.profile.unitframeOffsetY
+                    return self.db.global.unitframeOffsetY
                 end,
                 set = function(info, value)
-                    self.db.profile.unitframeOffsetY = value
+                    self.db.global.unitframeOffsetY = value
                     self:MoveFrames()
                 end,
             },
@@ -166,10 +166,10 @@ function MTUI:GetOptions()
                 max = 1.5,
                 step = 0.05,
                 get = function(info)
-                    return self.db.profile.actionbarScale
+                    return self.db.global.actionbarScale
                 end,
                 set = function(info, value)
-                    self.db.profile.actionbarScale = value
+                    self.db.global.actionbarScale = value
                     self:InitializeBars()
                 end,
             },
@@ -181,10 +181,10 @@ function MTUI:GetOptions()
                 max = 200,
                 step = 1,
                 get = function(info)
-                    return self.db.profile.actionbarRightOffsetY
+                    return self.db.global.actionbarRightOffsetY
                 end,
                 set = function(info, value)
-                    self.db.profile.actionbarRightOffsetY = value
+                    self.db.global.actionbarRightOffsetY = value
                     self:InitializeBars()
                 end,
             },
@@ -196,10 +196,10 @@ function MTUI:GetOptions()
                 max = 10,
                 step = 1,
                 get = function(info)
-                    return self.db.profile.actionbarBtnSpacing
+                    return self.db.global.actionbarBtnSpacing
                 end,
                 set = function(info, value)
-                    self.db.profile.actionbarBtnSpacing = value
+                    self.db.global.actionbarBtnSpacing = value
                     self:InitializeBars()
                 end,
             },
@@ -211,10 +211,10 @@ function MTUI:GetOptions()
                 max = 20,
                 step = 1,
                 get = function(info)
-                    return self.db.profile.actionbarTrackHeight
+                    return self.db.global.actionbarTrackHeight
                 end,
                 set = function(info, value)
-                    self.db.profile.actionbarTrackHeight = value
+                    self.db.global.actionbarTrackHeight = value
                     self:InitializeBars()
                 end,
             },

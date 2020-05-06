@@ -9,8 +9,8 @@ local function moveFrame(Frame, a, b, c, d, e)
 end
 
 function MTUI:MoveFrames()
-    local Y = self.db.profile.unitframeOffsetY
-    local X = self.db.profile.unitframeOffsetX / 2
+    local Y = self.db.global.unitframeOffsetY
+    local X = self.db.global.unitframeOffsetX / 2
 
     moveFrame(PlayerFrame, "BOTTOMRIGHT", UIParent, "BOTTOM", -X, Y)
     moveFrame(TargetFrame, "BOTTOMLEFT", UIParent, "BOTTOM", X, Y)
@@ -26,7 +26,7 @@ function MTUI:MoveFrames()
 end
 
 function MTUI:ApplyBarTexture()
-    local texture = self.db.profile.mediaPath..self.db.profile.barTexture
+    local texture = self.db.global.mediaPath..self.db.global.barTexture
 
     local UnitFrames = {
         PlayerFrame, PlayerFrameManaBar, PlayerFrameAlternateManaBar, PlayerFrameMyHealPredictionBar,
