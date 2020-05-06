@@ -4,8 +4,9 @@ local defaults = {
     global = {
         enableBars = true,
         moveFrames = true,
-        enableNameplateTweaks = true,
         enableUnitframes = true,
+        enableNameplateTweaks = true,
+        enableCastingbarTweaks = true,
         mediaPath = "Interface/Addons/MTUI/Media/",
         barTexture = "Textures/Smooth",
         enableTexture = true,
@@ -31,6 +32,7 @@ function MTUI:OnInitialize()
     if (self.db.global.enableNameplateTweaks) then self:InitializePlates() end
     if (self.db.global.enableUnitframes) then self:InitializeUnitframes() end
     if (self.db.global.enableTexture) then self:ApplyBarTexture() end
+    if (self.db.global.enableCastingbarTweaks) then self:ApplyCastingbarTweaks() end
 
     self:RemoveAnnoyances()
 end
@@ -115,6 +117,19 @@ function MTUI:GetOptions()
                 end,
                 set = function(info, value)
                     self.db.global.enableTexture = value
+                    ReloadUI()
+                end,
+            },
+            ag = {
+                order = 16,
+                type = "toggle",
+                name = "Castingbar border",
+                width = "full",
+                get = function(info)
+                    return self.db.global.enableCastingbarTweaks
+                end,
+                set = function(info, value)
+                    self.db.global.enableCastingbarTweaks = value
                     ReloadUI()
                 end,
             },

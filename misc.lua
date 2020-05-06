@@ -31,15 +31,9 @@ function MTUI:ApplyBarTexture()
     local UnitFrames = {
         PlayerFrame, PlayerFrameManaBar, PlayerFrameAlternateManaBar, PlayerFrameMyHealPredictionBar,
         TargetFrame, TargetFrameToT, FocusFrame, FocusFrameToT, PetFrame,
+        PartyMemberFrame1, PartyMemberFrame2, PartyMemberFrame3, PartyMemberFrame4,
+        Boss1TargetFrame, Boss2TargetFrame, Boss3TargetFrame, Boss4TargetFrame, Boss5TargetFrame,
     }
-
-    for i = 1, 4 do
-        table.insert(UnitFrames, "PartyMemberFrame"..i)
-    end
-
-    for i = 1, MAX_BOSS_FRAMES do
-        table.insert(UnitFrames, "Boss"..i.."TargetFrame")
-    end
 
     local UnitFrameRegions = {
         "healthbar", "manabar", "spellbar", "healAbsorbBar", "totalAbsorbBar",
@@ -56,6 +50,9 @@ function MTUI:ApplyBarTexture()
             end
         end
     end
+
+    GameTooltipStatusBar:SetStatusBarTexture(texture)
+    GameTooltipStatusBar:SetHeight(4)
 
     CastingBarFrame:SetStatusBarTexture(texture)
     for _, frame in next, { MirrorTimer1, MirrorTimer2, MirrorTimer3 } do
@@ -81,23 +78,22 @@ function MTUI:ApplyBarTexture()
     end)
 end
 
-function MTUI:SkinCastingBar()
+function MTUI:ApplyCastingbarTweaks()
     local CB_HEIGHT = 16
-    local Backdrop = CreateFrame("FRAME", nil, CastingBarFrame)
+    local CB_PADDING = 3
     CastingBarFrame:SetHeight(CB_HEIGHT)
     CastingBarFrame.Text:SetAllPoints(CastingBarFrame)
+    CastingBarFrame.Text:SetScale(0.9)
     CastingBarFrame.Border:Hide()
+    local Backdrop = CreateFrame("FRAME", nil, CastingBarFrame)
     Backdrop:ClearAllPoints()
-    Backdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -3, 2)
-    Backdrop:SetPoint("TOPRIGHT", CastingBarFrame, "TOPRIGHT", 2, 2)
-    Backdrop:SetHeight(20)
+    Backdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -CB_PADDING, CB_PADDING)
+    Backdrop:SetPoint("TOPRIGHT", CastingBarFrame, "TOPRIGHT", CB_PADDING, CB_PADDING)
+    Backdrop:SetHeight(CB_HEIGHT + CB_PADDING * 2)
     Backdrop:SetBackdrop({
-        edgeFile = "Interface/Glues/COMMON/TextPanel-Border",
-        edgeSize = 10,
-    });
-    -- CastingBarFrame.Border:SetTexture([[Interface\CastingBar\UI-CastingBar-Border-Small]])
-    -- CastingBarFrame.Border:SetPoint("TOPLEFT", -35, 30)
-    -- CastingBarFrame.Border:SetPoint("BOTTOMRIGHT", 35, -30)
+        edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+        edgeSize = 16,
+    })
 end
 
 function MTUI:RemoveAnnoyances()
