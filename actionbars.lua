@@ -151,7 +151,7 @@ local function SetupTrackingBars(self, bar, barWidth, isTopBar, isDouble)
     bar.StatusBar.Background:SetAlpha(0.5)
 
     if MTUI.db.global.enableTexture then
-        bar.StatusBar:SetStatusBarTexture(MTUI.db.global.mediaPath..MTUI.db.global.barTexture)
+        bar.StatusBar:SetStatusBarTexture(MTUI.db.global.barTexture)
     end
 
     if isDouble and isTopBar then
