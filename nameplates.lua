@@ -43,7 +43,7 @@ function MTUI:InitializePlates()
         if not IsNameplate(frame.unit) then return end
 
         if options.enableTexture then
-            local texture = options.barTexture
+            local texture = options.namePlateTexture
             frame.healthBar:SetStatusBarTexture(texture)
             frame.castBar:SetStatusBarTexture(texture)
             frame.castBar.Flash:SetTexture(nil)

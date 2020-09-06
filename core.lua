@@ -9,6 +9,7 @@ local defaults = {
         enableCastingbarTweaks = true,
         mediaPath = "Interface/Addons/MTUI/Media/",
         barTexture = "Interface/Addons/MTUI/Media/Textures/pfui-k",
+        namePlateTexture = "Interface/Addons/MTUI/Media/Textures/pfui-e",
         enableTexture = true,
         actionbarScale = 1,
         actionbarRightOffsetY = 0,
