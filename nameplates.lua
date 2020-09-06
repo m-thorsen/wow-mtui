@@ -2,10 +2,6 @@ local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI")
 
 local options
 
-local function GetRgb(c)
-    return c.r, c.g, c.b
-end
-
 local function IsNameplate(unit)
     return type(unit) == "string" and (string.match(unit, "nameplate") == "nameplate" or string.match(unit, "NamePlate") == "NamePlate")
 end
@@ -13,22 +9,25 @@ end
 local function UpdateStatusBarColor(frame, ...)
     if not IsNameplate(frame.unit) then return end
 
-    local r, g, b = UnitSelectionColor(frame.unit, true)
-
     if UnitReaction(frame.unit, "player") and UnitReaction(frame.unit, "player") > 4 then
-        frame.healthBar:SetStatusBarColor(0, 0.85, 0)
+        frame.healthBar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
     elseif UnitIsTapDenied(frame.unit) and not UnitPlayerControlled(frame.unit) then
-        frame.healthBar:SetStatusBarColor(0.5, 0.5, 0.5)
+        frame.healthBar:SetStatusBarColor(GRAY_FONT_COLOR:GetRGB())
     else
         local threat = UnitThreatSituation("player", frame.unit)
 
         if threat == 3 then
-            r, g, b = GetRgb(RED_FONT_COLOR)
+            r, g, b = RED_FONT_COLOR:GetRGB()
         elseif threat == 2 then
-            r, g, b = GetRgb(ORANGE_FONT_COLOR)
+            r, g, b = ORANGE_FONT_COLOR:GetRGB()
         elseif threat == 1 then
-            r, g, b = GetRgb(YELLOW_FONT_COLOR)
+            r, g, b = YELLOW_FONT_COLOR:GetRGB()
+        elseif threat ~= nil then
+            r, g, b = GREEN_FONT_COLOR:GetRGB()
+        else
+            r, g, b = UnitSelectionColor(frame.unit, true)
         end
+
         frame.healthBar:SetStatusBarColor(r, g, b)
     end
 end
