@@ -36,8 +36,9 @@ function MTUI:ApplyBarTexture()
     }
 
     local UnitFrameRegions = {
-        "healthbar", "manabar", "spellbar", "healAbsorbBar", "totalAbsorbBar",
-        "AnimatedLossBar", "myHealPredictionBar", "otherHealPredictionBar", "myManaCostPredictionBar",
+        "healthbar", "spellbar", "healAbsorbBar", "totalAbsorbBar",
+        "AnimatedLossBar", "myHealPredictionBar", "otherHealPredictionBar",
+        "manabar", "myManaCostPredictionBar",
     }
 
     for _, frame in next, UnitFrames do
@@ -61,21 +62,22 @@ function MTUI:ApplyBarTexture()
 
     PlayerFrame.healthbar.AnimatedLossBar:SetStatusBarTexture(texture)
 
-    hooksecurefunc("UnitFrameManaBar_UpdateType", function(self)
-        local powerType, powerToken, altR, altG, altB = UnitPowerType(self.unit)
-        local info = PowerBarColor[powerToken]
-        self:SetStatusBarTexture(texture)
-        if PlayerFrameAlternateManaBar then
-            PlayerFrameAlternateManaBar:SetStatusBarTexture(texture)
-        end
-        if info and info.atlas then
-            self:SetStatusBarColor(info.r, info.g, info.b)
-            if self.FeedbackFrame then
-                self.FeedbackFrame.BarTexture:SetTexture(texture)
-                self.FeedbackFrame.BarTexture:SetVertexColor(info.r, info.g, info.b)
-            end
-        end
-    end)
+    -- Skin power bars with special textures
+    -- hooksecurefunc("UnitFrameManaBar_UpdateType", function(self)
+    --     local powerType, powerToken, altR, altG, altB = UnitPowerType(self.unit)
+    --     local info = PowerBarColor[powerToken]
+    --     self:SetStatusBarTexture(texture)
+    --     if PlayerFrameAlternateManaBar then
+    --         PlayerFrameAlternateManaBar:SetStatusBarTexture(texture)
+    --     end
+    --     if info and info.atlas then
+    --         self:SetStatusBarColor(info.r, info.g, info.b)
+    --         if self.FeedbackFrame then
+    --             self.FeedbackFrame.BarTexture:SetTexture(texture)
+    --             self.FeedbackFrame.BarTexture:SetVertexColor(info.r, info.g, info.b)
+    --         end
+    --     end
+    -- end)
 end
 
 function MTUI:ApplyCastingbarTweaks()

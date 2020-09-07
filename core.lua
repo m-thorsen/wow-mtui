@@ -8,9 +8,11 @@ local defaults = {
         enableNameplateTweaks = true,
         enableCastingbarTweaks = true,
         mediaPath = "Interface/Addons/MTUI/Media/",
-        barTexture = "Interface/Addons/MTUI/Media/Textures/pfui-k",
-        namePlateTexture = "Interface/Addons/MTUI/Media/Textures/pfui-e",
-        enableTexture = true,
+        barTexture = "Interface/Addons/MTUI/Media/Textures/normal",
+        namePlateTexture = "Interface/Addons/MTUI/Media/Textures/flatter",
+        -- barTexture = "Interface/Addons/MTUI/Media/Textures/pfui-k",
+        -- namePlateTexture = "Interface/Addons/MTUI/Media/Textures/pfui-e",
+        smoothBarTexture = true,
         actionbarScale = 1,
         actionbarRightOffsetY = 0,
         actionbarBtnSpacing = 1,
@@ -32,7 +34,7 @@ function MTUI:OnInitialize()
     if (self.db.global.enableBars) then self:InitializeBars() end
     if (self.db.global.enableNameplateTweaks) then self:InitializePlates() end
     if (self.db.global.enableUnitframes) then self:InitializeUnitframes() end
-    if (self.db.global.enableTexture) then self:ApplyBarTexture() end
+    if (self.db.global.smoothBarTexture) then self:ApplyBarTexture() end
     if (self.db.global.enableCastingbarTweaks) then self:ApplyCastingbarTweaks() end
 
     self:RemoveAnnoyances()
@@ -108,19 +110,19 @@ function MTUI:GetOptions()
                     ReloadUI()
                 end,
             },
-            af = {
-                order = 15,
-                type = "toggle",
-                name = "Smooth bar texture",
-                width = "full",
-                get = function(info)
-                    return self.db.global.enableTexture
-                end,
-                set = function(info, value)
-                    self.db.global.enableTexture = value
-                    ReloadUI()
-                end,
-            },
+            -- af = {
+            --     order = 15,
+            --     type = "toggle",
+            --     name = "Smooth bar texture",
+            --     width = "full",
+            --     get = function(info)
+            --         return self.db.global.smoothBarTexture
+            --     end,
+            --     set = function(info, value)
+            --         self.db.global.smoothBarTexture = value
+            --         ReloadUI()
+            --     end,
+            -- },
             ag = {
                 order = 16,
                 type = "toggle",

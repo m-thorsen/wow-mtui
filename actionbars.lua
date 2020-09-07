@@ -150,7 +150,7 @@ local function SetupTrackingBars(self, bar, barWidth, isTopBar, isDouble)
     bar.StatusBar:SetSize(TRACK_WIDTH, TRACK_HEIGHT)
     bar.StatusBar.Background:SetAlpha(0.5)
 
-    if MTUI.db.global.enableTexture then
+    if MTUI.db.global.smoothBarTexture then
         bar.StatusBar:SetStatusBarTexture(MTUI.db.global.barTexture)
     end
 
