@@ -53,7 +53,7 @@ function MTUI:ApplyBarTexture()
     end
 
     GameTooltipStatusBar:SetStatusBarTexture(texture)
-    GameTooltipStatusBar:SetHeight(4)
+    GameTooltipStatusBar:SetHeight(6)
 
     CastingBarFrame:SetStatusBarTexture(texture)
     for _, frame in next, { MirrorTimer1, MirrorTimer2, MirrorTimer3 } do

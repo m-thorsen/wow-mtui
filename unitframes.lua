@@ -12,8 +12,8 @@ local function ApplyCommonFrameTweaks(self)
 end
 
 local function TweakPlayerFrame(self)
-    PlayerFrameTexture:SetTexture(options.mediaPath .. "TargetFrame")
-    PlayerStatusTexture:SetTexture(options.mediaPath .. "Player-Status")
+    PlayerFrameTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame")
+    PlayerStatusTexture:SetTexture("Interface/Addons/MTUI/Media/Player-Status")
     PlayerStatusTexture:SetWidth(192)
     ApplyCommonFrameTweaks(self)
     self.healthbar:SetPoint("TOPRIGHT", -5, -24)
@@ -50,14 +50,12 @@ local function TweakTargetFrame(self)
 
     self.nameBackground:Hide()
 
-    if (type == "worldboss" or type == "elite") then
-        self.borderTexture:SetTexture(options.mediaPath .."TargetFrame-Elite")
-    elseif (type == "rareelite") then
-        self.borderTexture:SetTexture(options.mediaPath .."TargetFrame-RareElite")
-    elseif (type == "rare") then
-        self.borderTexture:SetTexture(options.mediaPath .."TargetFrame-Rare")
-    elseif type ~= "minus" then
-        self.borderTexture:SetTexture(options.mediaPath .."TargetFrame")
+    if (not self.texture) then
+        local tex = self:CreateTexture(nil, "BACKGROUND")
+        tex:SetTexture("Interface/Addons/MTUI/Media/Frames/TargetingFrameShadow")
+        tex:SetPoint("TOPLEFT", self, "TOPLEFT", -25, 15)
+        tex:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 20, 0)
+        self.texture = tex
     end
 
     ApplyCommonFrameTweaks(self)
@@ -70,24 +68,33 @@ local function TweakTargetFrame(self)
     self.Background:SetPoint("TOP", self.healthbar, "TOP", 0, 0)
 
     if (type == "minus") then
-        self.name:SetPoint("LEFT", self, 16, 19)
+        self.texture:Hide()
+        self.name:SetPoint("LEFT", self, 16, 17)
         self.healthbar:SetPoint("LEFT", 5, 3)
         self.healthbar:SetHeight(12)
         self.Background:SetHeight(12)
-    else
-        self.name:SetPoint("LEFT", self, 15, 36)
-        self.healthbar:SetPoint("TOPLEFT", 5, -24)
-        self.Background:SetHeight(40)
-    end
-
-    if (self.threatIndicator) then
-        if (type == "minus") then
+        if (self.threatIndicator) then
             self.threatIndicator:SetTexture("Interface/TargetingFrame/UI-TargetingFrame-Minus-Flash")
             self.threatIndicator:SetTexCoord(0, 1, 0, 1)
             self.threatIndicator:SetWidth(256)
             self.threatIndicator:SetHeight(128)
             self.threatIndicator:SetPoint("TOPLEFT", self, "TOPLEFT", -24, 0)
+        end
+    else
+        self.texture:Show()
+        self.name:SetPoint("LEFT", self, 15, 36)
+        self.healthbar:SetPoint("TOPLEFT", 5, -24)
+        self.Background:SetHeight(40)
+        if (type == "worldboss" or type == "elite") then
+            self.borderTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame-Elite")
+        elseif (type == "rareelite") then
+            self.borderTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame-RareElite")
+        elseif (type == "rare") then
+            self.borderTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame-Rare")
         else
+            self.borderTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame")
+        end
+        if (self.threatIndicator) then
             self.threatIndicator:SetTexCoord(0, 0.9453125, 0, 0.181640625)
             self.threatIndicator:SetWidth(242)
             self.threatIndicator:SetHeight(93)
@@ -104,9 +111,9 @@ end
 --         local c = RAID_CLASS_COLORS[class]
 -- 		healthbar:SetStatusBarColor(c.r, c.g, )
 -- 	elseif UnitIsPlayer(unit) and (not UnitIsConnected(unit)) then
--- 		healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
+-- 		healthbar:SetStatusBarColor(GRAY_FONT_COLOR:GetRGB())
 -- 	else
--- 		healthbar:SetStatusBarColor(0, 0.85, 0)
+-- 		healthbar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
 -- 	end
 -- end
 
@@ -114,9 +121,9 @@ local function ApplyReactColors(healthbar, unit)
     if not UnitExists(unit) then return end
 
     if UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4 then
-        healthbar:SetStatusBarColor(0, 0.85, 0)
+        healthbar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
     elseif UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-        healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
+        healthbar:SetStatusBarColor(GRAY_FONT_COLOR:GetRGB())
     elseif not UnitIsTapDenied(unit) then
         local r, g, b = UnitSelectionColor(unit)
         healthbar:SetStatusBarColor(r, g, b)
