@@ -15,20 +15,17 @@ local function UpdateStatusBarColor(frame, ...)
         frame.healthBar:SetStatusBarColor(GRAY_FONT_COLOR:GetRGB())
     else
         local threat = UnitThreatSituation("player", frame.unit)
-
         if threat == 3 then
-            r, g, b = RED_FONT_COLOR:GetRGB()
+            frame.healthBar:SetStatusBarColor(RED_FONT_COLOR:GetRGB())
         elseif threat == 2 then
-            r, g, b = ORANGE_FONT_COLOR:GetRGB()
+            frame.healthBar:SetStatusBarColor(ORANGE_FONT_COLOR:GetRGB())
         elseif threat == 1 then
-            r, g, b = YELLOW_FONT_COLOR:GetRGB()
+            frame.healthBar:SetStatusBarColor(YELLOW_FONT_COLOR:GetRGB())
         elseif threat ~= nil then
-            r, g, b = GREEN_FONT_COLOR:GetRGB()
+            frame.healthBar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
         else
-            r, g, b = UnitSelectionColor(frame.unit, true)
+            frame.healthBar:SetStatusBarColor(UnitSelectionColor(frame.unit, true))
         end
-
-        frame.healthBar:SetStatusBarColor(r, g, b)
     end
 end
 
