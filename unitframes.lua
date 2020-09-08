@@ -53,7 +53,7 @@ local function TweakTargetFrame(self)
     if (not self.texture) then
         local tex = self:CreateTexture(nil, "BACKGROUND")
         tex:SetTexture("Interface/Addons/MTUI/Media/Frames/TargetingFrameShadow")
-        tex:SetPoint("TOPLEFT", self, "TOPLEFT", -25, 15)
+        tex:SetPoint("TOPLEFT", self, "TOPLEFT", -25, 16)
         tex:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 20, 0)
         self.texture = tex
     end
