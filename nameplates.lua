@@ -54,13 +54,13 @@ function MTUI:InitializePlates()
         end
 
         frame.name:SetVertexColor(1, 1, 1)
-        frame.name:SetFont(UNIT_NAME_FONT, 8, nil)
+        -- frame.name:SetFont(frame.name:GetFont(), 8, nil)
     end)
 
     hooksecurefunc("DefaultCompactNamePlateFrameAnchorInternal", function(frame, ...)
         if not IsNameplate(frame.unit) then return end
 
-        frame.castBar.Text:SetFont(UNIT_NAME_FONT, 6, nil)
+        frame.castBar.Text:SetFont(frame.name:GetFont(), 8, nil)
         frame.healthBar:SetHeight(6)
         frame.healthBar.border:SetScale(0.5)
         frame.selectionHighlight:Hide()
