@@ -60,7 +60,7 @@ function MTUI:InitializePlates()
     hooksecurefunc("DefaultCompactNamePlateFrameAnchorInternal", function(frame, ...)
         if not IsNameplate(frame.unit) then return end
 
-        frame.castBar.Text:SetFont(frame.name:GetFont(), 8, nil)
+        frame.castBar.Text:SetFont(frame.name:GetFont(), 7, nil)
         frame.healthBar:SetHeight(6)
         frame.healthBar.border:SetScale(0.5)
         frame.selectionHighlight:Hide()
