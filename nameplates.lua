@@ -6,13 +6,18 @@ local function IsNameplate(unit)
     return type(unit) == "string" and (string.match(unit, "nameplate") == "nameplate" or string.match(unit, "NamePlate") == "NamePlate")
 end
 
-local function UpdateStatusBarColor(frame, ...)
+-- Duplicate from unitframes?
+local function ColorizeHealthbar(frame, ...)
     if not IsNameplate(frame.unit) then return end
 
-    if UnitReaction(frame.unit, "player") and UnitReaction(frame.unit, "player") > 4 then
-        frame.healthBar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
-    elseif UnitIsTapDenied(frame.unit) and not UnitPlayerControlled(frame.unit) then
+    if UnitIsTapDenied(frame.unit) or not UnitIsConnected(frame.unit) then
         frame.healthBar:SetStatusBarColor(GRAY_FONT_COLOR:GetRGB())
+    elseif UnitIsPlayer(frame.unit) and UnitClass(frame.unit) then
+        local _, class = UnitClass(frame.unit)
+        local c = RAID_CLASS_COLORS[class]
+        frame.healthBar:SetStatusBarColor(c.r, c.g, c.b)
+    elseif UnitReaction(frame.unit, "player") and UnitReaction(frame.unit, "player") > 4 then
+        frame.healthBar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
     else
         local threat = UnitThreatSituation("player", frame.unit)
         if threat == 3 then
@@ -32,8 +37,8 @@ end
 function MTUI:InitializePlates()
     options = self.db.global
 
-    hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", UpdateStatusBarColor)
-    hooksecurefunc("CompactUnitFrame_UpdateHealthColor", UpdateStatusBarColor)
+    hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", ColorizeHealthbar)
+    hooksecurefunc("CompactUnitFrame_UpdateHealthColor", ColorizeHealthbar)
 
     hooksecurefunc("CompactUnitFrame_UpdateName", function(frame, ...)
         if not IsNameplate(frame.unit) then return end

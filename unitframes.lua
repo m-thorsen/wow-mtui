@@ -103,30 +103,20 @@ local function TweakTargetFrame(self)
     end
 end
 
--- local function ApplyClassColors(healthbar, unit)
---     if not UnitExists(unit) then return end
-
---     if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
--- 		local _, class = UnitClass(unit)
---         local c = RAID_CLASS_COLORS[class]
--- 		healthbar:SetStatusBarColor(c.r, c.g, )
--- 	elseif UnitIsPlayer(unit) and (not UnitIsConnected(unit)) then
--- 		healthbar:SetStatusBarColor(GRAY_FONT_COLOR:GetRGB())
--- 	else
--- 		healthbar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
--- 	end
--- end
-
-local function ApplyReactColors(healthbar, unit)
+-- Duplicate from nameplates?
+local function ColorizeHealthbar(healthBar, unit)
     if not UnitExists(unit) then return end
 
-    if UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4 then
-        healthbar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
-    elseif UnitIsTapDenied(unit) and not UnitPlayerControlled(unit) then
-        healthbar:SetStatusBarColor(GRAY_FONT_COLOR:GetRGB())
-    elseif not UnitIsTapDenied(unit) then
-        local r, g, b = UnitSelectionColor(unit)
-        healthbar:SetStatusBarColor(r, g, b)
+    if UnitIsTapDenied(unit) or not UnitIsConnected(unit) then
+        healthBar:SetStatusBarColor(GRAY_FONT_COLOR:GetRGB())
+    elseif UnitIsPlayer(unit) and UnitClass(unit) then
+        local _, class = UnitClass(unit)
+        local c = RAID_CLASS_COLORS[class]
+        healthBar:SetStatusBarColor(c.r, c.g, c.b)
+    elseif UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4 then
+        healthBar:SetStatusBarColor(GREEN_FONT_COLOR:GetRGB())
+    else
+        healthBar:SetStatusBarColor(UnitSelectionColor(unit))
     end
 end
 
@@ -136,8 +126,6 @@ function MTUI:InitializeUnitframes()
     hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame)
     hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame)
     hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame)
-    -- hooksecurefunc("UnitFrameHealthBar_Update", ApplyClassColors)
-    -- hooksecurefunc("HealthBar_OnValueChanged", function(self) ApplyClassColors(self, self.unit) end)
-    hooksecurefunc("UnitFrameHealthBar_Update", ApplyReactColors)
-    hooksecurefunc("HealthBar_OnValueChanged", function(self) ApplyReactColors(self, self.unit) end)
+    hooksecurefunc("UnitFrameHealthBar_Update", ColorizeHealthbar)
+    hooksecurefunc("HealthBar_OnValueChanged", function(self) ColorizeHealthbar(self, self.unit) end)
 end
