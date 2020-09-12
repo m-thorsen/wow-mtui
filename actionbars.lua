@@ -164,7 +164,7 @@ local function SetupTrackingBars(self, bar, barWidth, isTopBar, isDouble)
 
     for _, b in next, { self.SingleBarSmallUpper, self.SingleBarLargeUpper, self.SingleBarSmall, self.SingleBarLarge } do
         b:SetSize(TRACK_WIDTH, TRACK_HEIGHT)
-        b:SetVertexColor(0.7, 0.7, 0.7)
+        b:SetVertexColor(0.9, 0.9, 0.9)
     end
 
     for _, b in next, { self.SingleBarSmallUpper, self.SingleBarLargeUpper } do
