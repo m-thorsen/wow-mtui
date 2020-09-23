@@ -82,21 +82,23 @@ function MTUI:ApplyBarTexture()
 end
 
 function MTUI:ApplyCastingbarTweaks()
-    local CB_HEIGHT = 16
-    local CB_PADDING = 3
-    CastingBarFrame:SetHeight(CB_HEIGHT)
-    CastingBarFrame.Text:SetAllPoints(CastingBarFrame)
-    CastingBarFrame.Text:SetScale(0.9)
+    CastingBarFrame:SetSize(200, 16)
+    CastingBarFrame.Text:SetScale(0.85)
+    CastingBarFrame.Text:SetPoint("TOP", 0, -1)
     CastingBarFrame.Border:Hide()
-    local Backdrop = CreateFrame("FRAME", nil, CastingBarFrame)
-    Backdrop:ClearAllPoints()
-    Backdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -CB_PADDING, CB_PADDING)
-    Backdrop:SetPoint("TOPRIGHT", CastingBarFrame, "TOPRIGHT", CB_PADDING, CB_PADDING)
-    Backdrop:SetHeight(CB_HEIGHT + CB_PADDING * 2)
-    Backdrop:SetBackdrop({
-        edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-        edgeSize = 16,
-    })
+    CastingBarFrame.Flash:SetTexture(nil)
+
+    local LeftBorder = CastingBarFrame:CreateTexture(nil, "ARTWORK")
+    LeftBorder:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -6, 4)
+    LeftBorder:SetSize(106, 24)
+    LeftBorder:SetTexture("Interface/PaperDollInfoFrame/UI-Character-Skills-BarBorder")
+    LeftBorder:SetTexCoord(0, 0.4, 0.2, 0.8)
+
+    local RightBorder = CastingBarFrame:CreateTexture(nil, "ARTWORK")
+    RightBorder:SetPoint("TOPRIGHT", CastingBarFrame, "TOPRIGHT", 6, 4)
+    RightBorder:SetSize(106, 24)
+    RightBorder:SetTexture("Interface/PaperDollInfoFrame/UI-Character-Skills-BarBorder")
+    RightBorder:SetTexCoord(0.4, 0, 0.2, 0.8)
 end
 
 function MTUI:RemoveAnnoyances()
