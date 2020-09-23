@@ -83,8 +83,7 @@ end
 
 function MTUI:ApplyCastingbarTweaks()
     CastingBarFrame:SetSize(200, 16)
-    CastingBarFrame.Text:SetScale(0.85)
-    CastingBarFrame.Text:SetPoint("TOP", 0, -1)
+    CastingBarFrame.Text:SetPoint("TOP")
     CastingBarFrame.Border:Hide()
     CastingBarFrame.Flash:SetTexture(nil)
 
