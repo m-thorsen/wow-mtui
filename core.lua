@@ -1,4 +1,4 @@
-local MTUI = LibStub("AceAddon-3.0"):NewAddon("MTUI", "AceConsole-3.0")
+local MTUI = LibStub("AceAddon-3.0"):NewAddon("MTUI", "AceConsole-3.0");
 
 local defaults = {
     global = {
@@ -17,32 +17,61 @@ local defaults = {
         unitframeOffsetY = 200,
         unitframeOffsetX = 250,
     }
-}
+};
 
 -- Called when the addon is loaded
 function MTUI:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("MTUIDB", defaults, true)
+    self.db = LibStub("AceDB-3.0"):New("MTUIDB", defaults, true);
 
-    LibStub("AceConfig-3.0"):RegisterOptionsTable("MTUI", self:GetOptions())
-    self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MTUI", "MTUI")
-    self:RegisterChatCommand("mtui", "ChatCommand")
+    LibStub("AceConfig-3.0"):RegisterOptionsTable("MTUI", self:GetOptions());
+    self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MTUI", "MTUI");
+    self:RegisterChatCommand("mtui", "ChatCommand");
 
-    if (self.db.global.moveFrames) then self:MoveFrames() end
-    if (self.db.global.enableBars) then self:InitializeBars() end
-    if (self.db.global.enableNameplateTweaks) then self:InitializePlates() end
-    if (self.db.global.enableUnitframes) then self:InitializeUnitframes() end
-    if (self.db.global.smoothBarTexture) then self:ApplyBarTexture() end
-    if (self.db.global.enableCastingbarTweaks) then self:ApplyCastingbarTweaks() end
+    if (self.db.global.moveFrames) then self:MoveFrames() end;
+    if (self.db.global.enableBars) then self:InitializeBars() end;
+    if (self.db.global.enableNameplateTweaks) then self:InitializePlates() end;
+    if (self.db.global.enableUnitframes) then self:InitializeUnitframes() end;
+    if (self.db.global.smoothBarTexture) then self:ApplyBarTexture() end;
+    if (self.db.global.enableCastingbarTweaks) then self:ApplyCastingbarTweaks() end;
 
-    self:RemoveAnnoyances()
-end
+    self:RemoveAnnoyances();
+end;
 
-function MTUI:OnEnable() end
-function MTUI:OnDisable() end
+function MTUI:OnEnable() end;
+function MTUI:OnDisable() end;
 function MTUI:ChatCommand()
-    InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
-    InterfaceOptionsFrame_OpenToCategory(self.optionsFrame) -- Intentionally called twice due to a bliz bug
-end
+    InterfaceOptionsFrame_OpenToCategory(self.optionsFrame);
+    InterfaceOptionsFrame_OpenToCategory(self.optionsFrame); -- Intentionally called twice due to a bliz bug
+end;
+
+function MTUI:GetUnitColor(unit, useThreatColors)
+    if UnitIsTapDenied(unit) or not UnitIsConnected(unit) then
+        return GRAY_FONT_COLOR:GetRGB();
+
+    elseif UnitIsPlayer(unit) and UnitClass(unit) then
+        local _, class = UnitClass(unit);
+        local c = RAID_CLASS_COLORS[class];
+        return c.r, c.g, c.b;
+
+    elseif UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4 then
+        return GREEN_FONT_COLOR:GetRGB();
+
+    elseif (useThreatColors) then
+        threatLevel = UnitThreatSituation("player", unit);
+
+        if threatLevel == 3 then
+            return RED_FONT_COLOR:GetRGB();
+        elseif threatLevel == 2 then
+            return ORANGE_FONT_COLOR:GetRGB();
+        elseif threatLevel == 1 then
+            return YELLOW_FONT_COLOR:GetRGB();
+        elseif threatLevel ~= nil then
+            return GREEN_FONT_COLOR:GetRGB();
+        end;
+    end;
+
+    return UnitSelectionColor(unit, true);
+end;
 
 function MTUI:GetOptions()
     return {
@@ -248,5 +277,5 @@ function MTUI:GetOptions()
                 end,
             }
         },
-    }
-end
+    };
+end;
