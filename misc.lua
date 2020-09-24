@@ -82,9 +82,11 @@ end;
 
 function MTUI:ApplyCastingbarTweaks()
     CastingBarFrame:SetSize(200, 16)
+    CastingBarFrame.Text:SetScale(0.95)
     CastingBarFrame.Text:SetPoint("TOP")
     CastingBarFrame.Border:Hide()
     CastingBarFrame.Flash:SetTexture(nil)
+    CastingBarFrame:SetFrameStrata("TOOLTIP")
 
     local LeftBorder = CastingBarFrame:CreateTexture(nil, "ARTWORK")
     LeftBorder:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -6, 4)
