@@ -19,6 +19,7 @@ function MTUI:MoveFrames()
     moveFrame(UIWidgetTopCenterContainerFrame, "TOP", UIParent, "TOP", 0, -5)
     moveFrame(PlayerPowerBarAlt, "TOP", UIParent, "TOP", 0, -100)
     moveFrame(ObjectiveTrackerFrame, "TOPLEFT", UIParent, "TOPLEFT", 30, -5)
+    moveFrame(CastingBarFrame, "BOTTOM", UIParent, "BOTTOM", 0, 183)
 
     ObjectiveTrackerFrame.HeaderMenu.Title:SetPoint("TOPLEFT", ObjectiveTrackerFrame, "TOPLEFT", -6, -7)
     ObjectiveTrackerFrame.HeaderMenu.Title:SetJustifyH("LEFT")
