@@ -62,9 +62,8 @@ function MTUI:GetUnitColor(unit, useThreatColors)
         elseif threatLevel ~= nil then
             return GREEN_FONT_COLOR:GetRGB();
         end;
-    else
-        return UnitSelectionColor(unit, true);
     end;
+    return UnitSelectionColor(unit, true);
 end;
 
 function MTUI:GetOptions()
