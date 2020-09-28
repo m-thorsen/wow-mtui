@@ -61,20 +61,20 @@ function MTUI:ApplyBarTexture()
 
     PlayerFrame.healthbar.AnimatedLossBar:SetStatusBarTexture(texture);
 
-    hooksecurefunc("UnitFrameManaBar_UpdateType", function(self)
-        self:SetStatusBarTexture(texture);
+    hooksecurefunc("UnitFrameManaBar_UpdateType", function(frame)
+        frame:SetStatusBarTexture(texture);
         if PlayerFrameAlternateManaBar then
             PlayerFrameAlternateManaBar:SetStatusBarTexture(texture);
         end;
 
         -- Skin power bars with special textures
-        local powerType, powerToken, altR, altG, altB = UnitPowerType(self.unit);
+        local powerType, powerToken, altR, altG, altB = UnitPowerType(frame.unit);
         local info = PowerBarColor[powerToken];
         if info and info.atlas then
-            self:SetStatusBarColor(info.r, info.g, info.b);
-            if self.FeedbackFrame then
-                self.FeedbackFrame.BarTexture:SetTexture(texture);
-                self.FeedbackFrame.BarTexture:SetVertexColor(info.r, info.g, info.b);
+            frame:SetStatusBarColor(info.r, info.g, info.b);
+            if frame.FeedbackFrame then
+                frame.FeedbackFrame.BarTexture:SetTexture(texture);
+                frame.FeedbackFrame.BarTexture:SetVertexColor(info.r, info.g, info.b);
             end;
         end;
     end);

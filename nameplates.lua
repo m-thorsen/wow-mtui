@@ -23,15 +23,18 @@ local function SetNameplateTexture(frame, ...)
         end;
     end;
 
+    frame.name:SetFont(frame.name:GetFont(), 8, nil);
     frame.name:SetVertexColor(1, 1, 1);
 end;
 
 local function SetNameplateSize(frame, ...)
     if not IsNameplate(frame.unit) then return end;
 
+    frame.name:SetPoint("BOTTOM", frame.healthBar, "TOP", 0, 2);
     frame.castBar.Text:SetFont(frame.name:GetFont(), 7, nil);
-    frame.healthBar:SetHeight(6);
+    frame.healthBar:SetHeight(7);
     frame.healthBar.border:SetScale(0.5);
+    frame.healthBar.border:SetAlpha(1);
     frame.selectionHighlight:Hide();
 end;
 

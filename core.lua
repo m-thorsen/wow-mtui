@@ -9,6 +9,7 @@ local defaults = {
         enableCastingbarTweaks = true,
         barTexture = "Interface/Addons/MTUI/Media/Textures/default-zoomed-darker",
         namePlateTexture = "Interface/Addons/MTUI/Media/Textures/flatter-zoomed-darker",
+        -- namePlateTexture = "Interface/Addons/MTUI/Media/Textures/raidbar",
         smoothBarTexture = true,
         actionbarScale = 1,
         actionbarRightOffsetY = 0,
