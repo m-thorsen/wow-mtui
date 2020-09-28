@@ -9,6 +9,12 @@ local function ApplyCommonFrameTweaks(frame)
     frame.healthbar.TextString:SetPoint("CENTER", frame.healthbar, "CENTER", 0, 0);
 end;
 
+local function SetHealthbarColor(bar)
+    if UnitExists(bar.unit) then
+        bar:SetStatusBarColor(MTUI:GetUnitColor(bar.unit));
+    end;
+end;
+
 local function TweakPlayerFrame(frame)
     PlayerFrameTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame");
     PlayerStatusTexture:SetTexture("Interface/Addons/MTUI/Media/Player-Status");
@@ -45,9 +51,7 @@ end
 
 local function TweakTargetFrame(frame)
     local type = UnitClassification(frame.unit);
-
     frame.nameBackground:Hide();
-
     if (not frame.texture) then
         local tex = frame:CreateTexture(nil, "BACKGROUND");
         tex:SetTexture("Interface/Addons/MTUI/Media/Frames/TargetingFrameShadow");
@@ -55,15 +59,12 @@ local function TweakTargetFrame(frame)
         tex:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 20, 0);
         frame.texture = tex;
     end
-
     ApplyCommonFrameTweaks(frame);
-
     frame.threatNumericIndicator:SetPoint("BOTTOM", PlayerFrame, "TOP", 72, -21);
     frame.deadText:SetPoint("CENTER", frame.healthbar, "CENTER", 0, 0);
     frame.deadText:SetTextColor(0.5, 0.5, 0.5);
     frame.healthbar:ClearAllPoints();
     frame.Background:SetPoint("TOP", frame.healthbar, "TOP", 0, 0);
-
     if (type == "minus") then
         frame.texture:Hide();
         frame.name:SetPoint("LEFT", frame, 16, 17);
@@ -97,12 +98,6 @@ local function TweakTargetFrame(frame)
             frame.threatIndicator:SetHeight(93);
             frame.threatIndicator:SetPoint("TOPLEFT", frame, "TOPLEFT", -24, 0);
         end;
-    end;
-end;
-
-local function SetHealthbarColor(bar)
-    if UnitExists(bar.unit) then
-        bar:SetStatusBarColor(MTUI:GetUnitColor(bar.unit));
     end;
 end;
 

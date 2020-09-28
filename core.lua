@@ -9,7 +9,6 @@ local defaults = {
         enableCastingbarTweaks = true,
         barTexture = "Interface/Addons/MTUI/Media/Textures/default-zoomed-darker",
         namePlateTexture = "Interface/Addons/MTUI/Media/Textures/flatter-zoomed-darker",
-        -- namePlateTexture = "Interface/Addons/MTUI/Media/Textures/raidbar",
         smoothBarTexture = true,
         actionbarScale = 1,
         actionbarRightOffsetY = 0,
@@ -23,19 +22,16 @@ local defaults = {
 -- Called when the addon is loaded
 function MTUI:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("MTUIDB", defaults, true);
-
     LibStub("AceConfig-3.0"):RegisterOptionsTable("MTUI", self:GetOptions());
     self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MTUI", "MTUI");
     self:RegisterChatCommand("mtui", "ChatCommand");
-
+    self:RemoveAnnoyances();
     if (self.db.global.moveFrames) then self:MoveFrames() end;
     if (self.db.global.enableBars) then self:InitializeBars() end;
     if (self.db.global.enableNameplateTweaks) then self:InitializePlates() end;
     if (self.db.global.enableUnitframes) then self:InitializeUnitframes() end;
     if (self.db.global.smoothBarTexture) then self:ApplyBarTexture() end;
     if (self.db.global.enableCastingbarTweaks) then self:ApplyCastingbarTweaks() end;
-
-    self:RemoveAnnoyances();
 end;
 
 function MTUI:OnEnable() end;
@@ -45,21 +41,18 @@ function MTUI:ChatCommand()
     InterfaceOptionsFrame_OpenToCategory(self.optionsFrame); -- Intentionally called twice due to a bliz bug
 end;
 
+-- Return an appropriate unit color based on class (or threat situation)
 function MTUI:GetUnitColor(unit, useThreatColors)
     if UnitIsTapDenied(unit) or not UnitIsConnected(unit) then
         return GRAY_FONT_COLOR:GetRGB();
-
     elseif UnitIsPlayer(unit) and UnitClass(unit) then
         local _, class = UnitClass(unit);
         local c = RAID_CLASS_COLORS[class];
         return c.r, c.g, c.b;
-
     elseif UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4 then
         return GREEN_FONT_COLOR:GetRGB();
-
     elseif (useThreatColors) then
         threatLevel = UnitThreatSituation("player", unit);
-
         if threatLevel == 3 then
             return RED_FONT_COLOR:GetRGB();
         elseif threatLevel == 2 then
@@ -69,9 +62,9 @@ function MTUI:GetUnitColor(unit, useThreatColors)
         elseif threatLevel ~= nil then
             return GREEN_FONT_COLOR:GetRGB();
         end;
+    else
+        return UnitSelectionColor(unit, true);
     end;
-
-    return UnitSelectionColor(unit, true);
 end;
 
 function MTUI:GetOptions()

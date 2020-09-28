@@ -217,7 +217,7 @@ function MTUI:InitializeBars(triggerListeners)
     SpellBookFrame:HookScript("OnShow", ToggleUnstyledButtonsGrid);
     SpellBookFrame:HookScript("OnHide", ToggleUnstyledButtonsGrid);
 
-    -- Fire listeners once to make sure we apply the layout
+    -- Fire some events once to make sure we apply the layout
     LayoutActionbars();
     StatusTrackingBarManager:UpdateBarsShown();
 end;
