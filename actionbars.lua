@@ -83,7 +83,7 @@ local function ToggleUnstyledButtonsGrid()
     local shouldShow = bit.bor((tonumber(SpellBookFrame:IsShown() and 1) or GetCVar("alwaysShowActionBars")));
     for _, btn in next, opts.unstyledBtns do
         btn:SetAttribute("showgrid", shouldShow);
-        ActionButton_ShowGrid(btn, ACTION_BUTTON_SHOW_GRID_REASON_EVENT);
+        btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_EVENT);
     end;
 end;
 
