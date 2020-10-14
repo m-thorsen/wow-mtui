@@ -1,7 +1,7 @@
-## Interface: 80200
+## Interface: 90001
 ## Title: MTUI
-## Version: 8.2.0
-## Author: MT
+## Version: 9.0.1
+## Author: m-thorsen
 ## SavedVariables: MTUIDB
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3
