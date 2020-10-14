@@ -200,7 +200,7 @@ local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
     bar.StatusBar:ClearAllPoints();
     bar.StatusBar:SetSize(opts.trackingbarWidth, opts.trackingbarHeight);
 
-    if (MTUI.db.global.smoothBarTexture) then
+    if (MTUI.db.global.enableStatusbars) then
         bar.StatusBar:SetStatusBarTexture(MTUI.db.global.statusbarTexture);
     end;
 

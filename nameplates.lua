@@ -13,7 +13,7 @@ end;
 local function SetNameplateTexture(frame, ...)
     if not IsNameplate(frame.unit) then return end;
 
-    if MTUI.db.global.smoothBarTexture then
+    if MTUI.db.global.enableStatusbars then
         local texture = MTUI.db.global.nameplateTexture;
         frame.healthBar:SetStatusBarTexture(texture);
         frame.castBar:SetStatusBarTexture(texture);
