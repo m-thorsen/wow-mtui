@@ -8,8 +8,13 @@
 
 embeds.xml
 
-core.lua
+setup.lua
+common.lua
+options.lua
 nameplates.lua
 actionbars.lua
 unitframes.lua
-misc.lua
+moveframes.lua
+statusbars.lua
+castingbar.lua
+annoyances.lua

@@ -4,7 +4,7 @@ local opts = {};
 
 -- Update options
 local function Setup()
-    if InCombatLockdown() then return end;
+    if (InCombatLockdown()) then return end;
 
     opts.btnSize           = 36;
     opts.btnSizeSmall      = 30; -- pet, stance etc
@@ -17,13 +17,20 @@ local function Setup()
 
     -- Some action buttons are untextured as they are normally in front of the main menu artwork
     opts.unstyledBtns      = {};
-    for i = 1, 12 do tinsert(opts.unstyledBtns, _G["ActionButton"..i]) end;
-    for i = 1, 6 do tinsert(opts.unstyledBtns, _G["MultiBarBottomRightButton"..i]) end;
+
+    for i = 1, 12 do
+        tinsert(opts.unstyledBtns, _G["ActionButton"..i]);
+    end;
+
+    for i = 1, 6 do
+        tinsert(opts.unstyledBtns, _G["MultiBarBottomRightButton"..i]);
+    end;
+
     for _, btn in next, opts.unstyledBtns do
         btn.noGrid = nil;
         btn:Show();
         btn.NormalTexture:SetAlpha(0.5);
-        if not btn.floatingBG and not _G[btn:GetName().."FloatingBG"] then
+        if (not btn.floatingBG and not _G[btn:GetName().."FloatingBG"]) then
             btn.floatingBG = btn:CreateTexture();
             btn.floatingBG:SetPoint("TOPLEFT", btn, -15, 15);
             btn.floatingBG:SetPoint("BOTTOMRIGHT", btn, 15, -15);
@@ -38,12 +45,24 @@ local function Setup()
         ActionBarUpButton, ActionBarDownButton, OverrideActionBarEndCapL, OverrideActionBarEndCapR,
         MainMenuBarArtFrame.PageNumber, MainMenuBarArtFrame.LeftEndCap, MainMenuBarArtFrame.RightEndCap,
         MainMenuBarArtFrameBackground, MainMenuBarBackpackButton, MainMenuBarPerformanceBar,
-        MicroButtonAndBagsBar.MicroBagBar
+        MicroButtonAndBagsBar.MicroBagBar,
     } do f:Hide() end;
-    for i = 0, 3 do _G["CharacterBag"..i.."Slot"]:Hide() end;
-    for i = 1, 2 do _G["PossessBackground"..i]:SetTexture(nil) end;
-    for i = 0, 1 do _G["SlidingActionBarTexture"..i]:SetTexture(nil) end;
-    for _, tex in next, { StanceBarLeft, StanceBarMiddle, StanceBarRight } do tex:SetTexture(nil) end;
+
+    for i = 0, 3 do
+        _G["CharacterBag"..i.."Slot"]:Hide();
+    end;
+
+    for i = 1, 2 do
+        _G["PossessBackground"..i]:SetTexture(nil);
+    end;
+
+    for i = 0, 1 do
+        _G["SlidingActionBarTexture"..i]:SetTexture(nil);
+    end;
+
+    for _, tex in next, { StanceBarLeft, StanceBarMiddle, StanceBarRight } do
+        tex:SetTexture(nil);
+    end;
 
     -- Move some frames
     MicroButtonAndBagsBar:SetMovable(true);
@@ -61,7 +80,9 @@ local function Setup()
     for _, bar in next, {
         MainMenuBar, MultiBarLeft, MultiBarRight, StanceBar, PossessBar,
         PetActionBar, MicroButtonAndBagsBar, OverrideActionBar
-    } do bar:SetParent(actionbarFrame) end;
+    } do
+        bar:SetParent(actionbarFrame);
+    end;
 
     -- Set our frame's scale and position
     actionbarFrame:SetScale(MTUI.db.global.actionbarScale);
@@ -73,12 +94,14 @@ local function Setup()
     for _, bar in next, {
         MainMenuBar, PetActionBarFrame, PossessBarFrame, StanceBarFrame,
         MultiBarBottomLeft, MultiBarBottomRight, MultiBarLeft, MultiBarRight
-    } do bar:EnableMouse(false) end;
+    } do
+        bar:EnableMouse(false);
+    end;
 end;
 
 -- Show/hide unstyled buttons' grid when appropriate
 local function ToggleUnstyledButtonsGrid()
-    if InCombatLockdown() then return end;
+    if (InCombatLockdown()) then return end;
 
     local shouldShow = bit.bor((tonumber(SpellBookFrame:IsShown() and 1) or GetCVar("alwaysShowActionBars")));
     for _, btn in next, opts.unstyledBtns do
@@ -89,7 +112,7 @@ end;
 
 -- Position the main action bars and buttons
 local function LayoutActionbars()
-    if InCombatLockdown() then return end;
+    if (InCombatLockdown()) then return end;
 
     local currentY = opts.edgeOffset - 1;
 
@@ -164,7 +187,7 @@ end;
 
 -- Set up xp/ap/rep bars
 local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
-    if opts.trackingbarHeight == 0 then
+    if (opts.trackingbarHeight == 0) then
         return frame:Hide();
     end;
 
@@ -177,11 +200,11 @@ local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
     bar.StatusBar:ClearAllPoints();
     bar.StatusBar:SetSize(opts.trackingbarWidth, opts.trackingbarHeight);
 
-    if MTUI.db.global.smoothBarTexture then
-        bar.StatusBar:SetStatusBarTexture(MTUI.db.global.barTexture);
+    if (MTUI.db.global.smoothBarTexture) then
+        bar.StatusBar:SetStatusBarTexture(MTUI.db.global.statusbarTexture);
     end;
 
-    if isDouble and isTopBar then
+    if (isDouble and isTopBar) then
         bar:SetPoint("TOP", frame, "TOP", 0, 0);
         bar.StatusBar:SetPoint("TOP", frame, "TOP", 0, 0);
     else
@@ -199,7 +222,7 @@ local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
     end;
 
     for _, b in next, { frame.SingleBarSmall, frame.SingleBarLarge } do
-        if isDouble then
+        if (isDouble) then
             b:SetPoint("BOTTOM", frame, "BOTTOM", 0, 0);
         else
             b:Hide();
@@ -207,7 +230,7 @@ local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
     end;
 end;
 
-function MTUI:InitializeBars(triggerListeners)
+function MTUI:InitActionbars(triggerListeners)
     Setup();
 
     hooksecurefunc("UIParent_ManageFramePositions", LayoutActionbars);

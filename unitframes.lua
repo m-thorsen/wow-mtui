@@ -101,7 +101,7 @@ local function TweakTargetFrame(frame)
     end;
 end;
 
-function MTUI:InitializeUnitframes()
+function MTUI:InitUnitframes()
     hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame);
     hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame);
     hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame);

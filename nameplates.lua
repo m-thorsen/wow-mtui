@@ -14,7 +14,7 @@ local function SetNameplateTexture(frame, ...)
     if not IsNameplate(frame.unit) then return end;
 
     if MTUI.db.global.smoothBarTexture then
-        local texture = MTUI.db.global.namePlateTexture;
+        local texture = MTUI.db.global.nameplateTexture;
         frame.healthBar:SetStatusBarTexture(texture);
         frame.castBar:SetStatusBarTexture(texture);
         frame.castBar.Flash:SetTexture(nil);
@@ -38,7 +38,7 @@ local function SetNameplateSize(frame, ...)
     frame.selectionHighlight:Hide();
 end;
 
-function MTUI:InitializePlates()
+function MTUI:InitNameplates()
     hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", SetNameplateColor);
     hooksecurefunc("CompactUnitFrame_UpdateHealthColor", SetNameplateColor);
     hooksecurefunc("CompactUnitFrame_UpdateName", SetNameplateTexture);
