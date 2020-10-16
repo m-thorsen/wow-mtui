@@ -1,9 +1,9 @@
-#### WIP custom ui
+# WIP custom ui
 
-Settings dialog
+#### Settings dialog
 * Type `/mtui` or open Interface/Addons
 
-Modules
+#### Modules
 * Actionbars
   * Adjustable
   * Blizz options apply (shown bars)
