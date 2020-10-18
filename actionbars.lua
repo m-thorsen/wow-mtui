@@ -141,7 +141,6 @@ local function LayoutActionbars()
 
     -- Bottomright multibar
     if (SHOW_MULTI_ACTIONBAR_2) then
-
         if (opts.actionbarStacked) then
             MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", 0, currentY);
             currentY = currentY + opts.btnSpacing + opts.btnSize;
@@ -153,8 +152,8 @@ local function LayoutActionbars()
             MultiBarBottomRightButton7:ClearAllPoints();
             MultiBarBottomRightButton7:SetPoint("BOTTOMLEFT", ActionButton12, "TOPRIGHT", opts.btnSpacing, opts.btnSpacing);
         end;
-
         for i = 2, 12 do
+            -- If we're not stacking bottomright, don't reposition button #7 (first on second row)
             if (opts.actionbarStacked or i ~= 7) then
                 _G["MultiBarBottomRightButton"..i]:ClearAllPoints();
                 _G["MultiBarBottomRightButton"..i]:SetPoint("BOTTOMLEFT", _G["MultiBarBottomRightButton"..i-1], "BOTTOMRIGHT", opts.btnSpacing, 0);
