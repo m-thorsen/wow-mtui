@@ -7,6 +7,7 @@
 * Actionbars
   * Adjustable
   * Blizz options apply (shown bars)
+  * Option to keep Bottom right bar stacked or to the side
 * Unitframes
   * Centered layout
   * Adjustable spacing/distance from bottom
