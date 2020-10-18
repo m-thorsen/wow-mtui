@@ -189,6 +189,20 @@ function MTUI:GetOptions()
                     self:InitActionbars();
                 end,
             },
+            cf = {
+                order = 35,
+                type = "toggle",
+                name = "Stack bottom right actionbar",
+                width = "full",
+                get = function(info)
+                    return self.db.global.actionbarStacked;
+                end,
+                set = function(info, value)
+                    self.db.global.actionbarStacked = value;
+                    self:InitActionbars();
+                end,
+            },
+
             da = {
                 order = 40,
                 type = "header",

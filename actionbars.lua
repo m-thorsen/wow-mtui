@@ -14,6 +14,7 @@ local function Setup()
     opts.trackingbarWidth  = opts.actionbarWidth + 3;
     opts.petbarWidth       = (opts.btnSizeSmall + opts.btnSpacing) * NUM_PET_ACTION_SLOTS - opts.btnSpacing;
     opts.edgeOffset        = opts.btnSpacing - 3;
+    opts.actionbarStacked  = MTUI.db.global.actionbarStacked;
 
     -- Some action buttons are untextured as they are normally in front of the main menu artwork
     opts.unstyledBtns      = {};
@@ -131,13 +132,37 @@ local function LayoutActionbars()
 	    MultiBarBottomLeftButton1:ClearAllPoints();
         MultiBarBottomLeftButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", 0, currentY);
         currentY = currentY + opts.btnSpacing + opts.btnSize;
+    else
+        -- Fix a visual glitch when bottomleft is hidden
+        for i = 1, NUM_STANCE_SLOTS do
+            _G["StanceButton"..i.."NormalTexture2"]:SetSize(opts.btnSizeSmall + 22, opts.btnSizeSmall + 22);
+        end;
     end;
 
     -- Bottomright multibar
     if (SHOW_MULTI_ACTIONBAR_2) then
-        MultiBarBottomRightButton1:ClearAllPoints();
-        MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", 0, currentY);
-        currentY = currentY + opts.btnSpacing + opts.btnSize;
+
+        if (opts.actionbarStacked) then
+            MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", 0, currentY);
+            currentY = currentY + opts.btnSpacing + opts.btnSize;
+        else
+            actionbarFrame:SetWidth(opts.actionbarWidth * 1.5);
+            opts.trackingbarWidth = (opts.actionbarWidth * 1.5) + 4 + (opts.btnSpacing / 2);
+            MultiBarBottomRightButton1:ClearAllPoints();
+            MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", ActionButton12, "BOTTOMRIGHT", opts.btnSpacing, 0);
+            MultiBarBottomRightButton7:ClearAllPoints();
+            MultiBarBottomRightButton7:SetPoint("BOTTOMLEFT", ActionButton12, "TOPRIGHT", opts.btnSpacing, opts.btnSpacing);
+        end;
+
+        for i = 2, 12 do
+            if (opts.actionbarStacked or i ~= 7) then
+                _G["MultiBarBottomRightButton"..i]:ClearAllPoints();
+                _G["MultiBarBottomRightButton"..i]:SetPoint("BOTTOMLEFT", _G["MultiBarBottomRightButton"..i-1], "BOTTOMRIGHT", opts.btnSpacing, 0);
+            end;
+        end;
+    else
+        actionbarFrame:SetWidth(opts.actionbarWidth);
+        opts.trackingbarWidth = opts.actionbarWidth + 4;
     end
 
     -- Others
@@ -160,7 +185,7 @@ local function LayoutActionbars()
     MultiBarLeftButton1:SetPoint("TOPRIGHT", MultiBarRightButton1, "TOPLEFT", -opts.btnSpacing, 0);
 
     -- Set button spacing
-    for _, type in next, { "ActionButton", "MultiBarBottomLeftButton", "MultiBarBottomRightButton" } do
+    for _, type in next, { "ActionButton", "MultiBarBottomLeftButton" } do
         for i = 2, 12 do
             _G[type..i]:ClearAllPoints();
             _G[type..i]:SetPoint("BOTTOMLEFT", _G[type..i-1], "BOTTOMRIGHT", opts.btnSpacing, 0);

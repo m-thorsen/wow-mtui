@@ -2,20 +2,21 @@ local MTUI = LibStub("AceAddon-3.0"):NewAddon("MTUI", "AceConsole-3.0");
 
 local defaults = {
     global = {
-        enableStatusbars = true,
-        enableCastingbar = true,
-        enableMoveFrames = true,
-        enableUnitframes = true,
-        enableNameplates = true,
-        enableActionbars = true,
-        actionbarScale = 1,
+        enableStatusbars      = true,
+        enableCastingbar      = true,
+        enableMoveFrames      = true,
+        enableUnitframes      = true,
+        enableNameplates      = true,
+        enableActionbars      = true,
+        unitframeOffsetY      = 200,
+        unitframeOffsetX      = 250,
+        actionbarScale        = 1,
+        actionbarStacked      = true,
         actionbarRightOffsetY = 0,
-        actionbarBtnSpacing = 1,
-        actionbarTrackHeight = 10,
-        unitframeOffsetY = 200,
-        unitframeOffsetX = 250,
-        statusbarTexture = "Interface/Addons/MTUI/Media/Textures/default-zoomed-darker",
-        nameplateTexture = "Interface/Addons/MTUI/Media/Textures/flatter-zoomed-darker",
+        actionbarBtnSpacing   = 1,
+        actionbarTrackHeight  = 10,
+        statusbarTexture      = "Interface/Addons/MTUI/Media/Textures/default-zoomed-darker",
+        nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/flatter-zoomed-darker",
     }
 };
 
