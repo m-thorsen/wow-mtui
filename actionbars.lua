@@ -115,12 +115,14 @@ end;
 local function LayoutActionbars()
     if (InCombatLockdown()) then return end;
 
-    local currentY = opts.edgeOffset - 1;
+    local currentY = opts.edgeOffset;
 
     -- Tracking bars
-    StatusTrackingBarManager:ClearAllPoints();
-    StatusTrackingBarManager:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -2, currentY);
-    currentY = currentY + opts.btnSpacing + StatusTrackingBarManager:GetHeight() - 2;
+    if (StatusTrackingBarManager:GetNumberVisibleBars() > 0) then
+        StatusTrackingBarManager:ClearAllPoints();
+        StatusTrackingBarManager:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -2, currentY);
+        currentY = currentY + opts.btnSpacing - 2 + StatusTrackingBarManager:GetHeight();
+    end;
 
     -- Main bars
     ActionButton1:ClearAllPoints();
