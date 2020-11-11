@@ -66,7 +66,7 @@ function MTUI:GetOptions()
             af = {
                 order = 15,
                 type = "toggle",
-                name = "Enable custom status bar textures",
+                name = "Smoother bar textures",
                 width = "full",
                 get = function(info)
                     return self.db.global.enableStatusbars;

@@ -15,8 +15,8 @@ local defaults = {
         actionbarRightOffsetY = 0,
         actionbarBtnSpacing   = 1,
         actionbarTrackHeight  = 10,
-        statusbarTexture      = "Interface/Addons/MTUI/Media/Textures/default-zoomed-darker",
-        nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/flatter-zoomed-darker",
+        statusbarTexture      = "Interface/Addons/MTUI/Media/Textures/default",
+        nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/raidbar",
     }
 };
 
