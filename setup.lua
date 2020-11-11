@@ -2,12 +2,13 @@ local MTUI = LibStub("AceAddon-3.0"):NewAddon("MTUI", "AceConsole-3.0");
 
 local defaults = {
     global = {
-        enableStatusbars      = true,
         enableCastingbar      = true,
         enableMoveFrames      = true,
         enableUnitframes      = true,
         enableNameplates      = true,
         enableActionbars      = true,
+        enableStatusbars      = true,
+        enableMinorStatusbars = true,
         unitframeOffsetY      = 200,
         unitframeOffsetX      = 250,
         actionbarScale        = 1,

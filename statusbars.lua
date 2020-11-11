@@ -28,34 +28,36 @@ function MTUI:InitStatusbars()
         end;
     end;
 
-    GameTooltipStatusBar:SetStatusBarTexture(texture);
-    GameTooltipStatusBar:SetHeight(5);
+    if (self.db.global.enableMinorStatusbars) then
+        GameTooltipStatusBar:SetStatusBarTexture(texture);
+        GameTooltipStatusBar:SetHeight(5);
 
-    CastingBarFrame:SetStatusBarTexture(texture);
-    for _, frame in next, { MirrorTimer1, MirrorTimer2, MirrorTimer3 } do
-        _G[frame:GetName().."StatusBar"]:SetStatusBarTexture(texture);
-    end;
-
-    PlayerFrame.healthbar.AnimatedLossBar:SetStatusBarTexture(texture);
-
-    hooksecurefunc("UnitFrameManaBar_UpdateType", function(frame)
-        frame:SetStatusBarTexture(texture);
-
-        if (PlayerFrameAlternateManaBar) then
-            PlayerFrameAlternateManaBar:SetStatusBarTexture(texture);
+        CastingBarFrame:SetStatusBarTexture(texture);
+        for _, frame in next, { MirrorTimer1, MirrorTimer2, MirrorTimer3 } do
+            _G[frame:GetName().."StatusBar"]:SetStatusBarTexture(texture);
         end;
 
-        -- Skin power bars with special textures
-        local powerType, powerToken, altR, altG, altB = UnitPowerType(frame.unit);
-        local info = PowerBarColor[powerToken];
+        PlayerFrame.healthbar.AnimatedLossBar:SetStatusBarTexture(texture);
 
-        if (info and info.atlas) then
-            frame:SetStatusBarColor(info.r, info.g, info.b);
+        hooksecurefunc("UnitFrameManaBar_UpdateType", function(frame)
+            frame:SetStatusBarTexture(texture);
 
-            if (frame.FeedbackFrame) then
-                frame.FeedbackFrame.BarTexture:SetTexture(texture);
-                frame.FeedbackFrame.BarTexture:SetVertexColor(info.r, info.g, info.b);
+            if (PlayerFrameAlternateManaBar) then
+                PlayerFrameAlternateManaBar:SetStatusBarTexture(texture);
             end;
-        end;
+
+            -- Skin power bars with special textures
+            local powerType, powerToken, altR, altG, altB = UnitPowerType(frame.unit);
+            local info = PowerBarColor[powerToken];
+
+            if (info and info.atlas) then
+                frame:SetStatusBarColor(info.r, info.g, info.b);
+
+                if (frame.FeedbackFrame) then
+                    frame.FeedbackFrame.BarTexture:SetTexture(texture);
+                    frame.FeedbackFrame.BarTexture:SetVertexColor(info.r, info.g, info.b);
+                end;
+            end;
+        end);
     end);
 end;
