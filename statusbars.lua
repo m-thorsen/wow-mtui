@@ -59,5 +59,5 @@ function MTUI:InitStatusbars()
                 end;
             end;
         end);
-    end);
+    end;
 end;
