@@ -24,4 +24,9 @@ function MTUI:InitMoveFrames()
     ObjectiveTrackerFrame.HeaderMenu.Title:SetPoint("TOPLEFT", ObjectiveTrackerFrame, "TOPLEFT", -6, -7);
     ObjectiveTrackerFrame.HeaderMenu.Title:SetJustifyH("LEFT");
     ObjectiveTrackerFrame:SetHeight(800);
+
+    local TorghastBuffs = ScenarioBlocksFrame.MawBuffsBlock.Container;
+    moveFrame(TorghastBuffs.List, "TOPLEFT", TorghastBuffs, "TOPRIGHT", 0, 0);
+
+    -- TorghastBuffs:GetPushedTexture():SetTexCoord(1, 0, 0, 1)
 end;
