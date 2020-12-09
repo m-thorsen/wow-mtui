@@ -106,7 +106,7 @@ function MTUI:GetOptions()
                 end,
                 set = function(info, value)
                     self.db.global.unitframeOffsetX = value;
-                    self:MoveFrames();
+                    self:InitMoveFrames();
                 end,
             },
             bc = {
@@ -121,7 +121,7 @@ function MTUI:GetOptions()
                 end,
                 set = function(info, value)
                     self.db.global.unitframeOffsetY = value;
-                    self:MoveFrames();
+                    self:InitMoveFrames();
                 end,
             },
             ca = {
