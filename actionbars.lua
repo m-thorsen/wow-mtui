@@ -269,4 +269,22 @@ function MTUI:InitActionbars(triggerListeners)
     -- Fire some events once to make sure we apply the layout
     LayoutActionbars();
     StatusTrackingBarManager:UpdateBarsShown();
+
+    -- Paging?
+    -- local prevPage = GetActionBarPage();
+    -- actionbarFrame:EnableKeyboard(true);
+    -- actionbarFrame:RegisterEvent('MODIFIER_STATE_CHANGED');
+    -- actionbarFrame:RegisterEvent('ACTIONBAR_PAGE_CHANGED');
+    -- actionbarFrame:SetScript('OnEvent', function(frame, event, mod, val)
+    --     if (event == 'MODIFIER_STATE_CHANGED' and mod == 'LCTRL') then
+    --         if (val == 1) then
+    --             prevPage = GetActionBarPage();
+    --             ChangeActionBarPage(2);
+    --         else
+    --             ChangeActionBarPage(prevPage);
+    --         end;
+    --     else
+    --         return;
+    --     end;
+    -- end);
 end;
