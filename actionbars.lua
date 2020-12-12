@@ -68,7 +68,7 @@ local function Setup()
     -- Move some frames
     MicroButtonAndBagsBar:SetMovable(true);
     MicroButtonAndBagsBar:ClearAllPoints();
-    MicroButtonAndBagsBar:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -(opts.edgeOffset - 6), opts.edgeOffset - 3);
+    MicroButtonAndBagsBar:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -(opts.edgeOffset - 6), opts.edgeOffset - 5);
     MicroButtonAndBagsBar:SetUserPlaced(true);
     MicroButtonAndBagsBar:SetMovable(false);
     MainMenuBar:SetMovable(true);
