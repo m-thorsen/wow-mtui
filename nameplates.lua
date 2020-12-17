@@ -32,7 +32,7 @@ local function SetNameplateSize(frame, ...)
 
     frame.name:SetPoint("BOTTOM", frame.healthBar, "TOP", 0, 2);
     frame.castBar.Text:SetFont(frame.name:GetFont(), 7, nil);
-    frame.healthBar:SetHeight(7);
+    frame.healthBar:SetHeight(6);
     frame.healthBar.border:SetScale(0.5);
     frame.healthBar.border:SetAlpha(1);
     frame.selectionHighlight:Hide();
@@ -42,5 +42,6 @@ function MTUI:InitNameplates()
     hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", SetNameplateColor);
     hooksecurefunc("CompactUnitFrame_UpdateHealthColor", SetNameplateColor);
     hooksecurefunc("CompactUnitFrame_UpdateName", SetNameplateTexture);
+    hooksecurefunc("CompactUnitFrame_UpdateName", SetNameplateSize);
     hooksecurefunc("DefaultCompactNamePlateFrameAnchorInternal", SetNameplateSize);
 end;

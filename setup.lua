@@ -18,6 +18,7 @@ local defaults = {
         actionbarTrackHeight  = 10,
         statusbarTexture      = "Interface/Addons/MTUI/Media/Textures/default",
         nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/raidbar",
+        -- nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/default",
     }
 };
 
