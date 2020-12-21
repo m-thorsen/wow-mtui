@@ -30,11 +30,11 @@ end;
 local function SetNameplateSize(frame, ...)
     if not IsNameplate(frame.unit) then return end;
 
-    -- NamePlateDriverMixin:SetBaseNamePlateSize(128, 64);
+    NamePlateDriverMixin:SetBaseNamePlateSize(130, 50);
     frame.name:SetPoint("BOTTOM", frame.healthBar, "TOP", 0, 2);
     frame.castBar.Text:SetFont(frame.name:GetFont(), 7, nil);
     frame.healthBar:SetHeight(7);
-    frame.selectionHighlight:Hide();
+    frame.selectionHighlight:SetAlpha(0);
 end;
 
 function MTUI:InitNameplates()
