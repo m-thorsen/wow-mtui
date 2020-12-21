@@ -15,7 +15,8 @@ local function Setup()
     opts.petbarWidth       = (opts.btnSizeSmall + opts.btnSpacing) * NUM_PET_ACTION_SLOTS - opts.btnSpacing;
     opts.edgeOffset        = opts.btnSpacing - 3;
     opts.actionbarStacked  = MTUI.db.global.actionbarStacked;
-    opts.actionbarNoStance = MTUI.db.global.actionbarNoStance;
+    opts.actionbarHideMicro = MTUI.db.global.actionbarHideMicro;
+    opts.actionbarHideStance = MTUI.db.global.actionbarHideStance;
 
     -- Some action buttons are untextured as they are normally in front of the main menu artwork
     opts.unstyledBtns      = {};
@@ -67,11 +68,16 @@ local function Setup()
     end;
 
     -- Move some frames
-    MicroButtonAndBagsBar:SetMovable(true);
-    MicroButtonAndBagsBar:ClearAllPoints();
-    MicroButtonAndBagsBar:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -(opts.edgeOffset - 6), opts.edgeOffset - 5);
-    MicroButtonAndBagsBar:SetUserPlaced(true);
-    MicroButtonAndBagsBar:SetMovable(false);
+    if (opts.actionbarHideMicro) then
+        MicroButtonAndBagsBar:Hide();
+    else
+        MicroButtonAndBagsBar:SetMovable(true);
+        MicroButtonAndBagsBar:ClearAllPoints();
+        MicroButtonAndBagsBar:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -(opts.edgeOffset - 6), opts.edgeOffset - 5);
+        MicroButtonAndBagsBar:SetUserPlaced(true);
+        MicroButtonAndBagsBar:SetMovable(false);
+    end;
+
     MainMenuBar:SetMovable(true);
     MainMenuBar:ClearAllPoints();
     MainMenuBar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0);
@@ -189,7 +195,7 @@ local function LayoutActionbars()
         end;
     end;
 
-    if (opts.actionbarNoStance) then
+    if (opts.actionbarHideStance) then
         StanceBarFrame:Hide();
     else
         StanceBarFrame:Show();

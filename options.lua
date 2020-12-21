@@ -208,10 +208,10 @@ function MTUI:GetOptions()
                 name = "Hide stance bar",
                 width = "full",
                 get = function(info)
-                    return self.db.global.actionbarNoStance;
+                    return self.db.global.actionbarHideStance;
                 end,
                 set = function(info, value)
-                    self.db.global.actionbarNoStance = value;
+                    self.db.global.actionbarHideStance = value;
                     self:InitActionbars();
                 end,
             },
