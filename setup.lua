@@ -16,6 +16,7 @@ local defaults = {
         actionbarRightOffsetY = 0,
         actionbarBtnSpacing   = 1,
         actionbarTrackHeight  = 10,
+        actionbarNoStance     = false,
         statusbarTexture      = "Interface/Addons/MTUI/Media/Textures/default",
         nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/raidbar",
         -- nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/default",

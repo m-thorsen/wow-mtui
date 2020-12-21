@@ -15,6 +15,7 @@ local function Setup()
     opts.petbarWidth       = (opts.btnSizeSmall + opts.btnSpacing) * NUM_PET_ACTION_SLOTS - opts.btnSpacing;
     opts.edgeOffset        = opts.btnSpacing - 3;
     opts.actionbarStacked  = MTUI.db.global.actionbarStacked;
+    opts.actionbarNoStance = MTUI.db.global.actionbarNoStance;
 
     -- Some action buttons are untextured as they are normally in front of the main menu artwork
     opts.unstyledBtns      = {};
@@ -79,8 +80,8 @@ local function Setup()
 
     -- Attach some frames to our frame so they can be scaled together
     for _, bar in next, {
-        MainMenuBar, MultiBarLeft, MultiBarRight, StanceBar, PossessBar,
-        PetActionBar, MicroButtonAndBagsBar, OverrideActionBar
+        MainMenuBar, MultiBarLeft, MultiBarRight, StanceBarFrame, PossessBarFrame,
+        PetActionBarFrame, MicroButtonAndBagsBar, OverrideActionBar
     } do
         bar:SetParent(actionbarFrame);
     end;
@@ -93,8 +94,8 @@ local function Setup()
 
     -- Disable some mouse events to avoid conflicts
     for _, bar in next, {
-        MainMenuBar, PetActionBarFrame, PossessBarFrame, StanceBarFrame,
-        MultiBarBottomLeft, MultiBarBottomRight, MultiBarLeft, MultiBarRight
+        MainMenuBar, MultiBarLeft, MultiBarRight, StanceBarFrame, PossessBarFrame,
+        PetActionBarFrame, MultiBarBottomLeft, MultiBarBottomRight,
     } do
         bar:EnableMouse(false);
     end;
@@ -166,18 +167,6 @@ local function LayoutActionbars()
         opts.trackingbarWidth = opts.actionbarWidth + 4;
     end
 
-    -- Others
-    ExtraActionButton1:ClearAllPoints();
-	ExtraActionButton1:SetPoint("BOTTOM", actionbarFrame, 0, 200);
-    MainMenuBarVehicleLeaveButton:ClearAllPoints();
-    MainMenuBarVehicleLeaveButton:SetPoint("BOTTOMRIGHT", actionbarFrame, "BOTTOMRIGHT", 1, currentY);
-    PetActionButton1:ClearAllPoints();
-	PetActionButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", (opts.actionbarWidth - opts.petbarWidth) / 2, currentY + 1);
-	PossessButton1:ClearAllPoints();
-    PossessButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -1, currentY);
-    StanceButton1:ClearAllPoints();
-    StanceButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -1, currentY);
-
     -- Right bars
     local offsetY = MTUI.db.global.actionbarRightOffsetY;
     MultiBarRightButton1:ClearAllPoints();
@@ -200,15 +189,32 @@ local function LayoutActionbars()
         end;
     end;
 
-    for i = 2, NUM_STANCE_SLOTS do
-        _G["StanceButton"..i]:ClearAllPoints();
-        _G["StanceButton"..i]:SetPoint("BOTTOMLEFT", _G["StanceButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing - 2, 0);
+    if (opts.actionbarNoStance) then
+        StanceBarFrame:Hide();
+    else
+        StanceBarFrame:Show();
+        StanceButton1:ClearAllPoints();
+        StanceButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -1, currentY);
+        for i = 2, NUM_STANCE_SLOTS do
+            _G["StanceButton"..i]:ClearAllPoints();
+            _G["StanceButton"..i]:SetPoint("BOTTOMLEFT", _G["StanceButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing - 2, 0);
+        end;
     end;
 
+    PetActionButton1:ClearAllPoints();
+	PetActionButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", (opts.actionbarWidth - opts.petbarWidth) / 2, currentY + 1);
     for i = 2, NUM_PET_ACTION_SLOTS do
         _G["PetActionButton"..i]:ClearAllPoints();
         _G["PetActionButton"..i]:SetPoint("BOTTOMLEFT", _G["PetActionButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing, 0);
     end;
+
+    -- Others
+    ExtraActionButton1:ClearAllPoints();
+	ExtraActionButton1:SetPoint("BOTTOM", actionbarFrame, 0, 200);
+    MainMenuBarVehicleLeaveButton:ClearAllPoints();
+    MainMenuBarVehicleLeaveButton:SetPoint("BOTTOMRIGHT", actionbarFrame, "BOTTOMRIGHT", 1, currentY);
+	PossessButton1:ClearAllPoints();
+    PossessButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -1, currentY);
 end;
 
 -- Set up xp/ap/rep bars

@@ -202,7 +202,19 @@ function MTUI:GetOptions()
                     self:InitActionbars();
                 end,
             },
-
+            cg = {
+                order = 36,
+                type = "toggle",
+                name = "Hide stance bar",
+                width = "full",
+                get = function(info)
+                    return self.db.global.actionbarNoStance;
+                end,
+                set = function(info, value)
+                    self.db.global.actionbarNoStance = value;
+                    self:InitActionbars();
+                end,
+            },
             da = {
                 order = 40,
                 type = "header",
