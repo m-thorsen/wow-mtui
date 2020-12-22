@@ -82,10 +82,10 @@ function MTUI:GetOptions()
                 name = "Castingbar border",
                 width = "full",
                 get = function(info)
-                    return self.db.global.enableCastingbarTweaks;
+                    return self.db.global.enableCastingbar;
                 end,
                 set = function(info, value)
-                    self.db.global.enableCastingbarTweaks = value;
+                    self.db.global.enableCastingbar = value;
                     ReloadUI();
                 end,
             },
