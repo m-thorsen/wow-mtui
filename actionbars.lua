@@ -105,6 +105,12 @@ local function Setup()
     } do
         bar:EnableMouse(false);
     end;
+
+    if (opts.actionbarHideStance) then
+        StanceBarFrame:SetAlpha(0);
+    else
+        StanceBarFrame:SetAlpha(1);
+    end;
 end;
 
 -- Show/hide unstyled buttons' grid when appropriate
@@ -195,16 +201,11 @@ local function LayoutActionbars()
         end;
     end;
 
-    if (opts.actionbarHideStance) then
-        StanceBarFrame:Hide();
-    else
-        StanceBarFrame:Show();
-        StanceButton1:ClearAllPoints();
-        StanceButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -1, currentY);
-        for i = 2, NUM_STANCE_SLOTS do
-            _G["StanceButton"..i]:ClearAllPoints();
-            _G["StanceButton"..i]:SetPoint("BOTTOMLEFT", _G["StanceButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing - 2, 0);
-        end;
+    StanceButton1:ClearAllPoints();
+    StanceButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -1, currentY);
+    for i = 2, NUM_STANCE_SLOTS do
+        _G["StanceButton"..i]:ClearAllPoints();
+        _G["StanceButton"..i]:SetPoint("BOTTOMLEFT", _G["StanceButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing - 2, 0);
     end;
 
     PetActionButton1:ClearAllPoints();
