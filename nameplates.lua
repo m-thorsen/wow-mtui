@@ -5,14 +5,12 @@ local function IsNameplate(unit)
 end;
 
 local function SetNameplateColor(frame)
-    if IsNameplate(frame.unit) then
-        frame.healthBar:SetStatusBarColor(MTUI:GetUnitColor(frame.unit, true));
-    end;
+    if not IsNameplate(frame.unit) then return end;
+
+    frame.healthBar:SetStatusBarColor(MTUI:GetUnitColor(frame.unit, true));
 end;
 
 local function SetNameplateTexture(frame, ...)
-    if not IsNameplate(frame.unit) then return end;
-
     if MTUI.db.global.enableStatusbars then
         local texture = MTUI.db.global.nameplateTexture;
         frame.healthBar:SetStatusBarTexture(texture);
@@ -30,10 +28,9 @@ end;
 local function SetNameplateSize(frame, ...)
     if not IsNameplate(frame.unit) then return end;
 
-    NamePlateDriverMixin:SetBaseNamePlateSize(130, 50);
     frame.name:SetPoint("BOTTOM", frame.healthBar, "TOP", 0, 2);
     frame.castBar.Text:SetFont(frame.name:GetFont(), 7, nil);
-    frame.healthBar:SetHeight(7);
+    frame.healthBar:SetHeight(6);
     frame.selectionHighlight:SetAlpha(0);
 end;
 
