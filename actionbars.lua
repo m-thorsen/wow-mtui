@@ -239,10 +239,6 @@ local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
     bar.StatusBar:ClearAllPoints();
     bar.StatusBar:SetSize(opts.trackingbarWidth, opts.trackingbarHeight);
 
-    if (MTUI.db.global.enableStatusbars) then
-        bar.StatusBar:SetStatusBarTexture(MTUI.db.global.statusbarTexture);
-    end;
-
     if (isDouble and isTopBar) then
         bar:SetPoint("TOP", frame, "TOP", 0, 0);
         bar.StatusBar:SetPoint("TOP", frame, "TOP", 0, 0);

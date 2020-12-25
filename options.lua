@@ -63,19 +63,19 @@ function MTUI:GetOptions()
                     ReloadUI();
                 end,
             },
-            af = {
-                order = 15,
-                type = "toggle",
-                name = "Smoother bar textures",
-                width = "full",
-                get = function(info)
-                    return self.db.global.enableStatusbars;
-                end,
-                set = function(info, value)
-                    self.db.global.enableStatusbars = value;
-                    ReloadUI();
-                end,
-            },
+            -- af = {
+            --     order = 15,
+            --     type = "toggle",
+            --     name = "Smoother bar textures",
+            --     width = "full",
+            --     get = function(info)
+            --         return self.db.global.enableStatusbars;
+            --     end,
+            --     set = function(info, value)
+            --         self.db.global.enableStatusbars = value;
+            --         ReloadUI();
+            --     end,
+            -- },
             ag = {
                 order = 16,
                 type = "toggle",
