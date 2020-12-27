@@ -31,9 +31,6 @@ local function SetNameplateSize(frame, ...)
     frame.UnitFrame.castBar.Text:SetFont(frame.UnitFrame.name:GetFont(), 7, nil);
     frame.UnitFrame.healthBar:SetHeight(6);
     frame.UnitFrame.selectionHighlight:SetAlpha(0);
-end;
-
-local function SetNameplateOffsets(frame, ...)
     frame.UnitFrame.BuffFrame:SetBaseYOffset(-5);
     frame.UnitFrame.BuffFrame:SetTargetYOffset(-5);
 end;
@@ -42,6 +39,6 @@ function MTUI:InitNameplates()
     hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", SetNameplateColor);
     hooksecurefunc("CompactUnitFrame_UpdateHealthColor", SetNameplateColor);
     hooksecurefunc("CompactUnitFrame_UpdateName", SetNameplateTexture);
-    hooksecurefunc(NamePlateBaseMixin, "ApplyOffsets", SetNameplateOffsets);
+    hooksecurefunc(NamePlateBaseMixin, "ApplyOffsets", SetNameplateSize);
     hooksecurefunc(NamePlateBaseMixin, "OnSizeChanged", SetNameplateSize);
 end;
