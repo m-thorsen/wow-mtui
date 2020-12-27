@@ -24,7 +24,7 @@ local function cleanupMinimap()
     MinimapBorderTop:Hide();
     MiniMapWorldMapButton:Hide();
 
-    moveFrame(MinimapCluster, "TOPRIGHT", UIParent, "TOPRIGHT", -10, 13);
+    moveFrame(MinimapCluster, "TOPRIGHT", UIParent, "TOPRIGHT", -5, 15);
     moveFrame(BuffFrame, "TOPRIGHT", MinimapCluster, "TOPLEFT", -10, -25);
     BuffFrame.ClearAllPoints = function() end;
     BuffFrame.SetPoint = function() end;

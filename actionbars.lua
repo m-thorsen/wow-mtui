@@ -19,16 +19,9 @@ local function Setup()
     opts.actionbarHideStance = MTUI.db.global.actionbarHideStance;
 
     -- Some action buttons are untextured as they are normally in front of the main menu artwork
-    opts.unstyledBtns      = {};
-
-    for i = 1, 12 do
-        tinsert(opts.unstyledBtns, _G["ActionButton"..i]);
-    end;
-
-    for i = 1, 6 do
-        tinsert(opts.unstyledBtns, _G["MultiBarBottomRightButton"..i]);
-    end;
-
+    opts.unstyledBtns = {};
+    for i = 1, 12 do tinsert(opts.unstyledBtns, _G["ActionButton"..i]) end;
+    for i = 1, 6 do tinsert(opts.unstyledBtns, _G["MultiBarBottomRightButton"..i]) end;
     for _, btn in next, opts.unstyledBtns do
         btn.noGrid = nil;
         btn:Show();
@@ -50,22 +43,10 @@ local function Setup()
         MainMenuBarArtFrameBackground, MainMenuBarBackpackButton, MainMenuBarPerformanceBar,
         MicroButtonAndBagsBar.MicroBagBar,
     } do f:Hide() end;
-
-    for i = 0, 3 do
-        _G["CharacterBag"..i.."Slot"]:Hide();
-    end;
-
-    for i = 1, 2 do
-        _G["PossessBackground"..i]:SetTexture(nil);
-    end;
-
-    for i = 0, 1 do
-        _G["SlidingActionBarTexture"..i]:SetTexture(nil);
-    end;
-
-    for _, tex in next, { StanceBarLeft, StanceBarMiddle, StanceBarRight } do
-        tex:SetTexture(nil);
-    end;
+    for i = 0, 3 do _G["CharacterBag"..i.."Slot"]:Hide() end;
+    for i = 1, 2 do _G["PossessBackground"..i]:SetTexture(nil) end;
+    for i = 0, 1 do _G["SlidingActionBarTexture"..i]:SetTexture(nil) end;
+    for _, tex in next, { StanceBarLeft, StanceBarMiddle, StanceBarRight } do tex:SetTexture(nil) end;
 
     -- Move some frames
     if (opts.actionbarHideMicro) then
@@ -77,12 +58,6 @@ local function Setup()
         MicroButtonAndBagsBar:SetUserPlaced(true);
         MicroButtonAndBagsBar:SetMovable(false);
     end;
-
-    MainMenuBar:SetMovable(true);
-    MainMenuBar:ClearAllPoints();
-    MainMenuBar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0);
-    MainMenuBar:SetUserPlaced(true);
-    MainMenuBar:SetMovable(false);
 
     -- Attach some frames to our frame so they can be scaled together
     for _, bar in next, {
