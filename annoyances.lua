@@ -5,10 +5,11 @@ local annoyingSounds = {
 };
 
 function MTUI:InitAnnoyances()
-    -- Hide annoying alerts
-    function MainMenuMicroButton_AreAlertsEffectivelyEnabled()
-        return false;
-    end;
+    -- Hides annoying alerts
+    function MainMenuMicroButton_AreAlertsEffectivelyEnabled() return false; end;
+    -- Hides tutorial tooltips
+    function HelpTip:AreHelpTipsEnabled() return false; end;
+
 
     -- for _, sound in next, annoyingSounds do
     --     -- MuteSound(sound);
