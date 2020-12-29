@@ -1,5 +1,5 @@
 local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
-local actionbarFrame = CreateFrame("Frame", nil, UIParent);
+local MTUIActionbarFrame = CreateFrame("Frame", "MTUIActionbarFrame", UIParent);
 local opts = {};
 
 -- Update options
@@ -62,21 +62,21 @@ local function Setup()
     -- Attach some frames to our frame so they can be scaled together
     for _, bar in next, {
         MainMenuBar, MultiBarLeft, MultiBarRight, StanceBarFrame, PossessBarFrame,
-        PetActionBarFrame, MicroButtonAndBagsBar, OverrideActionBar
+        PetMTUIActionbarFrame, MicroButtonAndBagsBar, OverrideActionBar
     } do
-        bar:SetParent(actionbarFrame);
+        bar:SetParent(MTUIActionbarFrame);
     end;
 
     -- Set our frame's scale and position
-    actionbarFrame:SetScale(MTUI.db.global.actionbarScale);
-    actionbarFrame:SetPoint("BOTTOM", 0, 0);
-    actionbarFrame:SetSize(opts.actionbarWidth, opts.btnSize);
-    actionbarFrame:Show();
+    MTUIActionbarFrame:SetScale(MTUI.db.global.actionbarScale);
+    MTUIActionbarFrame:SetPoint("BOTTOM", 0, 0);
+    MTUIActionbarFrame:SetSize(opts.actionbarWidth, opts.btnSize);
+    MTUIActionbarFrame:Show();
 
     -- Disable some mouse events to avoid conflicts
     for _, bar in next, {
         MainMenuBar, MultiBarLeft, MultiBarRight, StanceBarFrame, PossessBarFrame,
-        PetActionBarFrame, MultiBarBottomLeft, MultiBarBottomRight,
+        PetMTUIActionbarFrame, MultiBarBottomLeft, MultiBarBottomRight,
     } do
         bar:EnableMouse(false);
     end;
@@ -108,19 +108,19 @@ local function LayoutActionbars()
     -- Tracking bars
     if (StatusTrackingBarManager:GetNumberVisibleBars() > 0) then
         StatusTrackingBarManager:ClearAllPoints();
-        StatusTrackingBarManager:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -2, currentY);
+        StatusTrackingBarManager:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", -2, currentY);
         currentY = currentY + opts.btnSpacing - 2 + StatusTrackingBarManager:GetHeight();
     end;
 
     -- Main bars
     ActionButton1:ClearAllPoints();
-    ActionButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", 0, currentY);
+    ActionButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", 0, currentY);
     currentY = currentY + opts.btnSpacing + opts.btnSize;
 
     -- Bottomleft multibar
     if (SHOW_MULTI_ACTIONBAR_1) then
 	    MultiBarBottomLeftButton1:ClearAllPoints();
-        MultiBarBottomLeftButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", 0, currentY);
+        MultiBarBottomLeftButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", 0, currentY);
         currentY = currentY + opts.btnSpacing + opts.btnSize;
     else
         -- Fix a visual glitch when bottomleft is hidden
@@ -132,10 +132,10 @@ local function LayoutActionbars()
     -- Bottomright multibar
     if (SHOW_MULTI_ACTIONBAR_2) then
         if (opts.actionbarStacked) then
-            MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", 0, currentY);
+            MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", 0, currentY);
             currentY = currentY + opts.btnSpacing + opts.btnSize;
         else
-            actionbarFrame:SetWidth(opts.actionbarWidth * 1.5);
+            MTUIActionbarFrame:SetWidth(opts.actionbarWidth * 1.5);
             opts.trackingbarWidth = (opts.actionbarWidth * 1.5) + 4 + (opts.btnSpacing / 2);
             MultiBarBottomRightButton1:ClearAllPoints();
             MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", ActionButton12, "BOTTOMRIGHT", opts.btnSpacing, 0);
@@ -150,7 +150,7 @@ local function LayoutActionbars()
             end;
         end;
     else
-        actionbarFrame:SetWidth(opts.actionbarWidth);
+        MTUIActionbarFrame:SetWidth(opts.actionbarWidth);
         opts.trackingbarWidth = opts.actionbarWidth + 4;
     end
 
@@ -177,14 +177,14 @@ local function LayoutActionbars()
     end;
 
     StanceButton1:ClearAllPoints();
-    StanceButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -1, currentY);
+    StanceButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", -1, currentY);
     for i = 2, NUM_STANCE_SLOTS do
         _G["StanceButton"..i]:ClearAllPoints();
         _G["StanceButton"..i]:SetPoint("BOTTOMLEFT", _G["StanceButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing - 2, 0);
     end;
 
     PetActionButton1:ClearAllPoints();
-	PetActionButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", (opts.actionbarWidth - opts.petbarWidth) / 2, currentY + 1);
+	PetActionButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", (opts.actionbarWidth - opts.petbarWidth) / 2, currentY + 1);
     for i = 2, NUM_PET_ACTION_SLOTS do
         _G["PetActionButton"..i]:ClearAllPoints();
         _G["PetActionButton"..i]:SetPoint("BOTTOMLEFT", _G["PetActionButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing, 0);
@@ -192,11 +192,11 @@ local function LayoutActionbars()
 
     -- Others
     ExtraActionButton1:ClearAllPoints();
-	ExtraActionButton1:SetPoint("BOTTOM", actionbarFrame, 0, 200);
+	ExtraActionButton1:SetPoint("BOTTOM", MTUIActionbarFrame, 0, 200);
     MainMenuBarVehicleLeaveButton:ClearAllPoints();
-    MainMenuBarVehicleLeaveButton:SetPoint("BOTTOMRIGHT", actionbarFrame, "BOTTOMRIGHT", 1, currentY);
+    MainMenuBarVehicleLeaveButton:SetPoint("BOTTOMRIGHT", MTUIActionbarFrame, "BOTTOMRIGHT", 1, currentY);
 	PossessButton1:ClearAllPoints();
-    PossessButton1:SetPoint("BOTTOMLEFT", actionbarFrame, "BOTTOMLEFT", -1, currentY);
+    PossessButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", -1, currentY);
 end;
 
 -- Set up xp/ap/rep bars
@@ -256,10 +256,10 @@ function MTUI:InitActionbars(triggerListeners)
 
     -- Paging?
     -- local prevPage = GetActionBarPage();
-    -- actionbarFrame:EnableKeyboard(true);
-    -- actionbarFrame:RegisterEvent('MODIFIER_STATE_CHANGED');
-    -- actionbarFrame:RegisterEvent('ACTIONBAR_PAGE_CHANGED');
-    -- actionbarFrame:SetScript('OnEvent', function(frame, event, mod, val)
+    -- MTUIActionbarFrame:EnableKeyboard(true);
+    -- MTUIActionbarFrame:RegisterEvent('MODIFIER_STATE_CHANGED');
+    -- MTUIActionbarFrame:RegisterEvent('ACTIONBAR_PAGE_CHANGED');
+    -- MTUIActionbarFrame:SetScript('OnEvent', function(frame, event, mod, val)
     --     if (event == 'MODIFIER_STATE_CHANGED' and mod == 'LCTRL') then
     --         if (val == 1) then
     --             prevPage = GetActionBarPage();

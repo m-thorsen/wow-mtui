@@ -44,7 +44,7 @@ end;
 
 function MTUI:InitMoveFrames()
     moveObjectiveTracker();
-    cleanupMinimap();
+    -- cleanupMinimap();
     moveUnitFrames();
     moveFrame(UIWidgetTopCenterContainerFrame, "TOP", UIParent, "TOP", 0, -5);
 end;
