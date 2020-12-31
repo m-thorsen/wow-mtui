@@ -9,7 +9,7 @@ function MTUI:GetOptions()
             aa = {
                 order = 10,
                 type = "header",
-                name = "Enable/disable modules (triggers UI reload)",
+                name = "Enable/disable modules (requires UI reload to take effect)",
             },
             ab = {
                 order = 11,
@@ -21,7 +21,6 @@ function MTUI:GetOptions()
                 end,
                 set = function(info, value)
                     self.db.global.enableActionbars = value;
-                    ReloadUI()
                 end,
             },
             ac = {
@@ -34,7 +33,6 @@ function MTUI:GetOptions()
                 end,
                 set = function(info, value)
                     self.db.global.enableMoveFrames = value;
-                    ReloadUI();
                 end,
             },
             ad = {
@@ -47,20 +45,18 @@ function MTUI:GetOptions()
                 end,
                 set = function(info, value)
                     self.db.global.enableUnitframes = value;
-                    ReloadUI();
                 end,
             },
             ae = {
                 order = 14,
                 type = "toggle",
-                name = "Enable customized nameplates",
+                name = "Enable nameplate tweaks",
                 width = "full",
                 get = function(info)
                     return self.db.global.enableNameplates;
                 end,
                 set = function(info, value)
                     self.db.global.enableNameplates = value;
-                    ReloadUI();
                 end,
             },
             -- af = {
@@ -86,6 +82,13 @@ function MTUI:GetOptions()
                 end,
                 set = function(info, value)
                     self.db.global.enableCastingbar = value;
+                end,
+            },
+            ah = {
+                order = 17,
+                type = "execute",
+                name = "Reload UI",
+                func = function()
                     ReloadUI();
                 end,
             },
