@@ -17,7 +17,7 @@ local defaults = {
         actionbarBtnSpacing   = 1,
         actionbarTrackHeight  = 10,
         actionbarHideStance   = false,
-        actionbarHideMicro    = false,
+        actionbarHideMicro    = true,
         statusbarTexture      = "Interface/Addons/MTUI/Media/Textures/default",
         nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/raidbar",
         -- nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/default",
@@ -54,7 +54,7 @@ function MTUI:OnInitialize()
         self:InitCastingbar()
     end;
 
-    self:InitAnnoyances(); -- Not optional!
+    self:InitAutomation(); -- Not optional!
     self:RegisterChatCommand("mtui", "ChatCommand");
 end;
 

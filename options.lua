@@ -218,6 +218,19 @@ function MTUI:GetOptions()
                     self:InitActionbars();
                 end,
             },
+            ch = {
+                order = 37,
+                type = "toggle",
+                name = "Hide micro menu",
+                width = "full",
+                get = function(info)
+                    return self.db.global.actionbarHideMicro;
+                end,
+                set = function(info, value)
+                    self.db.global.actionbarHideMicro = value;
+                    self:InitActionbars();
+                end,
+            },
             da = {
                 order = 40,
                 type = "header",

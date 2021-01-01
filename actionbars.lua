@@ -49,15 +49,11 @@ local function Setup()
     for _, tex in next, { StanceBarLeft, StanceBarMiddle, StanceBarRight } do tex:SetTexture(nil) end;
 
     -- Move some frames
-    if (opts.actionbarHideMicro) then
-        MicroButtonAndBagsBar:Hide();
-    else
-        MicroButtonAndBagsBar:SetMovable(true);
-        MicroButtonAndBagsBar:ClearAllPoints();
-        MicroButtonAndBagsBar:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -(opts.edgeOffset - 6), opts.edgeOffset - 5);
-        MicroButtonAndBagsBar:SetUserPlaced(true);
-        MicroButtonAndBagsBar:SetMovable(false);
-    end;
+    MicroButtonAndBagsBar:SetMovable(true);
+    MicroButtonAndBagsBar:ClearAllPoints();
+    MicroButtonAndBagsBar:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -(opts.edgeOffset - 6), opts.edgeOffset - 5);
+    MicroButtonAndBagsBar:SetUserPlaced(true);
+    MicroButtonAndBagsBar:SetMovable(false);
 
     -- Attach some frames to our frame so they can be scaled together
     for _, bar in next, {
@@ -79,6 +75,14 @@ local function Setup()
         PetMTUIActionbarFrame, MultiBarBottomLeft, MultiBarBottomRight,
     } do
         bar:EnableMouse(false);
+    end;
+
+    if (opts.actionbarHideMicro) then
+        MicroButtonAndBagsBar:SetAlpha(0);
+        MicroButtonAndBagsBar:SetScale(0.0001);
+    else
+        MicroButtonAndBagsBar:SetAlpha(1);
+        MicroButtonAndBagsBar:SetScale(1);
     end;
 
     if (opts.actionbarHideStance) then

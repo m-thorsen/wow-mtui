@@ -9,25 +9,26 @@ local function moveFrame(frame, frameAnchor, parent, parentAnchor, deltaX, delta
 end;
 
 local function moveObjectiveTracker()
-    moveFrame(ObjectiveTrackerFrame, "TOPLEFT", UIParent, "TOPLEFT", 35, -10);
+    -- attach the quest tracker to the minimap to allow broker bars etc to adjust frames
+    moveFrame(ObjectiveTrackerFrame, "TOPLEFT", MinimapCluster, "TOPRIGHT", -(GetScreenWidth() - 30), -5);
     ObjectiveTrackerFrame.HeaderMenu.Title:SetPoint("TOPLEFT", ObjectiveTrackerFrame, "TOPLEFT", -6, -7);
     ObjectiveTrackerFrame.HeaderMenu.Title:SetJustifyH("LEFT");
     ObjectiveTrackerFrame:SetHeight(800);
 
     local TorghastBuffs = ScenarioBlocksFrame.MawBuffsBlock.Container;
     moveFrame(TorghastBuffs.List, "TOPLEFT", TorghastBuffs, "TOPRIGHT", 0, 0);
-    -- TorghastBuffs:GetPushedTexture():SetTexCoord(1, 0, 0, 1)
 end;
 
 local function cleanupMinimap()
-    MinimapZoneTextButton:Hide();
-    MinimapBorderTop:Hide();
-    MiniMapWorldMapButton:Hide();
+    MinimapZoneText:SetWidth(120);
+    -- MinimapZoneTextButton:Hide();
+    -- MinimapBorderTop:Hide();
+    -- MiniMapWorldMapButton:Hide();
 
-    moveFrame(MinimapCluster, "TOPRIGHT", UIParent, "TOPRIGHT", -5, 15);
-    moveFrame(BuffFrame, "TOPRIGHT", MinimapCluster, "TOPLEFT", -10, -25);
-    BuffFrame.ClearAllPoints = function() end;
-    BuffFrame.SetPoint = function() end;
+    -- moveFrame(MinimapCluster, "TOPRIGHT", UIParent, "TOPRIGHT", -5, 15);
+    -- moveFrame(BuffFrame, "TOPRIGHT", MinimapCluster, "TOPLEFT", -10, -25);
+    -- BuffFrame.ClearAllPoints = function() end;
+    -- BuffFrame.SetPoint = function() end;
 end;
 
 local function moveUnitFrames()
@@ -44,7 +45,7 @@ end;
 
 function MTUI:InitMoveFrames()
     moveObjectiveTracker();
-    -- cleanupMinimap();
+    cleanupMinimap();
     moveUnitFrames();
     moveFrame(UIWidgetTopCenterContainerFrame, "TOP", UIParent, "TOP", 0, -5);
 end;

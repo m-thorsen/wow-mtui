@@ -17,4 +17,4 @@ unitframes.lua
 moveframes.lua
 statusbars.lua
 castingbar.lua
-annoyances.lua
+automation.lua
