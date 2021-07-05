@@ -140,7 +140,7 @@ local function LayoutActionbars()
             currentY = currentY + opts.btnSpacing + opts.btnSize;
         else
             MTUIActionbarFrame:SetWidth(opts.actionbarWidth * 1.5);
-            opts.trackingbarWidth = (opts.actionbarWidth * 1.5) + 4 + (opts.btnSpacing / 2);
+            opts.trackingbarWidth = (opts.actionbarWidth * 1.5) + 3 + (opts.btnSpacing / 2);
             MultiBarBottomRightButton1:ClearAllPoints();
             MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", ActionButton12, "BOTTOMRIGHT", opts.btnSpacing, 0);
             MultiBarBottomRightButton7:ClearAllPoints();
@@ -155,7 +155,7 @@ local function LayoutActionbars()
         end;
     else
         MTUIActionbarFrame:SetWidth(opts.actionbarWidth);
-        opts.trackingbarWidth = opts.actionbarWidth + 4;
+        opts.trackingbarWidth = opts.actionbarWidth + 3;
     end
 
     -- Right bars
@@ -228,7 +228,7 @@ local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
 
     for _, b in next, { frame.SingleBarSmallUpper, frame.SingleBarLargeUpper, frame.SingleBarSmall, frame.SingleBarLarge } do
         b:SetSize(opts.trackingbarWidth, opts.trackingbarHeight);
-        b:SetVertexColor(0.9, 0.9, 0.9);
+        b:SetVertexColor(0.6, 0.6, 0.6);
     end;
 
     for _, b in next, { frame.SingleBarSmallUpper, frame.SingleBarLargeUpper } do
