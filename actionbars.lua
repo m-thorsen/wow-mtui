@@ -195,8 +195,8 @@ local function LayoutActionbars()
     end;
 
     -- Others
-    ExtraActionButton1:ClearAllPoints();
-	ExtraActionButton1:SetPoint("BOTTOM", MTUIActionbarFrame, 0, 200);
+    -- ExtraActionButton1:ClearAllPoints();
+	-- ExtraActionButton1:SetPoint("BOTTOM", MTUIActionbarFrame, 0, 200);
     MainMenuBarVehicleLeaveButton:ClearAllPoints();
     MainMenuBarVehicleLeaveButton:SetPoint("BOTTOMRIGHT", MTUIActionbarFrame, "BOTTOMRIGHT", 1, currentY);
 	PossessButton1:ClearAllPoints();
