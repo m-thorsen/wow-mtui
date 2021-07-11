@@ -2,7 +2,7 @@ local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
 
 local function DisableHelpTips()
     -- Hides annoying alerts
-    function MainMenuMicroButton_AreAlertsEffectivelyEnabled() return false; end;
+    -- function MainMenuMicroButton_AreAlertsEffectivelyEnabled() return false; end;
     -- Hides tutorial tooltips
     function HelpTip:AreHelpTipsEnabled() return false; end;
 end;

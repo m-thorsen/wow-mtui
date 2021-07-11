@@ -55,7 +55,7 @@ function MTUI:OnInitialize()
     end;
 
     self:InitAutomation(); -- Not optional!
-    self:RegisterChatCommand("mtui", "ChatCommand");
+    -- self:RegisterChatCommand("mtui", "ChatCommand");
 end;
 
 function MTUI:OnEnable() end;
