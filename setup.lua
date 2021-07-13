@@ -3,17 +3,15 @@ MTUI = {
         offsetY         = 200,
         offsetX         = 250,
     },
-
     actionbars = {
         scale           = 1,
         stacked         = true,
-        rightOffsetY    = 0,
         spacing         = 1,
         trackHeight     = 10,
         hideStance      = false,
         hideMicro       = true,
+        rightOffsetY    = 0,
     },
-
     textures = {
         statusbar       = "Interface/Addons/MTUI/Media/statusbar",
         raidbar         = "Interface/Addons/MTUI/Media/raidbar",
