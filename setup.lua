@@ -25,7 +25,7 @@ MTUIFrame:RegisterEvent("ADDON_LOADED");
 
 MTUIFrame:SetScript("OnEvent", function(a, event , c, d, e, f)
     if (event == "ADDON_LOADED") then
-        HelpTip:HideAllSystem("MicroButtons");
+        function HelpTip:AreHelpTipsEnabled() return false end;
 
         MTUI:InitActionbars();
         MTUI:InitCastingbar();
