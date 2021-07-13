@@ -2,10 +2,35 @@ local function IsNameplate(unit)
     return type(unit) == "string" and (string.match(unit, "nameplate") == "nameplate" or string.match(unit, "NamePlate") == "NamePlate");
 end;
 
+local function GetUnitColor(unit)
+    local threatLevel = UnitThreatSituation("player", unit);
+
+    if (UnitIsTapDenied(unit) or not UnitIsConnected(unit)) then
+        return GRAY_FONT_COLOR:GetRGB();
+    elseif (UnitIsPlayer(unit) and UnitClass(unit)) then
+        local _, class = UnitClass(unit);
+        local c = RAID_CLASS_COLORS[class];
+        return c.r, c.g, c.b;
+    elseif (UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4) then
+        return GREEN_FONT_COLOR:GetRGB();
+    elseif (threatLevel == 3) then
+        return RED_FONT_COLOR:GetRGB();
+    elseif (threatLevel == 2) then
+        return ORANGE_FONT_COLOR:GetRGB();
+    elseif (threatLevel == 1) then
+        return YELLOW_FONT_COLOR:GetRGB();
+    elseif (threatLevel ~= nil) then
+        return GREEN_FONT_COLOR:GetRGB();
+    else
+        return UnitSelectionColor(unit, true);
+    end;
+end;
+
+
 local function SetNameplateColor(frame)
     if not IsNameplate(frame.unit) then return end;
 
-    frame.healthBar:SetStatusBarColor(MTUI:GetUnitColor(frame.unit, true));
+    frame.healthBar:SetStatusBarColor(GetUnitColor(frame.unit));
 end;
 
 local function SetNameplateTexture(frame, ...)

@@ -4,7 +4,6 @@
 ## Author: m-thorsen
 
 setup.lua
-common.lua
 nameplates.lua
 actionbars.lua
 unitframes.lua
