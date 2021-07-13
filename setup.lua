@@ -22,21 +22,19 @@ local MTUIFrame = CreateFrame("Frame", "MTUIFrame", UIParent);
 
 MTUIFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
 MTUIFrame:RegisterEvent("ADDON_LOADED");
-
-MTUIFrame:SetScript("OnEvent", function(a, event , c, d, e, f)
-    if (event == "ADDON_LOADED") then
-        function HelpTip:AreHelpTipsEnabled() return false end;
+MTUIFrame:SetScript("OnEvent", function(frame, event, addonName)
+    if (event == "ADDON_LOADED" and addonName == 'MTUI') then
+        HelpTip:ForceHideAll();
 
         MTUI:InitActionbars();
         MTUI:InitCastingbar();
         MTUI:InitUnitframes();
         MTUI:InitMoveFrames();
-
-    elseif (event == "PLAYER_ENTERING_WORLD") then
         MTUI:InitStatusbars();
         -- MTUI:InitMinorStatusbars():
         -- MTUI:InitNameplates();
 
+    elseif (event == "PLAYER_ENTERING_WORLD") then
         local inInstance, instanceType = IsInInstance();
         if (inInstance) then
             SetCVar("nameplateShowAll", 1);

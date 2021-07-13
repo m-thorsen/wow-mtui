@@ -16,12 +16,22 @@ local function LoadOptions()
     opts.stacked            = MTUI.actionbars.stacked;
     opts.hideMicro          = MTUI.actionbars.hideMicro;
     opts.hideStance         = MTUI.actionbars.hideStance;
+end;
 
-    -- Some action buttons are untextured as they are normally in front of the main menu artwork
-    opts.unstyledBtns = {};
-    for i = 1, 12 do tinsert(opts.unstyledBtns, _G["ActionButton"..i]) end;
-    for i = 1, 6 do tinsert(opts.unstyledBtns, _G["MultiBarBottomRightButton"..i]) end;
-    for _, btn in next, opts.unstyledBtns do
+-- Some action buttons don't have a grid bg, as they are normally in front of the main menu artwork
+-- Add this, and show/hide the grid when appropriate (such as when viewing the spellbook)
+local function SkinUnskinnedBtns()
+    local btns = {};
+
+    for i = 1, 12 do
+        tinsert(btns, _G["ActionButton"..i])
+    end;
+
+    for i = 1, 6 do
+        tinsert(btns, _G["MultiBarBottomRightButton"..i])
+    end;
+
+    for _, btn in next, btns do
         btn.noGrid = nil;
         btn:Show();
         btn.NormalTexture:SetAlpha(0.5);
@@ -34,6 +44,23 @@ local function LoadOptions()
             btn.floatingBG:SetDrawLayer("BACKGROUND", -1);
         end;
     end;
+
+    local function AddBorderToUnskinnedButtons()
+        if (InCombatLockdown()) then return end;
+
+        local shouldShow = bit.bor((tonumber(SpellBookFrame:IsShown() and 1) or GetCVar("alwaysShowActionBars")));
+        for _, btn in next, btns do
+            btn:SetAttribute("showgrid", shouldShow);
+            btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_EVENT);
+        end;
+    end;
+
+    -- AddBorderToUnskinnedButtons();
+    hooksecurefunc("MultiActionBar_UpdateGridVisibility", AddBorderToUnskinnedButtons);
+    hooksecurefunc("SpellButton_OnShow", AddBorderToUnskinnedButtons);
+    hooksecurefunc("SpellButton_OnHide", AddBorderToUnskinnedButtons);
+    -- SpellBookFrame:HookScript("OnShow", AddBorderToUnskinnedButtons);
+    -- SpellBookFrame:HookScript("OnHide", AddBorderToUnskinnedButtons);
 end;
 
 -- Hide some frames/textures
@@ -90,17 +117,6 @@ local function HideFrames()
         StanceBarFrame:SetAlpha(0);
     else
         StanceBarFrame:SetAlpha(1);
-    end;
-end;
-
--- Show/hide unstyled buttons' grid when appropriate
-local function ToggleUnstyledButtonsGrid()
-    if (InCombatLockdown()) then return end;
-
-    local shouldShow = bit.bor((tonumber(SpellBookFrame:IsShown() and 1) or GetCVar("alwaysShowActionBars")));
-    for _, btn in next, opts.unstyledBtns do
-        btn:SetAttribute("showgrid", shouldShow);
-        btn:ShowGrid(ACTION_BUTTON_SHOW_GRID_REASON_EVENT);
     end;
 end;
 
@@ -248,13 +264,11 @@ end;
 function MTUI:InitActionbars()
     LoadOptions();
     HideFrames();
+    SkinUnskinnedBtns();
 
     hooksecurefunc("UIParent_ManageFramePositions", LayoutActionbars);
     hooksecurefunc("OverrideActionBar_Leave", function() ShowPetActionBar(true) end);
     hooksecurefunc(StatusTrackingBarManager, "LayoutBar", LayoutTrackingbars);
-    hooksecurefunc("MultiActionBar_UpdateGridVisibility", ToggleUnstyledButtonsGrid);
-    SpellBookFrame:HookScript("OnShow", ToggleUnstyledButtonsGrid);
-    SpellBookFrame:HookScript("OnHide", ToggleUnstyledButtonsGrid);
 
     -- Fire some events once to make sure we apply the layout
     LayoutActionbars();
