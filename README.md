@@ -1,17 +1,15 @@
 # WIP custom ui
 
-#### Settings dialog
-* Type `/mtui` or open Interface/Addons
-
 #### Modules
 * Actionbars
-  * Adjustable
+  * Adjustable in config file
   * Blizz options apply (shown bars)
   * Option to keep Bottom right bar stacked or to the side
 * Unitframes
   * Centered layout
-  * Adjustable spacing/distance from bottom
-  * Thick healthbars
+  * Adjustable spacing/distance from bottom in config file
+  * Thicker healthbars
+  * Improved healthbar texture
   * Class/threat colors
 * Nameplates 
   * Tweaked for readability 
@@ -24,5 +22,4 @@
 * Misc
   * Remove some artwork
   * Block some annoyances (WIP)
-  * Custom statusbar skins (smoother/slightly flatter than vanilla)
-  * Castingbar skinned like objective tracker bars
+  * Castingbar and mirror timers skinned like objective tracker bars
