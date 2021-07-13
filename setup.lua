@@ -16,6 +16,9 @@ MTUI = {
         statusbar       = "Interface/Addons/MTUI/Media/statusbar",
         raidbar         = "Interface/Addons/MTUI/Media/raidbar",
     },
+    castingbar = {
+        width           = 220,
+    },
 }
 
 local MTUIFrame = CreateFrame("Frame", "MTUIFrame", UIParent);

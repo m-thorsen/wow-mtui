@@ -14,7 +14,7 @@ local function SkinFrame(frame)
         border = frame.Border;
     end
 
-    statusbar:SetSize(250, 15);
+    statusbar:SetSize(MTUI.castingbar.width, 15);
     text:SetSize(statusbar:GetSize());
     text:SetScale(0.9);
     text:SetPoint("TOP", statusbar, "TOP", 0, -1);
