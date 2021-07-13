@@ -30,11 +30,12 @@ MTUIFrame:SetScript("OnEvent", function(frame, event, addonName)
         MTUI:InitCastingbar();
         MTUI:InitUnitframes();
         MTUI:InitMoveFrames();
+
+    elseif (event == "PLAYER_ENTERING_WORLD") then
         MTUI:InitStatusbars();
         -- MTUI:InitMinorStatusbars():
         -- MTUI:InitNameplates();
 
-    elseif (event == "PLAYER_ENTERING_WORLD") then
         local inInstance, instanceType = IsInInstance();
         if (inInstance) then
             SetCVar("nameplateShowAll", 1);
