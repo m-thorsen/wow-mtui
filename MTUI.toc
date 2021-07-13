@@ -1,16 +1,10 @@
-## Interface: 90001
+## Interface: 90100
 ## Title: MTUI
-## Version: 9.0.1
+## Version: 9.1.0
 ## Author: m-thorsen
-## SavedVariables: MTUIDB
-## OptionalDeps: Ace3
-## X-Embeds: Ace3
-
-embeds.xml
 
 setup.lua
 common.lua
-options.lua
 nameplates.lua
 actionbars.lua
 unitframes.lua

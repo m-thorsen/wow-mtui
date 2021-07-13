@@ -1,5 +1,3 @@
-local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
-
 local UnitFrames = {
     PlayerFrame, PlayerFrameManaBar, PlayerFrameAlternateManaBar, PlayerFrameMyHealPredictionBar,
     TargetFrame, TargetFrameToT, FocusFrame, FocusFrameToT, PetFrame,
@@ -13,51 +11,51 @@ local UnitFrameRegions = {
     "manabar", "myManaCostPredictionBar",
 };
 
-function MTUI:InitStatusbars()
-    local texture = self.db.global.statusbarTexture;
+local tex = MTUI.textures.statusbar;
 
+function MTUI:InitStatusbars()
     for _, frame in next, UnitFrames do
         for _, region in next, UnitFrameRegions do
             local bar = frame[region];
 
             if (bar and bar.SetStatusBarTexture) then
-                bar:SetStatusBarTexture(texture);
+                bar:SetStatusBarTexture(tex);
             elseif (bar and bar.SetTexture) then
-                bar:SetTexture(texture);
+                bar:SetTexture(tex);
             end;
         end;
     end;
+end;
 
-    if (self.db.global.enableMinorStatusbars) then
-        GameTooltipStatusBar:SetStatusBarTexture(texture);
-        GameTooltipStatusBar:SetHeight(5);
+function MTUI:InitMinorStatusbars()
+    GameTooltipStatusBar:SetStatusBarTexture(tex);
+    GameTooltipStatusBar:SetHeight(5);
 
-        CastingBarFrame:SetStatusBarTexture(texture);
-        for _, frame in next, { MirrorTimer1, MirrorTimer2, MirrorTimer3 } do
-            _G[frame:GetName().."StatusBar"]:SetStatusBarTexture(texture);
+    CastingBarFrame:SetStatusBarTexture(tex);
+    for _, frame in next, { MirrorTimer1, MirrorTimer2, MirrorTimer3 } do
+        _G[frame:GetName().."StatusBar"]:SetStatusBarTexture(tex);
+    end;
+
+    PlayerFrame.healthbar.AnimatedLossBar:SetStatusBarTexture(tex);
+
+    hooksecurefunc("UnitFrameManaBar_UpdateType", function(frame)
+        frame:SetStatusBarTexture(tex);
+
+        if (PlayerFrameAlternateManaBar) then
+            PlayerFrameAlternateManaBar:SetStatusBarTexture(tex);
         end;
 
-        PlayerFrame.healthbar.AnimatedLossBar:SetStatusBarTexture(texture);
+        -- Skin power bars with special textures
+        local powerType, powerToken, altR, altG, altB = UnitPowerType(frame.unit);
+        local info = PowerBarColor[powerToken];
 
-        hooksecurefunc("UnitFrameManaBar_UpdateType", function(frame)
-            frame:SetStatusBarTexture(texture);
+        if (info and info.atlas) then
+            frame:SetStatusBarColor(info.r, info.g, info.b);
 
-            if (PlayerFrameAlternateManaBar) then
-                PlayerFrameAlternateManaBar:SetStatusBarTexture(texture);
+            if (frame.FeedbackFrame) then
+                frame.FeedbackFrame.BarTexture:SetTexture(tex);
+                frame.FeedbackFrame.BarTexture:SetVertexColor(info.r, info.g, info.b);
             end;
-
-            -- Skin power bars with special textures
-            local powerType, powerToken, altR, altG, altB = UnitPowerType(frame.unit);
-            local info = PowerBarColor[powerToken];
-
-            if (info and info.atlas) then
-                frame:SetStatusBarColor(info.r, info.g, info.b);
-
-                if (frame.FeedbackFrame) then
-                    frame.FeedbackFrame.BarTexture:SetTexture(texture);
-                    frame.FeedbackFrame.BarTexture:SetVertexColor(info.r, info.g, info.b);
-                end;
-            end;
-        end);
-    end;
+        end;
+    end);
 end;

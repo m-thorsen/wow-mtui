@@ -1,5 +1,3 @@
-local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
-
 local function ApplyCommonFrameTweaks(frame)
     frame.name:ClearAllPoints();
     frame.healthbar:ClearAllPoints();
@@ -54,7 +52,7 @@ local function TweakTargetFrame(frame)
     frame.nameBackground:Hide();
     if (not frame.texture) then
         local tex = frame:CreateTexture(nil, "BACKGROUND");
-        tex:SetTexture("Interface/Addons/MTUI/Media/Frames/TargetingFrameShadow");
+        tex:SetTexture("Interface/Addons/MTUI/Media/TargetingFrameShadow");
         tex:SetPoint("TOPLEFT", frame, "TOPLEFT", -25, 16);
         tex:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 20, 0);
         frame.texture = tex;

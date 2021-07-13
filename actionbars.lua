@@ -1,22 +1,21 @@
-local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
 local MTUIActionbarFrame = CreateFrame("Frame", "MTUIActionbarFrame", UIParent);
 local opts = {};
 
 -- Update options
-local function Setup()
+local function LoadOptions()
     if (InCombatLockdown()) then return end;
 
-    opts.btnSize           = 36;
-    opts.btnSizeSmall      = 30; -- pet, stance etc
-    opts.btnSpacing        = MTUI.db.global.actionbarBtnSpacing + 4;
-    opts.actionbarWidth    = (opts.btnSize + opts.btnSpacing) * NUM_MULTIBAR_BUTTONS - opts.btnSpacing;
-    opts.trackingbarHeight = MTUI.db.global.actionbarTrackHeight;
-    opts.trackingbarWidth  = opts.actionbarWidth + 3;
-    opts.petbarWidth       = (opts.btnSizeSmall + opts.btnSpacing) * NUM_PET_ACTION_SLOTS - opts.btnSpacing;
-    opts.edgeOffset        = opts.btnSpacing - 3;
-    opts.actionbarStacked  = MTUI.db.global.actionbarStacked;
-    opts.actionbarHideMicro = MTUI.db.global.actionbarHideMicro;
-    opts.actionbarHideStance = MTUI.db.global.actionbarHideStance;
+    opts.btnSize            = 36;
+    opts.btnSizeSmall       = 30; -- pet, stance etc
+    opts.btnSpacing         = MTUI.actionbars.spacing + 4;
+    opts.actionbarWidth     = (opts.btnSize + opts.btnSpacing) * NUM_MULTIBAR_BUTTONS - opts.btnSpacing;
+    opts.trackingbarHeight  = MTUI.actionbars.trackHeight;
+    opts.trackingbarWidth   = opts.actionbarWidth + 3;
+    opts.petbarWidth        = (opts.btnSizeSmall + opts.btnSpacing) * NUM_PET_ACTION_SLOTS - opts.btnSpacing;
+    opts.edgeOffset         = opts.btnSpacing - 3;
+    opts.stacked            = MTUI.actionbars.stacked;
+    opts.hideMicro          = MTUI.actionbars.hideMicro;
+    opts.hideStance         = MTUI.actionbars.hideStance;
 
     -- Some action buttons are untextured as they are normally in front of the main menu artwork
     opts.unstyledBtns = {};
@@ -35,8 +34,10 @@ local function Setup()
             btn.floatingBG:SetDrawLayer("BACKGROUND", -1);
         end;
     end;
+end;
 
-    -- Hide some frames/textures
+-- Hide some frames/textures
+local function HideFrames()
     for _, f in next, {
         ActionBarUpButton, ActionBarDownButton, OverrideActionBarEndCapL, OverrideActionBarEndCapR,
         MainMenuBarArtFrame.PageNumber, MainMenuBarArtFrame.LeftEndCap, MainMenuBarArtFrame.RightEndCap,
@@ -64,7 +65,7 @@ local function Setup()
     end;
 
     -- Set our frame's scale and position
-    MTUIActionbarFrame:SetScale(MTUI.db.global.actionbarScale);
+    MTUIActionbarFrame:SetScale(MTUI.actionbars.scale);
     MTUIActionbarFrame:SetPoint("BOTTOM", 0, 0);
     MTUIActionbarFrame:SetSize(opts.actionbarWidth, opts.btnSize);
     MTUIActionbarFrame:Show();
@@ -77,7 +78,7 @@ local function Setup()
         bar:EnableMouse(false);
     end;
 
-    if (opts.actionbarHideMicro) then
+    if (opts.hideMicro) then
         MicroButtonAndBagsBar:SetAlpha(0);
         MicroButtonAndBagsBar:SetScale(0.0001);
     else
@@ -85,7 +86,7 @@ local function Setup()
         MicroButtonAndBagsBar:SetScale(1);
     end;
 
-    if (opts.actionbarHideStance) then
+    if (opts.hideStance) then
         StanceBarFrame:SetAlpha(0);
     else
         StanceBarFrame:SetAlpha(1);
@@ -135,7 +136,7 @@ local function LayoutActionbars()
 
     -- Bottomright multibar
     if (SHOW_MULTI_ACTIONBAR_2) then
-        if (opts.actionbarStacked) then
+        if (opts.stacked) then
             MultiBarBottomRightButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", 0, currentY);
             currentY = currentY + opts.btnSpacing + opts.btnSize;
         else
@@ -148,7 +149,7 @@ local function LayoutActionbars()
         end;
         for i = 2, 12 do
             -- If we're not stacking bottomright, don't reposition button #7 (first on second row)
-            if (opts.actionbarStacked or i ~= 7) then
+            if (opts.stacked or i ~= 7) then
                 _G["MultiBarBottomRightButton"..i]:ClearAllPoints();
                 _G["MultiBarBottomRightButton"..i]:SetPoint("BOTTOMLEFT", _G["MultiBarBottomRightButton"..i-1], "BOTTOMRIGHT", opts.btnSpacing, 0);
             end;
@@ -159,7 +160,7 @@ local function LayoutActionbars()
     end
 
     -- Right bars
-    local offsetY = MTUI.db.global.actionbarRightOffsetY;
+    local offsetY = MTUI.actionbars.rightOffsetY;
     MultiBarRightButton1:ClearAllPoints();
     MultiBarRightButton1:SetPoint("TOPRIGHT", UIParent, "RIGHT", -opts.edgeOffset, opts.actionbarWidth / 2 + offsetY - 72);
     MultiBarLeftButton1:ClearAllPoints();
@@ -244,8 +245,9 @@ local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
     end;
 end;
 
-function MTUI:InitActionbars(triggerListeners)
-    Setup();
+function MTUI:InitActionbars()
+    LoadOptions();
+    HideFrames();
 
     hooksecurefunc("UIParent_ManageFramePositions", LayoutActionbars);
     hooksecurefunc("OverrideActionBar_Leave", function() ShowPetActionBar(true) end);
@@ -257,22 +259,4 @@ function MTUI:InitActionbars(triggerListeners)
     -- Fire some events once to make sure we apply the layout
     LayoutActionbars();
     StatusTrackingBarManager:UpdateBarsShown();
-
-    -- Paging?
-    -- local prevPage = GetActionBarPage();
-    -- MTUIActionbarFrame:EnableKeyboard(true);
-    -- MTUIActionbarFrame:RegisterEvent('MODIFIER_STATE_CHANGED');
-    -- MTUIActionbarFrame:RegisterEvent('ACTIONBAR_PAGE_CHANGED');
-    -- MTUIActionbarFrame:SetScript('OnEvent', function(frame, event, mod, val)
-    --     if (event == 'MODIFIER_STATE_CHANGED' and mod == 'LCTRL') then
-    --         if (val == 1) then
-    --             prevPage = GetActionBarPage();
-    --             ChangeActionBarPage(2);
-    --         else
-    --             ChangeActionBarPage(prevPage);
-    --         end;
-    --     else
-    --         return;
-    --     end;
-    -- end);
 end;

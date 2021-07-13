@@ -1,5 +1,3 @@
-local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
-
 local function moveFrame(frame, frameAnchor, parent, parentAnchor, deltaX, deltaY)
     frame:SetMovable(true);
     frame:ClearAllPoints();
@@ -15,25 +13,14 @@ local function moveObjectiveTracker()
     ObjectiveTrackerFrame.HeaderMenu.Title:SetJustifyH("LEFT");
     ObjectiveTrackerFrame:SetHeight(800);
 
+    -- make the torghast buff tracker pop out to the right
     local TorghastBuffs = ScenarioBlocksFrame.MawBuffsBlock.Container;
     moveFrame(TorghastBuffs.List, "TOPLEFT", TorghastBuffs, "TOPRIGHT", 0, 0);
 end;
 
-local function cleanupMinimap()
-    MinimapZoneText:SetWidth(120);
-    -- MinimapZoneTextButton:Hide();
-    -- MinimapBorderTop:Hide();
-    -- MiniMapWorldMapButton:Hide();
-
-    -- moveFrame(MinimapCluster, "TOPRIGHT", UIParent, "TOPRIGHT", -5, 15);
-    -- moveFrame(BuffFrame, "TOPRIGHT", MinimapCluster, "TOPLEFT", -10, -25);
-    -- BuffFrame.ClearAllPoints = function() end;
-    -- BuffFrame.SetPoint = function() end;
-end;
-
 local function moveUnitFrames()
-    local Y = MTUI.db.global.unitframeOffsetY;
-    local X = MTUI.db.global.unitframeOffsetX / 2;
+    local Y = MTUI.unitframes.offsetY;
+    local X = MTUI.unitframes.offsetX / 2;
 
     moveFrame(PlayerFrame, "BOTTOMRIGHT", UIParent, "BOTTOM", -X, Y);
     moveFrame(TargetFrame, "BOTTOMLEFT", UIParent, "BOTTOM", X, Y);
@@ -45,7 +32,7 @@ end;
 
 function MTUI:InitMoveFrames()
     moveObjectiveTracker();
-    cleanupMinimap();
     moveUnitFrames();
     moveFrame(UIWidgetTopCenterContainerFrame, "TOP", UIParent, "TOP", 0, -5);
+    MinimapZoneText:SetWidth(120);
 end;

@@ -1,5 +1,3 @@
-local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
-
 -- Return an appropriate unit color based on class (or threat situation)
 function MTUI:GetUnitColor(unit, useThreatColors)
     if (UnitIsTapDenied(unit) or not UnitIsConnected(unit)) then

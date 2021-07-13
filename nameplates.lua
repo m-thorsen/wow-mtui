@@ -1,5 +1,3 @@
-local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
-
 local function IsNameplate(unit)
     return type(unit) == "string" and (string.match(unit, "nameplate") == "nameplate" or string.match(unit, "NamePlate") == "NamePlate");
 end;
@@ -13,12 +11,11 @@ end;
 local function SetNameplateTexture(frame, ...)
     if not IsNameplate(frame.unit) then return end;
 
-    local texture = MTUI.db.global.nameplateTexture;
-    frame.healthBar:SetStatusBarTexture(texture);
-    frame.castBar:SetStatusBarTexture(texture);
+    frame.healthBar:SetStatusBarTexture(MTUI.textures.raidbar);
+    frame.castBar:SetStatusBarTexture(MTUI.textures.raidbar);
     frame.castBar.Flash:SetTexture(nil);
     if (ClassNameplateManaBarFrame) then
-        ClassNameplateManaBarFrame:SetStatusBarTexture(texture);
+        ClassNameplateManaBarFrame:SetStatusBarTexture(MTUI.textures.raidbar);
     end;
 
     frame.name:SetFont(frame.name:GetFont(), 8, nil);

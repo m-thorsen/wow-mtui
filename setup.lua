@@ -1,66 +1,48 @@
-local MTUI = LibStub("AceAddon-3.0"):NewAddon("MTUI", "AceConsole-3.0");
+MTUI = {
+    unitframes = {
+        offsetY         = 200,
+        offsetX         = 250,
+    },
 
-local defaults = {
-    global = {
-        enableCastingbar      = true,
-        enableMoveFrames      = true,
-        enableUnitframes      = true,
-        enableNameplates      = true,
-        enableActionbars      = true,
-        enableStatusbars      = true,
-        enableMinorStatusbars = true,
-        unitframeOffsetY      = 200,
-        unitframeOffsetX      = 250,
-        actionbarScale        = 1,
-        actionbarStacked      = true,
-        actionbarRightOffsetY = 0,
-        actionbarBtnSpacing   = 1,
-        actionbarTrackHeight  = 10,
-        actionbarHideStance   = false,
-        actionbarHideMicro    = true,
-        statusbarTexture      = "Interface/Addons/MTUI/Media/Textures/default",
-        nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/raidbar",
-        -- nameplateTexture      = "Interface/Addons/MTUI/Media/Textures/default",
-    }
-};
+    actionbars = {
+        scale           = 1,
+        stacked         = true,
+        rightOffsetY    = 0,
+        spacing         = 1,
+        trackHeight     = 10,
+        hideStance      = false,
+        hideMicro       = true,
+    },
 
--- Called when the addon is loaded
-function MTUI:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("MTUIDB", defaults, true);
-    LibStub("AceConfig-3.0"):RegisterOptionsTable("MTUI", self:GetOptions());
-    self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("MTUI", "MTUI");
+    textures = {
+        statusbar       = "Interface/Addons/MTUI/Media/statusbar",
+        raidbar         = "Interface/Addons/MTUI/Media/raidbar",
+    },
+}
 
-    if (self.db.global.enableActionbars) then
-        self:InitActionbars();
+local MTUIFrame = CreateFrame("Frame", "MTUIFrame", UIParent);
+
+MTUIFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
+MTUIFrame:RegisterEvent("ADDON_LOADED");
+
+MTUIFrame:SetScript("OnEvent", function(a, event , c, d, e, f)
+    if (event == "ADDON_LOADED") then
+        HelpTip:HideAllSystem("MicroButtons");
+
+        MTUI:InitActionbars();
+        MTUI:InitCastingbar();
+        MTUI:InitUnitframes();
+        MTUI:InitMoveFrames();
+        MTUI:InitStatusbars();
+        -- MTUI:InitMinorStatusbars():
+        -- MTUI:InitNameplates();
+
+    elseif (event == "PLAYER_ENTERING_WORLD") then
+        local inInstance, instanceType = IsInInstance();
+        if (inInstance) then
+            SetCVar("nameplateShowAll", 1);
+        else
+            SetCVar("nameplateShowAll", 0);
+        end;
     end;
-
-    if (self.db.global.enableNameplates) then
-        self:InitNameplates();
-    end;
-
-    if (self.db.global.enableUnitframes) then
-        self:InitUnitframes();
-    end;
-
-    if (self.db.global.enableMoveFrames) then
-        self:InitMoveFrames();
-    end;
-
-    if (self.db.global.enableStatusbars) then
-        self:InitStatusbars();
-    end;
-
-    if (self.db.global.enableCastingbar) then
-        self:InitCastingbar()
-    end;
-
-    self:InitAutomation(); -- Not optional!
-    -- self:RegisterChatCommand("mtui", "ChatCommand");
-end;
-
-function MTUI:OnEnable() end;
-function MTUI:OnDisable() end;
-function MTUI:ChatCommand()
-    InterfaceOptionsFrame_OpenToCategory(self.optionsFrame);
-    InterfaceOptionsFrame_OpenToCategory(self.optionsFrame); -- Intentionally called twice due to a bliz bug
-end;
+end)

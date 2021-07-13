@@ -1,5 +1,3 @@
-local MTUI = LibStub("AceAddon-3.0"):GetAddon("MTUI");
-
 function MTUI:InitCastingbar()
     CastingBarFrame:SetSize(220, 15)
     CastingBarFrame.Text:SetScale(0.95)
