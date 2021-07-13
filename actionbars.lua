@@ -23,14 +23,8 @@ end;
 local function SkinUnskinnedBtns()
     local btns = {};
 
-    for i = 1, 12 do
-        tinsert(btns, _G["ActionButton"..i])
-    end;
-
-    for i = 1, 6 do
-        tinsert(btns, _G["MultiBarBottomRightButton"..i])
-    end;
-
+    for i = 1, 12 do tinsert(btns, _G["ActionButton"..i]) end;
+    for i = 1, 6 do tinsert(btns, _G["MultiBarBottomRightButton"..i]) end;
     for _, btn in next, btns do
         btn.noGrid = nil;
         btn:Show();
@@ -59,8 +53,6 @@ local function SkinUnskinnedBtns()
     hooksecurefunc("MultiActionBar_UpdateGridVisibility", AddBorderToUnskinnedButtons);
     hooksecurefunc("SpellButton_OnShow", AddBorderToUnskinnedButtons);
     hooksecurefunc("SpellButton_OnHide", AddBorderToUnskinnedButtons);
-    -- SpellBookFrame:HookScript("OnShow", AddBorderToUnskinnedButtons);
-    -- SpellBookFrame:HookScript("OnHide", AddBorderToUnskinnedButtons);
 end;
 
 -- Hide some frames/textures

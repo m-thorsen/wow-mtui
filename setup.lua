@@ -24,7 +24,7 @@ MTUIFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
 MTUIFrame:RegisterEvent("ADDON_LOADED");
 MTUIFrame:SetScript("OnEvent", function(frame, event, addonName)
     if (event == "ADDON_LOADED" and addonName == 'MTUI') then
-        HelpTip:ForceHideAll();
+        function HelpTip:AreHelpTipsEnabled() return false end;
 
         MTUI:InitActionbars();
         MTUI:InitCastingbar();
