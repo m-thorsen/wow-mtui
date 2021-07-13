@@ -31,12 +31,10 @@ MTUIFrame:SetScript("OnEvent", function(frame, event, addonName)
 
         MTUI:InitActionbars();
         MTUI:InitCastingbar();
-        MTUI:InitUnitframes();
         MTUI:InitMoveFrames();
+        MTUI:InitUnitframes();
 
     elseif (event == "PLAYER_ENTERING_WORLD") then
-        MTUI:InitStatusbars();
-        -- MTUI:InitMinorStatusbars():
         -- MTUI:InitNameplates();
 
         local inInstance, instanceType = IsInInstance();

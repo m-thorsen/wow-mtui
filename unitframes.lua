@@ -113,10 +113,38 @@ local function TweakTargetFrame(frame)
     end;
 end;
 
+local function SetStatusbarTexture()
+    local frames = {
+        PlayerFrame, PlayerFrameManaBar, PlayerFrameAlternateManaBar, PlayerFrameMyHealPredictionBar,
+        TargetFrame, TargetFrameToT, FocusFrame, FocusFrameToT, PetFrame,
+        PartyMemberFrame1, PartyMemberFrame2, PartyMemberFrame3, PartyMemberFrame4,
+        Boss1TargetFrame, Boss2TargetFrame, Boss3TargetFrame, Boss4TargetFrame, Boss5TargetFrame,
+    };
+
+    local regions = {
+        "healthbar", "spellbar", "healAbsorbBar", "totalAbsorbBar",
+        "AnimatedLossBar", "myHealPredictionBar", "otherHealPredictionBar",
+        "manabar", "myManaCostPredictionBar",
+    };
+
+    for _, frame in next, frames do
+        for _, region in next, regions do
+            local bar = frame[region];
+
+            if (bar and bar.SetStatusBarTexture) then
+                bar:SetStatusBarTexture(MTUI.textures.statusbar);
+            elseif (bar and bar.SetTexture) then
+                bar:SetTexture(MTUI.textures.statusbar);
+            end;
+        end;
+    end;
+end;
+
 function MTUI:InitUnitframes()
     hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame);
     hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame);
     hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame);
     hooksecurefunc("UnitFrameHealthBar_Update", SetHealthbarColor);
     hooksecurefunc("HealthBar_OnValueChanged", SetHealthbarColor);
+    SetStatusbarTexture();
 end;

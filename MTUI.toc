@@ -8,6 +8,5 @@ nameplates.lua
 actionbars.lua
 unitframes.lua
 moveframes.lua
-statusbars.lua
 castingbar.lua
 automation.lua
