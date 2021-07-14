@@ -37,30 +37,6 @@ local function TweakPlayerFrame(frame)
     frame.name:SetPoint("CENTER", frame, "CENTER", 50.5, 36);
 end;
 
-local function TweakVehicleFrame(frame, vehicle)
-    frame.healthbar:ClearAllPoints();
-    frame.manabar:ClearAllPoints();
-    if (vehicle == "Natural") then
-        PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic");
-        PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic-Flash");
-        PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
-        frame.healthbar:SetSize(103, 12);
-        frame.healthbar:SetPoint("TOPLEFT", 116, -41);
-        frame.manabar:SetSize(103, 12);
-        frame.manabar:SetPoint("TOPLEFT", 116, -52);
-    else
-        PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame");
-        PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Flash");
-        PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
-        frame.healthbar:SetPoint("TOPLEFT", 119, -41);
-        frame.healthbar:SetSize(100, 12);
-        frame.manabar:SetSize(100, 12);
-        frame.manabar:SetPoint("TOPLEFT", 119, -52);
-    end;
-    PlayerName:SetPoint("CENTER", 50, 23);
-    PlayerFrameBackground:SetWidth(114);
-end
-
 local function TweakTargetFrame(frame)
     local type = UnitClassification(frame.unit);
     frame.nameBackground:Hide();
@@ -113,6 +89,30 @@ local function TweakTargetFrame(frame)
     end;
 end;
 
+local function TweakVehicleFrame(frame, vehicle)
+    frame.healthbar:ClearAllPoints();
+    frame.manabar:ClearAllPoints();
+    if (vehicle == "Natural") then
+        PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic");
+        PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic-Flash");
+        PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
+        frame.healthbar:SetSize(103, 12);
+        frame.healthbar:SetPoint("TOPLEFT", 116, -41);
+        frame.manabar:SetSize(103, 12);
+        frame.manabar:SetPoint("TOPLEFT", 116, -52);
+    else
+        PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame");
+        PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Flash");
+        PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
+        frame.healthbar:SetPoint("TOPLEFT", 119, -41);
+        frame.healthbar:SetSize(100, 12);
+        frame.manabar:SetSize(100, 12);
+        frame.manabar:SetPoint("TOPLEFT", 119, -52);
+    end;
+    PlayerName:SetPoint("CENTER", 50, 23);
+    PlayerFrameBackground:SetWidth(114);
+end;
+
 local function SetStatusbarTexture()
     local frames = {
         PlayerFrame, PlayerFrameManaBar, PlayerFrameAlternateManaBar, PlayerFrameMyHealPredictionBar,
@@ -146,5 +146,6 @@ function MTUI:InitUnitframes()
     hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame);
     hooksecurefunc("UnitFrameHealthBar_Update", SetHealthbarColor);
     hooksecurefunc("HealthBar_OnValueChanged", SetHealthbarColor);
+    AnimatedHealthLossMixin:SetDuration(0);
     SetStatusbarTexture();
 end;
