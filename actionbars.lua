@@ -39,7 +39,7 @@ local function SkinUnskinnedBtns()
         end;
     end;
 
-    local function AddBorderToUnskinnedButtons()
+    local function ShowUnskinnedButtonsGrid()
         if (InCombatLockdown()) then return end;
 
         local shouldShow = bit.bor((tonumber(SpellBookFrame:IsShown() and 1) or GetCVar("alwaysShowActionBars")));
@@ -49,10 +49,9 @@ local function SkinUnskinnedBtns()
         end;
     end;
 
-    -- AddBorderToUnskinnedButtons();
-    hooksecurefunc("MultiActionBar_UpdateGridVisibility", AddBorderToUnskinnedButtons);
-    hooksecurefunc("SpellButton_OnShow", AddBorderToUnskinnedButtons);
-    hooksecurefunc("SpellButton_OnHide", AddBorderToUnskinnedButtons);
+    hooksecurefunc("MultiActionBar_UpdateGridVisibility", ShowUnskinnedButtonsGrid);
+    hooksecurefunc("SpellButton_OnShow", ShowUnskinnedButtonsGrid);
+    hooksecurefunc("SpellButton_OnHide", ShowUnskinnedButtonsGrid);
 end;
 
 -- Hide some frames/textures
