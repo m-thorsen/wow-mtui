@@ -33,7 +33,7 @@ local function TweakPlayerFrame(frame)
     PlayerStatusTexture:SetWidth(192);
     ApplyCommonFrameTweaks(frame);
     frame.healthbar:SetPoint("TOPRIGHT", -5, -24);
-    frame.healthbar.AnimatedLossBar:SetAlpha(0);
+    frame.healthbar.AnimatedLossBar:SetAlpha(0.1);
     frame.name:Hide();
     frame.name:SetPoint("CENTER", frame, "CENTER", 50.5, 36);
 end;

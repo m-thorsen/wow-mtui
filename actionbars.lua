@@ -11,7 +11,7 @@ local function LoadOptions()
     opts.actionbarWidth     = (opts.btnSize + opts.btnSpacing) * NUM_MULTIBAR_BUTTONS - opts.btnSpacing;
     opts.trackingbarHeight  = MTUI.actionbars.trackHeight;
     opts.trackingbarWidth   = opts.actionbarWidth + 3;
-    opts.petbarWidth        = (opts.btnSizeSmall + opts.btnSpacing) * NUM_PET_ACTION_SLOTS - opts.btnSpacing;
+    opts.petbarWidth        = (opts.btnSizeSmall + opts.btnSpacing) * NUM_PET_ACTION_SLOTS - (opts.btnSpacing * 0.75);
     opts.edgeOffset         = opts.btnSpacing - 3;
     opts.stacked            = MTUI.actionbars.stacked;
     opts.hideMicro          = MTUI.actionbars.hideMicro;
@@ -190,14 +190,14 @@ local function LayoutActionbars()
     end;
 
     StanceButton1:ClearAllPoints();
-    StanceButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", -1, currentY);
+    StanceButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", -1, currentY + 0.5);
     for i = 2, NUM_STANCE_SLOTS do
         _G["StanceButton"..i]:ClearAllPoints();
         _G["StanceButton"..i]:SetPoint("BOTTOMLEFT", _G["StanceButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing - 2, 0);
     end;
 
     PetActionButton1:ClearAllPoints();
-	PetActionButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", (opts.actionbarWidth - opts.petbarWidth) / 2, currentY + 1);
+	PetActionButton1:SetPoint("BOTTOMLEFT", MTUIActionbarFrame, "BOTTOMLEFT", (opts.actionbarWidth - opts.petbarWidth) / 2, currentY + 1.5);
     for i = 2, NUM_PET_ACTION_SLOTS do
         _G["PetActionButton"..i]:ClearAllPoints();
         _G["PetActionButton"..i]:SetPoint("BOTTOMLEFT", _G["PetActionButton"..i-1], "BOTTOMLEFT", opts.btnSizeSmall + opts.btnSpacing, 0);
