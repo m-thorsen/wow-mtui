@@ -16,7 +16,6 @@ local function SkinFrame(frame)
 
     statusbar:SetSize(MTUI.castingbar.width, 15);
     text:SetSize(statusbar:GetSize());
-    text:SetScale(0.9);
     text:SetPoint("TOP", statusbar, "TOP", 0, -1);
     border:Hide();
 
