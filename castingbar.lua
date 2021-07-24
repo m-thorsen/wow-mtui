@@ -16,7 +16,8 @@ local function SkinFrame(frame)
 
     statusbar:SetSize(MTUI.castingbar.width, 15);
     text:SetSize(statusbar:GetSize());
-    text:SetPoint("TOP", statusbar, "TOP", 0, -1);
+    text:SetScale(1.05);
+    text:SetPoint("TOP", statusbar, "TOP", 0, 0);
     border:Hide();
 
     local LeftBorder = statusbar:CreateTexture(nil, "TOOLTIP", nil, 7);
