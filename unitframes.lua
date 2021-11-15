@@ -1,3 +1,15 @@
+local function moveUnitFrames()
+    local Y = MTUI.unitframes.offsetY;
+    local X = MTUI.unitframes.offsetX / 2;
+
+    MTUI:moveFrame(PlayerFrame, "BOTTOMRIGHT", UIParent, "BOTTOM", -X, Y);
+    MTUI:moveFrame(TargetFrame, "BOTTOMLEFT", UIParent, "BOTTOM", X, Y);
+    MTUI:moveFrame(FocusFrame, "BOTTOMLEFT", TargetFrame, "TOPRIGHT", -50, 20);
+    MTUI:moveFrame(CastingBarFrame, "TOP", UIParent, "BOTTOM", 0, Y);
+    MTUI:moveFrame(CompactRaidFrameContainer, "TOPLEFT", TargetFrame, "TOPRIGHT", 0, -20);
+    MTUI:moveFrame(PlayerPowerBarAlt, "TOP", UIParent, "TOP", 0, -100);
+end;
+
 local function ApplyCommonFrameTweaks(frame)
     frame.name:ClearAllPoints();
     frame.healthbar:ClearAllPoints();
@@ -36,6 +48,30 @@ local function TweakPlayerFrame(frame)
     frame.healthbar.AnimatedLossBar:SetAlpha(0.1);
     frame.name:Hide();
     frame.name:SetPoint("CENTER", frame, "CENTER", 50.5, 36);
+end;
+
+local function TweakVehicleFrame(frame, vehicle)
+    frame.healthbar:ClearAllPoints();
+    frame.manabar:ClearAllPoints();
+    if (vehicle == "Natural") then
+        PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic");
+        PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic-Flash");
+        PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
+        frame.healthbar:SetSize(103, 12);
+        frame.healthbar:SetPoint("TOPLEFT", 116, -41);
+        frame.manabar:SetSize(103, 12);
+        frame.manabar:SetPoint("TOPLEFT", 116, -52);
+    else
+        PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame");
+        PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Flash");
+        PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
+        frame.healthbar:SetPoint("TOPLEFT", 119, -41);
+        frame.healthbar:SetSize(100, 12);
+        frame.manabar:SetSize(100, 12);
+        frame.manabar:SetPoint("TOPLEFT", 119, -52);
+    end;
+    PlayerName:SetPoint("CENTER", 50, 23);
+    PlayerFrameBackground:SetWidth(114);
 end;
 
 local function TweakTargetFrame(frame)
@@ -90,30 +126,6 @@ local function TweakTargetFrame(frame)
     end;
 end;
 
-local function TweakVehicleFrame(frame, vehicle)
-    frame.healthbar:ClearAllPoints();
-    frame.manabar:ClearAllPoints();
-    if (vehicle == "Natural") then
-        PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic");
-        PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic-Flash");
-        PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
-        frame.healthbar:SetSize(103, 12);
-        frame.healthbar:SetPoint("TOPLEFT", 116, -41);
-        frame.manabar:SetSize(103, 12);
-        frame.manabar:SetPoint("TOPLEFT", 116, -52);
-    else
-        PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame");
-        PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Flash");
-        PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
-        frame.healthbar:SetPoint("TOPLEFT", 119, -41);
-        frame.healthbar:SetSize(100, 12);
-        frame.manabar:SetSize(100, 12);
-        frame.manabar:SetPoint("TOPLEFT", 119, -52);
-    end;
-    PlayerName:SetPoint("CENTER", 50, 23);
-    PlayerFrameBackground:SetWidth(114);
-end;
-
 local function SetStatusbarTexture()
     local frames = {
         PlayerFrame, PlayerFrameManaBar, PlayerFrameAlternateManaBar, PlayerFrameMyHealPredictionBar,
@@ -142,6 +154,26 @@ local function SetStatusbarTexture()
 end;
 
 function MTUI:InitUnitframes()
+    moveUnitFrames();
+
+    -- Bypass hardcoded animation when entering vehicle since 9.1.5
+    hooksecurefunc("PlayerFrame_UpdateArt", function(self)
+        if (UnitHasVehiclePlayerFrameUI('player')) then
+            self:Hide();
+            C_Timer.After(0.3, function() self:Show() end);
+        end;
+    end);
+
+    -- Re-mot frames after animation finished
+    hooksecurefunc("PlayerFrame_SequenceFinished", function(self)
+        moveUnitFrames();
+        if (UnitHasVehiclePlayerFrameUI('player')) then
+            TweakVehicleFrame(self);
+        else
+            TweakPlayerFrame(self);
+        end;
+    end);
+
     hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame);
     hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame);
     hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame);

@@ -45,3 +45,12 @@ MTUIFrame:SetScript("OnEvent", function(frame, event, addonName)
         end;
     end;
 end)
+
+-- common methods
+function MTUI:moveFrame(frame, frameAnchor, parent, parentAnchor, deltaX, deltaY)
+    frame:SetMovable(true);
+    frame:ClearAllPoints();
+    frame:SetPoint(frameAnchor, parent, parentAnchor, deltaX, deltaY);
+    frame:SetUserPlaced(true);
+    frame:SetMovable(false);
+end;
