@@ -25,7 +25,7 @@ local MTUIFrame = CreateFrame("Frame", "MTUIFrame", UIParent);
 
 MTUIFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
 MTUIFrame:RegisterEvent("ADDON_LOADED");
-MTUIFrame:SetScript("OnEvent", function(frame, event, addonName)
+MTUIFrame:SetScript("OnEvent", function(self, event, addonName)
     if (event == "ADDON_LOADED" and addonName == 'MTUI') then
         function HelpTip:AreHelpTipsEnabled() return false end;
 
@@ -47,10 +47,10 @@ MTUIFrame:SetScript("OnEvent", function(frame, event, addonName)
 end)
 
 -- common methods
-function MTUI:moveFrame(frame, frameAnchor, parent, parentAnchor, deltaX, deltaY)
-    frame:SetMovable(true);
-    frame:ClearAllPoints();
-    frame:SetPoint(frameAnchor, parent, parentAnchor, deltaX, deltaY);
-    frame:SetUserPlaced(true);
-    frame:SetMovable(false);
+function MTUI:moveFrame(self, frameAnchor, parent, parentAnchor, deltaX, deltaY)
+    self:SetMovable(true);
+    self:ClearAllPoints();
+    self:SetPoint(frameAnchor, parent, parentAnchor, deltaX, deltaY);
+    self:SetUserPlaced(true);
+    self:SetMovable(false);
 end;

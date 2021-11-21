@@ -6,17 +6,18 @@ local function moveUnitFrames()
     MTUI:moveFrame(TargetFrame, "BOTTOMLEFT", UIParent, "BOTTOM", X, Y);
     MTUI:moveFrame(FocusFrame, "BOTTOMLEFT", TargetFrame, "TOPRIGHT", -50, 20);
     MTUI:moveFrame(CastingBarFrame, "TOP", UIParent, "BOTTOM", 0, Y);
-    MTUI:moveFrame(CompactRaidFrameContainer, "TOPLEFT", TargetFrame, "TOPRIGHT", 0, -20);
     MTUI:moveFrame(PlayerPowerBarAlt, "TOP", UIParent, "TOP", 0, -100);
+    -- MTUI:moveFrame(CompactRaidFrameContainer, "TOPLEFT", TargetFrame, "TOPRIGHT", 0, -20);
+    -- CompactRaidFrameContainer:SetHeight(300);
 end;
 
-local function ApplyCommonFrameTweaks(frame)
-    frame.name:ClearAllPoints();
-    frame.healthbar:ClearAllPoints();
-    frame.healthbar:SetHeight(28);
-    frame.healthbar.LeftText:SetPoint("LEFT", frame.healthbar, "LEFT", 3, 0);
-    frame.healthbar.RightText:SetPoint("RIGHT", frame.healthbar, "RIGHT", -3, 0);
-    frame.healthbar.TextString:SetPoint("CENTER", frame.healthbar, "CENTER", 0, 0);
+local function ApplyCommonFrameTweaks(self)
+    self.name:ClearAllPoints();
+    self.healthbar:ClearAllPoints();
+    self.healthbar:SetHeight(28);
+    self.healthbar.LeftText:SetPoint("LEFT", self.healthbar, "LEFT", 3, 0);
+    self.healthbar.RightText:SetPoint("RIGHT", self.healthbar, "RIGHT", -3, 0);
+    self.healthbar.TextString:SetPoint("CENTER", self.healthbar, "CENTER", 0, 0);
 end;
 
 local function GetUnitColor(unit)
@@ -39,36 +40,32 @@ local function SetHealthbarColor(bar)
     end;
 end;
 
-local function TweakPlayerFrame(frame)
-    PlayerFrameTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame");
+local function TweakPlayerFrame(self)
+    PlayerStatusTexture:ClearAllPoints();
+    PlayerStatusTexture:SetPoint("CENTER", PlayerFrame, "CENTER",16, 8);
     PlayerStatusTexture:SetTexture("Interface/Addons/MTUI/Media/Player-Status");
     PlayerStatusTexture:SetWidth(192);
-    ApplyCommonFrameTweaks(frame);
-    frame.healthbar:SetPoint("TOPRIGHT", -5, -24);
-    frame.healthbar.AnimatedLossBar:SetAlpha(0.1);
-    frame.name:Hide();
-    frame.name:SetPoint("CENTER", frame, "CENTER", 50.5, 36);
+    PlayerFrameTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame");
+    ApplyCommonFrameTweaks(self);
+    self.healthbar:SetPoint("TOPRIGHT", -5, -24);
+    self.healthbar.AnimatedLossBar:SetAlpha(0.1);
+    self.name:Hide();
+    self.name:SetPoint("CENTER", frame, "CENTER", 50.5, 36);
 end;
 
-local function TweakVehicleFrame(frame, vehicle)
-    frame.healthbar:ClearAllPoints();
-    frame.manabar:ClearAllPoints();
+local function TweakVehicleFrame(self, vehicle)
     if (vehicle == "Natural") then
         PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic");
         PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Organic-Flash");
         PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
-        frame.healthbar:SetSize(103, 12);
-        frame.healthbar:SetPoint("TOPLEFT", 116, -41);
-        frame.manabar:SetSize(103, 12);
-        frame.manabar:SetPoint("TOPLEFT", 116, -52);
+        self.healthbar:SetSize(103, 12);
+        self.healthbar:SetPoint("TOPRIGHT", -15, -41);
     else
         PlayerFrameVehicleTexture:SetTexture("Interface/Vehicles/UI-Vehicle-Frame");
         PlayerFrameFlash:SetTexture("Interface/Vehicles/UI-Vehicle-Frame-Flash");
         PlayerFrameFlash:SetTexCoord(-0.02, 1, 0.07, 0.86);
-        frame.healthbar:SetPoint("TOPLEFT", 119, -41);
-        frame.healthbar:SetSize(100, 12);
-        frame.manabar:SetSize(100, 12);
-        frame.manabar:SetPoint("TOPLEFT", 119, -52);
+        self.healthbar:SetSize(100, 12);
+        self.healthbar:SetPoint("TOPRIGHT", -15, -41);
     end;
     PlayerName:SetPoint("CENTER", 50, 23);
     PlayerFrameBackground:SetWidth(114);
@@ -153,26 +150,23 @@ local function SetStatusbarTexture()
     end;
 end;
 
+-- @hack: Revert global playerframe_updateart because of error...
+function PlayerFrame_UpdateArt(self)
+	if (self.inSeat) then
+        PlayerFrame_SequenceFinished(PlayerFrame);
+		if (UnitHasVehiclePlayerFrameUI("player")) then
+			PlayerFrame_ToVehicleArt(self, UnitVehicleSkin("player"));
+		else
+			PlayerFrame_ToPlayerArt(self);
+		end
+	elseif (self.updatePetFrame) then
+		self.updatePetFrame = false;
+		PetFrame_Update(PetFrame);
+	end
+end
+
 function MTUI:InitUnitframes()
     moveUnitFrames();
-
-    -- Bypass hardcoded animation when entering vehicle since 9.1.5
-    hooksecurefunc("PlayerFrame_UpdateArt", function(self)
-        if (UnitHasVehiclePlayerFrameUI('player')) then
-            self:Hide();
-            C_Timer.After(0.3, function() self:Show() end);
-        end;
-    end);
-
-    -- Re-mot frames after animation finished
-    hooksecurefunc("PlayerFrame_SequenceFinished", function(self)
-        moveUnitFrames();
-        if (UnitHasVehiclePlayerFrameUI('player')) then
-            TweakVehicleFrame(self);
-        else
-            TweakPlayerFrame(self);
-        end;
-    end);
 
     hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame);
     hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame);
