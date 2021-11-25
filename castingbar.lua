@@ -1,4 +1,3 @@
-
 local function SkinFrame(frame)
     frame:SetFrameStrata("TOOLTIP", nil, 6);
 
@@ -14,28 +13,33 @@ local function SkinFrame(frame)
         border = frame.Border;
     end
 
-    statusbar:SetSize(MTUI.castingbar.width, 15);
+    local barHeight = 14;
+    local frameOffset = 5;
+    local frameHeight = barHeight + (frameOffset * 2);
+
+    statusbar:SetSize(MTUI.castingbar.width, barHeight);
     text:SetSize(statusbar:GetSize());
-    text:SetScale(1.05);
     text:SetPoint("TOP", statusbar, "TOP", 0, 0);
     border:Hide();
 
+    local tex = "Interface/PaperDollInfoFrame/UI-Character-Skills-BarBorder";
+
     local LeftBorder = statusbar:CreateTexture(nil, "TOOLTIP", nil, 7);
-    LeftBorder:SetPoint("TOPLEFT", statusbar, "TOPLEFT", -3, 3);
-    LeftBorder:SetSize(9, 22);
-    LeftBorder:SetTexture("Interface/PaperDollInfoFrame/UI-Character-Skills-BarBorder");
+    LeftBorder:SetPoint("TOPLEFT", statusbar, "TOPLEFT", -frameOffset, frameOffset);
+    LeftBorder:SetSize(frameHeight / 2, frameHeight);
+    LeftBorder:SetTexture(tex);
     LeftBorder:SetTexCoord(0.007843, 0.043137, 0.193548, 0.774193);
 
     local RightBorder = statusbar:CreateTexture(nil, "TOOLTIP", nil, 7);
-    RightBorder:SetPoint("TOPRIGHT", statusbar, "TOPRIGHT", 3, 3);
-    RightBorder:SetSize(9, 22);
-    RightBorder:SetTexture("Interface/PaperDollInfoFrame/UI-Character-Skills-BarBorder");
+    RightBorder:SetPoint("TOPRIGHT", statusbar, "TOPRIGHT", frameOffset, frameOffset);
+    RightBorder:SetSize(frameHeight / 2, frameHeight);
+    RightBorder:SetTexture(tex);
     RightBorder:SetTexCoord(0.043137, 0.007843, 0.193548, 0.774193);
 
     local MidBorder = statusbar:CreateTexture(nil, "TOOLTIP", nil, 7);
     MidBorder:SetPoint("TOPLEFT", LeftBorder, "TOPRIGHT");
     MidBorder:SetPoint("BOTTOMRIGHT", RightBorder, "BOTTOMLEFT");
-    MidBorder:SetTexture("Interface/PaperDollInfoFrame/UI-Character-Skills-BarBorder");
+    MidBorder:SetTexture(tex);
     MidBorder:SetTexCoord(0.113726, 0.1490196, 0.193548, 0.774193);
 end
 
