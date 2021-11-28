@@ -14,7 +14,7 @@ local function SkinFrame(frame)
     end
 
     local barHeight = 16;
-    local frameOffset = 5;
+    local frameOffset = 4;
     local frameHeight = barHeight + (frameOffset * 2);
 
     statusbar:SetSize(MTUI.castingbar.width, barHeight);
