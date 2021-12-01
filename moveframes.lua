@@ -1,6 +1,9 @@
 local function moveObjectiveTracker()
-    -- attach the quest tracker to the minimap to allow broker bars etc to adjust frames
-    MTUI:moveFrame(ObjectiveTrackerFrame, "TOPLEFT", MinimapCluster, "TOPRIGHT", -(GetScreenWidth() - 30), -5);
+    -- reattach the buff frame to compensate for removal of the minimap zone text
+    MTUI:moveFrame(BuffFrame, "TOPLEFT", UIParent, "TOPLEFT", 35, -13);
+
+    -- move the tracker
+    MTUI:moveFrame(ObjectiveTrackerFrame, "TOPLEFT", UIParent, "TOPLEFT", 32, -8);
     ObjectiveTrackerFrame.HeaderMenu.Title:SetPoint("TOPLEFT", ObjectiveTrackerFrame, "TOPLEFT", -6, -7);
     ObjectiveTrackerFrame.HeaderMenu.Title:SetJustifyH("LEFT");
     ObjectiveTrackerFrame:SetHeight(800);
