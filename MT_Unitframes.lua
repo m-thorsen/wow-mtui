@@ -21,9 +21,7 @@ local function GetUnitColor(unit)
     if (UnitIsTapDenied(unit) or not UnitIsConnected(unit)) then
         return GRAY_FONT_COLOR:GetRGB();
     elseif (UnitIsPlayer(unit) and UnitClass(unit)) then
-        local _, class = UnitClass(unit);
-        local c = RAID_CLASS_COLORS[class];
-        return c.r, c.g, c.b;
+        return GetClassColor(select(2, UnitClass(unit)));
     elseif (UnitReaction(unit, "player") and UnitReaction(unit, "player") > 4) then
         return GREEN_FONT_COLOR:GetRGB();
     end;
@@ -32,7 +30,7 @@ local function GetUnitColor(unit)
 end;
 
 local function SetHealthbarColor(bar)
-    if UnitExists(bar.unit) then
+    if (UnitExists(bar.unit)) then
         bar:SetStatusBarColor(GetUnitColor(bar.unit));
     end;
 end;

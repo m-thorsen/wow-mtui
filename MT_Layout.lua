@@ -31,9 +31,6 @@ local function Init()
 
     -- make the torghast buff tracker pop out to the right
     MoveFrame(TorghastBuffs.List, "TOPLEFT", TorghastBuffs, "TOPRIGHT", 0, 0);
-
-    -- reattach the buff frame to compensate for removal of the minimap zone text
-    MoveFrame(BuffFrame, "TOPLEFT", UIParent, "TOPLEFT", 35, -13);
     MoveFrame(UIWidgetTopCenterContainerFrame, "TOP", UIParent, "TOP", 0, -5);
     MinimapZoneText:SetWidth(120);
 end
