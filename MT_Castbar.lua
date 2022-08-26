@@ -52,30 +52,28 @@ local function SkinFrame(frame)
     MidBorder:SetDesaturated(1);
 end
 
-local function Init()
-    SkinFrame(CastingBarFrame);
-    CastingBarFrame.Flash:SetTexture(nil); -- hide the flashing frame at the end of the cast
-    CastingBarFrame.Spark:SetTexCoord(0, 1, 0, 0.85);
-
-    hooksecurefunc("MirrorTimer_Show", function()
-        for i = 1, MIRRORTIMER_NUMTIMERS, 1 do
-            local frame = _G["MirrorTimer"..i];
-            if (not frame.isSkinned) then
-                SkinFrame(frame);
-
-                local region = frame:GetRegions();
-
-                if (region:GetObjectType() == "Texture") then
-                    region:SetSize(_G[frame:GetName().."StatusBar"]:GetSize());
-                end
-
-                frame.isSkinned = true;
-            end
-        end
-    end);
-end
-
 eventFrame:RegisterEvent("ADDON_LOADED");
 eventFrame:SetScript("OnEvent", function(self, event, addonName)
-    if (event == "ADDON_LOADED" and addonName == 'MT_UI') then Init() end;
+    if (event == "ADDON_LOADED" and addonName == 'MT_UI') then
+        SkinFrame(CastingBarFrame);
+        CastingBarFrame.Flash:SetTexture(nil); -- hide the flashing frame at the end of the cast
+        CastingBarFrame.Spark:SetTexCoord(0, 1, 0, 0.85);
+
+        hooksecurefunc("MirrorTimer_Show", function()
+            for i = 1, MIRRORTIMER_NUMTIMERS, 1 do
+                local frame = _G["MirrorTimer"..i];
+                if (not frame.isSkinned) then
+                    SkinFrame(frame);
+
+                    local region = frame:GetRegions();
+
+                    if (region:GetObjectType() == "Texture") then
+                        region:SetSize(_G[frame:GetName().."StatusBar"]:GetSize());
+                    end
+
+                    frame.isSkinned = true;
+                end
+            end
+        end);
+    end;
 end);

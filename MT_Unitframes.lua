@@ -146,18 +146,16 @@ local function SetStatusbarTexture()
     end;
 end;
 
-local function Init()
-    hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame);
-    hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame);
-    hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame);
-    hooksecurefunc("UnitFrameHealthBar_Update", SetHealthbarColor);
-    hooksecurefunc("HealthBar_OnValueChanged", SetHealthbarColor);
-    SetStatusbarTexture();
-end
-
 eventFrame:RegisterEvent("ADDON_LOADED");
 eventFrame:SetScript("OnEvent", function(self, event, addonName)
-    if (event == "ADDON_LOADED" and addonName == 'MT_UI') then Init() end;
+    if (event == "ADDON_LOADED" and addonName == 'MT_UI') then
+        hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame);
+        hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame);
+        hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame);
+        hooksecurefunc("UnitFrameHealthBar_Update", SetHealthbarColor);
+        hooksecurefunc("HealthBar_OnValueChanged", SetHealthbarColor);
+        SetStatusbarTexture();
+    end;
 end);
 
 

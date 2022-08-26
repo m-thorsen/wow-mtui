@@ -262,22 +262,19 @@ local function LayoutTrackingbars(frame, bar, width, isTopBar, isDouble)
     end;
 end;
 
-local function Init()
-    SetDerivedOptions();
-    HideFrames();
-    SkinUnskinnedBtns();
-
-    hooksecurefunc("UIParent_ManageFramePositions", LayoutActionbars);
-    hooksecurefunc("OverrideActionBar_Leave", function() ShowPetActionBar(true) end);
-    hooksecurefunc(StatusTrackingBarManager, "LayoutBar", LayoutTrackingbars);
-
-    -- Fire some events once to make sure we apply the layout
-    LayoutActionbars();
-    StatusTrackingBarManager:UpdateBarsShown();
-end
-
-eventFrame:RegisterEvent("ADDON_LOADED");
 eventFrame:RegisterEvent("ADDON_LOADED");
 eventFrame:SetScript("OnEvent", function(self, event, addonName)
-    if (event == "ADDON_LOADED" and addonName == 'MT_UI') then Init() end;
+    if (event == "ADDON_LOADED" and addonName == 'MT_UI') then
+        SetDerivedOptions();
+        HideFrames();
+        SkinUnskinnedBtns();
+
+        hooksecurefunc("UIParent_ManageFramePositions", LayoutActionbars);
+        hooksecurefunc("OverrideActionBar_Leave", function() ShowPetActionBar(true) end);
+        hooksecurefunc(StatusTrackingBarManager, "LayoutBar", LayoutTrackingbars);
+
+        -- Fire some events once to make sure we apply the layout
+        LayoutActionbars();
+        StatusTrackingBarManager:UpdateBarsShown();
+    end;
 end);
