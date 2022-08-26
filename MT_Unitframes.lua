@@ -1,14 +1,11 @@
-local function moveUnitFrames()
-    local Y = MTUI.unitframes.offsetY;
-    local X = MTUI.unitframes.offsetX / 2;
+local eventFrame = CreateFrame("Frame", "MT_Unitframes", UIParent);
 
-    MTUI:moveFrame(PlayerFrame, "BOTTOMRIGHT", UIParent, "BOTTOM", -X, Y);
-    MTUI:moveFrame(TargetFrame, "BOTTOMLEFT", UIParent, "BOTTOM", X, Y);
-    MTUI:moveFrame(FocusFrame, "BOTTOMLEFT", TargetFrame, "TOPRIGHT", -50, 20);
-    MTUI:moveFrame(CastingBarFrame, "TOP", UIParent, "BOTTOM", 0, Y);
-    MTUI:moveFrame(PlayerPowerBarAlt, "TOP", UIParent, "TOP", 0, -100);
-    -- MTUI:moveFrame(CompactRaidFrameContainer, "TOPLEFT", TargetFrame, "TOPRIGHT", 0, -20);
-    -- CompactRaidFrameContainer:SetHeight(300);
+local options = {
+    localMediaDir = "Interface/Addons/MT_UI/Media/",
+};
+
+local function LocalTexture(name)
+    return options.localMediaDir .. name;
 end;
 
 local function ApplyCommonFrameTweaks(self)
@@ -43,9 +40,9 @@ end;
 local function TweakPlayerFrame(self)
     PlayerStatusTexture:ClearAllPoints();
     PlayerStatusTexture:SetPoint("CENTER", PlayerFrame, "CENTER",16, 8);
-    PlayerStatusTexture:SetTexture("Interface/Addons/MTUI/Media/Player-Status");
+    PlayerStatusTexture:SetTexture(LocalTexture("Player-Status"));
     PlayerStatusTexture:SetWidth(192);
-    PlayerFrameTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame");
+    PlayerFrameTexture:SetTexture(LocalTexture("TargetFrame"));
     ApplyCommonFrameTweaks(self);
     self.healthbar:SetPoint("TOPRIGHT", -5, -24);
     self.healthbar.AnimatedLossBar:SetAlpha(0.1);
@@ -71,12 +68,13 @@ local function TweakVehicleFrame(self, vehicle)
     PlayerFrameBackground:SetWidth(114);
 end;
 
+
 local function TweakTargetFrame(frame)
     local type = UnitClassification(frame.unit);
     frame.nameBackground:Hide();
     if (not frame.texture) then
         local tex = frame:CreateTexture(nil, "BACKGROUND");
-        tex:SetTexture("Interface/Addons/MTUI/Media/TargetingFrameShadow");
+        tex:SetTexture(LocalTexture("TargetingFrameShadow"));
         tex:SetPoint("TOPLEFT", frame, "TOPLEFT", -25, 16);
         tex:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 20, 0);
         frame.texture = tex;
@@ -106,13 +104,13 @@ local function TweakTargetFrame(frame)
         frame.healthbar:SetPoint("TOPLEFT", 5, -24);
         frame.Background:SetHeight(40);
         if (type == "worldboss" or type == "elite") then
-            frame.borderTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame-Elite");
+            frame.borderTexture:SetTexture(LocalTexture("TargetFrame-Elite"));
         elseif (type == "rareelite") then
-            frame.borderTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame-RareElite");
+            frame.borderTexture:SetTexture(LocalTexture("TargetFrame-RareElite"));
         elseif (type == "rare") then
-            frame.borderTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame-Rare");
+            frame.borderTexture:SetTexture(LocalTexture("TargetFrame-Rare"));
         else
-            frame.borderTexture:SetTexture("Interface/Addons/MTUI/Media/TargetFrame");
+            frame.borderTexture:SetTexture(LocalTexture("TargetFrame"));
         end;
         if (frame.threatIndicator) then
             frame.threatIndicator:SetTexCoord(0, 0.9453125, 0, 0.181640625);
@@ -142,13 +140,25 @@ local function SetStatusbarTexture()
             local bar = frame[region];
 
             if (bar and bar.SetStatusBarTexture) then
-                bar:SetStatusBarTexture(MTUI.textures.statusbar);
+                bar:SetStatusBarTexture(LocalTexture("statusbar"));
             elseif (bar and bar.SetTexture) then
-                bar:SetTexture(MTUI.textures.statusbar);
+                bar:SetTexture(LocalTexture("statusbar"));
             end;
         end;
     end;
 end;
+
+local function Init()
+    hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame);
+    hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame);
+    hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame);
+    hooksecurefunc("UnitFrameHealthBar_Update", SetHealthbarColor);
+    hooksecurefunc("HealthBar_OnValueChanged", SetHealthbarColor);
+    SetStatusbarTexture();
+end
+
+eventFrame:RegisterEvent("ADDON_LOADED");
+eventFrame:SetScript("OnEvent", Init);
 
 -- @hack: Revert global playerframe_updateart because of error...
 function PlayerFrame_UpdateArt(self)
@@ -165,14 +175,3 @@ function PlayerFrame_UpdateArt(self)
 	end
 end
 
-function MTUI:InitUnitframes()
-    moveUnitFrames();
-
-    hooksecurefunc("PlayerFrame_ToPlayerArt", TweakPlayerFrame);
-    hooksecurefunc("PlayerFrame_ToVehicleArt", TweakVehicleFrame);
-    hooksecurefunc("TargetFrame_CheckClassification", TweakTargetFrame);
-    hooksecurefunc("UnitFrameHealthBar_Update", SetHealthbarColor);
-    hooksecurefunc("HealthBar_OnValueChanged", SetHealthbarColor);
-
-    SetStatusbarTexture();
-end;

@@ -1,3 +1,9 @@
+local eventFrame = CreateFrame("Frame", "MT_Castbar", UIParent);
+
+local options = {
+    size = 220,
+};
+
 local function SkinFrame(frame)
     frame:SetFrameStrata("TOOLTIP", nil, 6);
 
@@ -17,7 +23,7 @@ local function SkinFrame(frame)
     local frameOffset = 4;
     local frameHeight = barHeight + (frameOffset * 2);
 
-    statusbar:SetSize(MTUI.castingbar.width, barHeight);
+    statusbar:SetSize(options.size, barHeight);
     text:SetSize(statusbar:GetSize());
     text:SetPoint("TOP", statusbar, "TOP", 0, 0);
     border:Hide();
@@ -26,14 +32,14 @@ local function SkinFrame(frame)
 
     local LeftBorder = statusbar:CreateTexture(nil, "TOOLTIP", nil, 7);
     LeftBorder:SetPoint("TOPLEFT", statusbar, "TOPLEFT", -frameOffset, frameOffset);
-    LeftBorder:SetSize(frameHeight / 2, frameHeight);
+    LeftBorder:SetSize(frameHeight / 1.85, frameHeight);
     LeftBorder:SetTexture(tex);
     LeftBorder:SetTexCoord(0.007843, 0.043137, 0.193548, 0.774193);
     LeftBorder:SetDesaturated(1);
 
     local RightBorder = statusbar:CreateTexture(nil, "TOOLTIP", nil, 7);
     RightBorder:SetPoint("TOPRIGHT", statusbar, "TOPRIGHT", frameOffset, frameOffset);
-    RightBorder:SetSize(frameHeight / 2, frameHeight);
+    RightBorder:SetSize(frameHeight / 1.85, frameHeight);
     RightBorder:SetTexture(tex);
     RightBorder:SetTexCoord(0.043137, 0.007843, 0.193548, 0.774193);
     RightBorder:SetDesaturated(1);
@@ -46,7 +52,7 @@ local function SkinFrame(frame)
     MidBorder:SetDesaturated(1);
 end
 
-function MTUI:InitCastingbar()
+local function Init()
     SkinFrame(CastingBarFrame);
     CastingBarFrame.Flash:SetTexture(nil); -- hide the flashing frame at the end of the cast
     CastingBarFrame.Spark:SetTexCoord(0, 1, 0, 0.85);
@@ -68,3 +74,6 @@ function MTUI:InitCastingbar()
         end
     end);
 end
+
+eventFrame:RegisterEvent("ADDON_LOADED");
+eventFrame:SetScript("OnEvent", Init);
