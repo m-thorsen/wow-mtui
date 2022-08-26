@@ -32,14 +32,14 @@ local function SkinFrame(frame)
 
     local LeftBorder = statusbar:CreateTexture(nil, "TOOLTIP", nil, 7);
     LeftBorder:SetPoint("TOPLEFT", statusbar, "TOPLEFT", -frameOffset, frameOffset);
-    LeftBorder:SetSize(frameHeight / 1.85, frameHeight);
+    LeftBorder:SetSize(frameHeight / 2, frameHeight);
     LeftBorder:SetTexture(tex);
     LeftBorder:SetTexCoord(0.007843, 0.043137, 0.193548, 0.774193);
     LeftBorder:SetDesaturated(1);
 
     local RightBorder = statusbar:CreateTexture(nil, "TOOLTIP", nil, 7);
     RightBorder:SetPoint("TOPRIGHT", statusbar, "TOPRIGHT", frameOffset, frameOffset);
-    RightBorder:SetSize(frameHeight / 1.85, frameHeight);
+    RightBorder:SetSize(frameHeight / 2, frameHeight);
     RightBorder:SetTexture(tex);
     RightBorder:SetTexCoord(0.043137, 0.007843, 0.193548, 0.774193);
     RightBorder:SetDesaturated(1);
@@ -76,4 +76,6 @@ local function Init()
 end
 
 eventFrame:RegisterEvent("ADDON_LOADED");
-eventFrame:SetScript("OnEvent", Init);
+eventFrame:SetScript("OnEvent", function(self, event, addonName)
+    if (event == "ADDON_LOADED" and addonName == 'MT_UI') then Init() end;
+end);

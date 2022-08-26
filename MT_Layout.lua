@@ -36,4 +36,6 @@ local function Init()
 end
 
 eventFrame:RegisterEvent("ADDON_LOADED");
-eventFrame:SetScript("OnEvent", Init);
+eventFrame:SetScript("OnEvent", function(self, event, addonName)
+    if (event == "ADDON_LOADED" and addonName == 'MT_UI') then Init() end;
+end);
