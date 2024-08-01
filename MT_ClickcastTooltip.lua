@@ -35,20 +35,36 @@ function GetCurrentModifier()
     end
 end
 
-function AddClickcastBindsToTooltip(tooltip)
+function GetRelevantBindings()
+    local filteredBindings = {}
+    local clickBindings = C_ClickBindings.GetProfileInfo()
+
+    for i, binding in ipairs(clickBindings) do
+        if GetCurrentModifier() == C_ClickBindings.GetStringFromModifiers(binding.modifiers) then
+            tinsert(filteredBindings, binding)
+        end
+    end
+
+    return filteredBindings
+end
+
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip) 
     local ownerName = tooltip:GetOwner():GetName()
+
     if (strfind(ownerName, "Party") == nil and strfind(ownerName, "Player") == nil) then 
         return 
     end
-    lastTooltipOwnerName = ownerName
-    local clickBindings = C_ClickBindings.GetProfileInfo()
-    tooltip:AddLine(" ")
-    for i, binding in ipairs(clickBindings) do
-        if GetCurrentModifier() == C_ClickBindings.GetStringFromModifiers(binding.modifiers) then
-            local btnName = gsub(binding.button, "Button", "")
-            tooltip:AddDoubleLine(btnName, GetActionName(binding))
-        end
-    end
-end
 
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, AddClickcastBindsToTooltip)
+    local bindings = GetRelevantBindings()
+
+    if not bindings or getn(bindings) == 0 then
+        return
+    end
+
+    tooltip:AddLine(" ")
+
+    for i, binding in ipairs(bindings) do
+        local btnName = gsub(binding.button, "Button", "")
+        tooltip:AddDoubleLine(btnName, GetActionName(binding))
+    end
+end)
