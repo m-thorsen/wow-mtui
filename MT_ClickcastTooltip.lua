@@ -51,7 +51,7 @@ end
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip) 
     local ownerName = tooltip:GetOwner():GetName()
 
-    if (strfind(ownerName, "Party") == nil and strfind(ownerName, "Player") == nil) then 
+    if (strfind(ownerName, "Player") == nil and strfind(ownerName, "Party") == nil and strfind(ownerName, "Raid") == nil) then 
         return 
     end
 
