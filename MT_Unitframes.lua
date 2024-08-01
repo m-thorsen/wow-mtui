@@ -38,7 +38,7 @@ end
 local eventFrame = CreateFrame("Frame", "MT_Unitframes", UIParent)
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:SetScript("OnEvent", function(self, event, addonName)
-    if (event == "ADDON_LOADED" and addonName == 'MT_Unitframes') then
+    if (event == "ADDON_LOADED" and addonName == 'MTUI') then
         hooksecurefunc("UnitFrameHealthBar_Update", SetHealthbarColor)
         -- hooksecurefunc("UnitFrameHealthBar_Update", SetStatusbarTexture)
         -- hooksecurefunc("UnitFrameManaBar_Update", SetStatusbarTexture)
