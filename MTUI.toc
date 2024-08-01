@@ -1,0 +1,8 @@
+## Interface: 110000
+## Title: MT_Tweaks
+## Version: 11.0.0
+## Author: m-thorsen
+
+MT_EnableNameplatesInInstances.lua
+MT_ClickcastTooltip.lua
+MT_Unitframes.lua
