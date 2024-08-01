@@ -4,5 +4,5 @@
 ## Author: m-thorsen
 
 MT_EnableNameplatesInInstances.lua
-MT_ClickcastTooltip.lua
 MT_Unitframes.lua
+## MT_ClickcastTooltip.lua
