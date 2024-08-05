@@ -6,3 +6,4 @@
 MT_EnableNameplatesInInstances.lua
 MT_Unitframes.lua
 ## MT_ClickcastTooltip.lua
+MT_CellTips.lua
