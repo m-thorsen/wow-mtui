@@ -5,9 +5,6 @@ local eventFrame = CreateFrame("Frame", "MT_CellFrame", UIParent);
 eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
 eventFrame:SetScript("OnEvent", function(self, event, addonName)
     if _G.Cell and not Cell then
-        print(addonName)
-        print(event)
-                
         Cell = _G.Cell
         clickCastingTable = Cell.vars.clickCastings["useCommon"] and Cell.vars.clickCastings["common"] or Cell.vars.clickCastings[Cell.vars.playerSpecID]
     end
