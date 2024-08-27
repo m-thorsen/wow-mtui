@@ -1,21 +1,12 @@
 local Cell
 local clickCastingTable
-local eventFrame = CreateFrame("Frame", "MT_CellFrame", UIParent);
-
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
-eventFrame:SetScript("OnEvent", function(self, event, addonName)
-    if _G.Cell and not Cell then
-        Cell = _G.Cell
-        clickCastingTable = Cell.vars.clickCastings["useCommon"] and Cell.vars.clickCastings["common"] or Cell.vars.clickCastings[Cell.vars.playerSpecID]
-    end
-end);
 
 local mouseKeyIDs = {
     ["Left"] = 1,
     ["Right"] = 2,
     ["Middle"] = 3,
-    ["Button4"] = 4,
-    ["Button5"] = 5,
+    ["Mouse4"] = 4,
+    ["Mouse5"] = 5,
 }
 
 local function DecodeKeyboard(fullKey)
@@ -35,12 +26,12 @@ local function GetBindingDisplay(modifier, key)
     modifier = modifier:gsub("alt", "Alt")
     modifier = modifier:gsub("ctrl", "Ctrl")
     modifier = modifier:gsub("shift", "Shift")
-    modifier = modifier:gsub("meta", "Command")
+    modifier = modifier:gsub("meta", "Cmd")
 
     if strfind(key, "^NUM") then
         key = _G["KEY_"..key]
     elseif strlen(key) ~= 1 then
-        key = L[key]
+        key = Cell.L[key]
     end
 
     return modifier..key
@@ -90,7 +81,7 @@ local function GetBoundActionDisplay(bindType, bindAction)
         if bindAction then
             return "|cFFFFFFFF"..bindAction.." |T"..icon..":0|t"
         else
-            return "|cFFFF3030"..L["Invalid"]
+            return "|cFFFF3030"..Cell.L["Invalid"]
         end
     end
 end
@@ -120,3 +111,13 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (too
 
     ShowTips(tooltip)
 end)
+
+local eventFrame = CreateFrame("Frame", "MT_CellFrame", UIParent);
+
+eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
+eventFrame:SetScript("OnEvent", function(self, event, addonName)
+    if _G.Cell and not Cell then
+        Cell = _G.Cell
+        clickCastingTable = Cell.vars.clickCastings["useCommon"] and Cell.vars.clickCastings["common"] or Cell.vars.clickCastings[Cell.vars.playerSpecID]
+    end
+end);
