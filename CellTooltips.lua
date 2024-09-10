@@ -1,6 +1,7 @@
+local SHOW_MENU_AND_TARGET = false
+
 local Cell
 local clickCastingTable
-
 local mouseKeyIDs = {
     ["Left"] = 1,
     ["Right"] = 2,
@@ -71,9 +72,9 @@ local function DecodeDB(t)
 end
 
 local function GetBoundActionDisplay(bindType, bindAction)
-    if bindAction == 'target' then
+    if bindAction == 'target' and SHOW_MENU_AND_TARGET then
         return "[Target]"
-    elseif bindAction == 'togglemenu' then
+    elseif bindAction == 'togglemenu' and SHOW_MENU_AND_TARGET then
         return "[Menu]"
     elseif bindType == "spell" then
         local bindActionDisplay, icon
