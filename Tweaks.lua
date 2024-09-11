@@ -1,10 +1,11 @@
-local frame = CreateFrame("Frame", "MTUI_EventFrame", UIParent);
+local _, MTUI = ...
 
-local function showNameplatesInInstances()
+function MTUI.showNameplatesInInstances()
     SetCVar("nameplateShowAll", IsInInstance() and 1 or 0)
+    print('hei')
 end
 
-local function moveAlertFrame()
+function MTUI.moveAlertFrame()
     hooksecurefunc(AlertFrame, "UpdateAnchors", function(self,...)
         local spacing = 10
         local totalHeight = spacing
@@ -26,14 +27,3 @@ local function moveAlertFrame()
     -- EntitlementDeliveredAlertSystem:AddAlert("ENTITLEMENT_DELIVERED");
 end
 
-frame:RegisterEvent("ADDON_LOADED")
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-frame:SetScript("OnEvent", function(self, event, addonName)
-    if (event == "PLAYER_ENTERING_WORLD") then
-        showNameplatesInInstances()
-    end
-
-    if (event == "ADDON_LOADED" and addonName == "MTUI") then
-        moveAlertFrame()
-    end
-end)

@@ -1,20 +1,23 @@
-function GetActionName(binding)
-    if binding.type == Enum.ClickBindingType.Interaction then
+local _, MTUI = ...
+
+local isInitalized = false
+
+local function GetActionName(binding)
+    local showBasics = MTUI.options.showMenuAndTargetActionInTooltips
+    if showBasics and binding.type == Enum.ClickBindingType.Interaction then
         if binding.actionID == Enum.ClickBindingInteraction.Target then
             return "[Target]"
         elseif binding.actionID == Enum.ClickBindingInteraction.OpenContextMenu then
             return "[Menu]"
         end
     elseif binding.type == Enum.ClickBindingType.Spell then
-        return GetSpellInfo(binding.actionID)
+        return C_Spell.GetSpellName(binding.actionID)
     elseif binding.type == Enum.ClickBindingType.Macro then
         return GetMacroInfo(binding.actionID)
     end
-
-    return tostring(binding.actionID)
 end
 
-function GetCurrentModifier()
+local function GetCurrentModifier()
     local modShift = IsShiftKeyDown()
     local modAlt = IsAltKeyDown()
     local modCtrl = IsControlKeyDown()
@@ -35,7 +38,7 @@ function GetCurrentModifier()
     end
 end
 
-function GetRelevantBindings()
+local function GetRelevantBindings()
     local filteredBindings = {}
     local clickBindings = C_ClickBindings.GetProfileInfo()
 
@@ -48,23 +51,33 @@ function GetRelevantBindings()
     return filteredBindings
 end
 
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip) 
-    local ownerName = tooltip:GetOwner():GetName()
+function MTUI.initClickcastTooltips()
+    if isInitalized then return end
 
-    if (strfind(ownerName, "Player") == nil and strfind(ownerName, "Party") == nil and strfind(ownerName, "Raid") == nil) then 
-        return 
-    end
+    TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip) 
+        local ownerName = tooltip:GetOwner():GetName()
 
-    local bindings = GetRelevantBindings()
+        if (strfind(ownerName, "Player") == nil and strfind(ownerName, "Party") == nil and strfind(ownerName, "Raid") == nil) then 
+            return 
+        end
+    
+        local bindings = GetRelevantBindings()
+    
+        if not bindings or getn(bindings) == 0 then
+            return
+        end
+    
+        tooltip:AddLine(" ")
+    
+        for _, binding in ipairs(bindings) do
+            local btnName = gsub(binding.button, "Button", "")
+            local actionName = GetActionName(binding)
+            if actionName then
+                tooltip:AddDoubleLine(btnName, actionName)
+            end
+        end
+    end)
 
-    if not bindings or getn(bindings) == 0 then
-        return
-    end
+    isInitalized = true
+end
 
-    tooltip:AddLine(" ")
-
-    for i, binding in ipairs(bindings) do
-        local btnName = gsub(binding.button, "Button", "")
-        tooltip:AddDoubleLine(btnName, GetActionName(binding))
-    end
-end)

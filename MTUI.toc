@@ -3,7 +3,8 @@
 ## Version: 11.0.5
 ## Author: m-thorsen
 
+Core.lua
 Tweaks.lua
 Unitframes.lua
-## ClickcastTooltip.lua
+ClickcastTooltips.lua
 CellTooltips.lua

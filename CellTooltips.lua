@@ -1,5 +1,7 @@
-local SHOW_MENU_AND_TARGET = false
+---@diagnostic disable: undefined-field
+local _, MTUI = ...
 
+local isInitialized = false
 local Cell
 local clickCastingTable
 local mouseKeyIDs = {
@@ -72,12 +74,13 @@ local function DecodeDB(t)
 end
 
 local function GetBoundActionDisplay(bindType, bindAction)
-    if bindAction == 'target' and SHOW_MENU_AND_TARGET then
+    local showBasics = MTUI.options.showMenuAndTargetActionInTooltip
+    if bindAction == 'target' and showBasics then
         return "[Target]"
-    elseif bindAction == 'togglemenu' and SHOW_MENU_AND_TARGET then
+    elseif bindAction == 'togglemenu' and showBasics then
         return "[Menu]"
     elseif bindType == "spell" then
-        local bindActionDisplay, icon
+        local icon
         bindAction, icon = Cell.funcs:GetSpellInfo(bindAction)
         if bindAction then
             return "|cFFFFFFFF"..bindAction.." |T"..icon..":0|t"
@@ -86,7 +89,6 @@ local function GetBoundActionDisplay(bindType, bindAction)
         end
     end
 end
-
 
 local function ShowTips(tooltip)
     if clickCastingTable == nil or getn(clickCastingTable) == 0 then
@@ -105,20 +107,19 @@ local function ShowTips(tooltip)
     end
 end
 
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip) 
-    if strfind(tooltip:GetOwner():GetName(), "Cell") == nil or Cell == nil then 
-        return
-    end
-
-    ShowTips(tooltip)
-end)
-
-local eventFrame = CreateFrame("Frame", "MT_CellFrame", UIParent);
-
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
-eventFrame:SetScript("OnEvent", function(self, event, addonName)
+function MTUI.initCellTooltips()
     if _G.Cell and not Cell then
         Cell = _G.Cell
         clickCastingTable = Cell.vars.clickCastings["useCommon"] and Cell.vars.clickCastings["common"] or Cell.vars.clickCastings[Cell.vars.playerSpecID]
     end
-end);
+
+    if Cell and not isInitialized then
+        TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip) 
+            if strfind(tooltip:GetOwner():GetName(), "Cell") == nil or Cell == nil then 
+                return
+            end
+        
+            ShowTips(tooltip)
+        end)
+    end
+end
