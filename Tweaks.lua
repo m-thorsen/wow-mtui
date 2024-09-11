@@ -1,20 +1,28 @@
 local frame = CreateFrame("Frame", "MTUI_EventFrame", UIParent);
 
-local function showNameplatesInInstances() 
-    local inInstance, instanceType = IsInInstance()
-    SetCVar("nameplateShowAll", inInstance and 1 or 0)
+local function showNameplatesInInstances()
+    SetCVar("nameplateShowAll", IsInInstance() and 1 or 0)
 end
 
 local function moveAlertFrame()
-    hooksecurefunc(AlertFrame, "AddAlertFrame", function()
-        AlertFrame:ClearAllPoints()
-        AlertFrame:SetPoint("BOTTOM", UIParent, "CENTER", 0, 200)
+    hooksecurefunc(AlertFrame, "UpdateAnchors", function(self,...)
+        local spacing = 10
+        local totalHeight = spacing
+        for _, alertFrameSubSystem in ipairs(self.alertFrameSubSystems) do
+            if alertFrameSubSystem.alertFramePool then
+                for f in alertFrameSubSystem.alertFramePool:EnumerateActive() do				
+                    totalHeight = totalHeight + f:GetHeight() + spacing
+                end
+            end
+        end
+        self:ClearAllPoints()
+        self:SetPoint("TOP", UIParent, "TOP", 0, totalHeight * -1)
     end)
-    
     -- Test!
     -- MoneyWonAlertSystem:AddAlert(666);
+    -- MoneyWonAlertSystem:AddAlert(666);
     -- HonorAwardedAlertSystem:AddAlert(667);
-    -- EntitlementDeliveredAlertSystem:AddAlert("ENTITLEMENT_DELIVERED");
+    -- HonorAwardedAlertSystem:AddAlert(667);
     -- EntitlementDeliveredAlertSystem:AddAlert("ENTITLEMENT_DELIVERED");
 end
 
