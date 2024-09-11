@@ -9,7 +9,6 @@ local function moveAlertFrame()
     hooksecurefunc(AlertFrame, "AddAlertFrame", function()
         AlertFrame:ClearAllPoints()
         AlertFrame:SetPoint("BOTTOM", UIParent, "CENTER", 0, 200)
-        print('hei', AlertFrame)
     end)
     
     -- Test!
