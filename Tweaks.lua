@@ -6,13 +6,17 @@ local function showNameplatesInInstances()
 end
 
 local function moveAlertFrame()
-    hooksecurefunc(AlertFrame, "UpdateAnchors", function()
+    hooksecurefunc(AlertFrame, "AddAlertFrame", function()
         AlertFrame:ClearAllPoints()
-        AlertFrame:SetPoint("TOP", UIParent, "TOP", 0, -200)
+        AlertFrame:SetPoint("BOTTOM", UIParent, "CENTER", 0, 200)
+        print('hei', AlertFrame)
     end)
     
     -- Test!
     -- MoneyWonAlertSystem:AddAlert(666);
+    -- HonorAwardedAlertSystem:AddAlert(667);
+    -- EntitlementDeliveredAlertSystem:AddAlert("ENTITLEMENT_DELIVERED");
+    -- EntitlementDeliveredAlertSystem:AddAlert("ENTITLEMENT_DELIVERED");
 end
 
 frame:RegisterEvent("ADDON_LOADED")
