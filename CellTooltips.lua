@@ -108,18 +108,24 @@ local function ShowTips(tooltip)
 end
 
 function MTUI.initCellTooltips()
+    if isInitialized then
+       return 
+    end
+
     if _G.Cell and not Cell then
         Cell = _G.Cell
         clickCastingTable = Cell.vars.clickCastings["useCommon"] and Cell.vars.clickCastings["common"] or Cell.vars.clickCastings[Cell.vars.playerSpecID]
     end
 
-    if Cell and not isInitialized then
+    if Cell then
         TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip) 
-            if strfind(tooltip:GetOwner():GetName(), "Cell") == nil or Cell == nil then 
+            if strfind(tooltip:GetOwner():GetName(), "Cell") == nil or Cell == nil then
                 return
             end
         
             ShowTips(tooltip)
         end)
+
+        isInitialized = true
     end
 end

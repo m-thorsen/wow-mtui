@@ -2,6 +2,7 @@ local _, MTUI = ...
 
 function MTUI.showNameplatesInInstances()
     SetCVar("nameplateShowAll", IsInInstance() and 1 or 0)
+    print('nameplates', IsInInstance(), GetCVar('nameplateShowAll'))
 end
 
 function MTUI.moveAlertFrame()
