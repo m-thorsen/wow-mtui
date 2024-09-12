@@ -1,8 +1,15 @@
 local _, MTUI = ...
 
 function MTUI.showNameplatesInInstances()
-    SetCVar("nameplateShowAll", IsInInstance() and 1 or 0)
-    print('nameplates', IsInInstance(), GetCVar('nameplateShowAll'))
+    local oldState = GetCVar("nameplateShowAll")
+    local newState = IsInInstance() and 1 or 0
+
+    if oldState ~= nil and tonumber(oldState) == newState then
+        return
+    end
+
+    SetCVar("nameplateShowAll", newState)
+    print(newState == 1 and 'MTUI nameplates: ON' or 'MTUI nameplates: OFF')
 end
 
 function MTUI.moveAlertFrame()
@@ -11,7 +18,7 @@ function MTUI.moveAlertFrame()
         local totalHeight = spacing
         for _, alertFrameSubSystem in ipairs(self.alertFrameSubSystems) do
             if alertFrameSubSystem.alertFramePool then
-                for f in alertFrameSubSystem.alertFramePool:EnumerateActive() do				
+                for f in alertFrameSubSystem.alertFramePool:EnumerateActive() do
                     totalHeight = totalHeight + f:GetHeight() + spacing
                 end
             end
