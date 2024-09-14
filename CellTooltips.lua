@@ -80,12 +80,11 @@ local function GetBoundActionDisplay(bindType, bindAction)
     elseif bindAction == 'togglemenu' and showBasics then
         return "[Menu]"
     elseif bindType == "spell" then
-        local icon
-        bindAction, icon = Cell.funcs:GetSpellInfo(bindAction)
-        if bindAction then
-            return "|cFFFFFFFF"..bindAction.." |T"..icon..":0|t"
+        local name, icon = Cell.funcs:GetSpellInfo(bindAction)
+        if name and IsSpellKnown(bindAction) then
+            return "|cFFFFFFFF"..name.." |T"..icon..":0|t"
         else
-            return "|cFFFF3030"..Cell.L["Invalid"]
+            return "|c88888888"..(name or Cell.L["Invalid"])
         end
     end
 end
@@ -97,7 +96,7 @@ local function ShowTips(tooltip)
 
     tooltip:AddLine(" ")
 
-    for i, t in pairs(clickCastingTable) do
+    for _, t in pairs(clickCastingTable) do
         local modifier, bindKey, bindType, bindAction = DecodeDB(t)
         local actionDisplay = GetBoundActionDisplay(bindType, bindAction)
 
@@ -109,7 +108,7 @@ end
 
 function MTUI.initCellTooltips()
     if isInitialized then
-       return 
+       return
     end
 
     if _G.Cell and not Cell then
@@ -118,11 +117,11 @@ function MTUI.initCellTooltips()
     end
 
     if Cell then
-        TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip) 
+        TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function (tooltip)
             if strfind(tooltip:GetOwner():GetName(), "Cell") == nil or Cell == nil then
                 return
             end
-        
+
             ShowTips(tooltip)
         end)
 
