@@ -1,15 +1,16 @@
 local _, MTUI = ...
 
-function MTUI.showNameplatesInInstances()
-    local oldState = GetCVar("nameplateShowAll")
-    local newState = IsInInstance() and 1 or 0
-
-    if oldState ~= nil and tonumber(oldState) == newState then
-        return
+function MTUI.applyInstanceSettings()
+    -- Other possible settings:
+    -- graphicsViewDistance
+    -- graphicsEnvironmentDetail
+    if (IsInInstance() or 1) then
+        SetCVar("nameplateShowAll", 1)
+        SetCVar("graphicsGroundClutter", 1)
+    else
+        SetCVar("nameplateShowAll", 0)
+        SetCVar("graphicsGroundClutter", 9)
     end
-
-    SetCVar("nameplateShowAll", newState)
-    print(newState == 1 and 'MTUI nameplates: ON' or 'MTUI nameplates: OFF')
 end
 
 function MTUI.moveAlertFrame()
