@@ -4,7 +4,7 @@ function MTUI.applyInstanceSettings()
     -- Other possible settings:
     -- graphicsViewDistance
     -- graphicsEnvironmentDetail
-    if (IsInInstance() or 1) then
+    if IsInInstance() then
         SetCVar("nameplateShowAll", 1)
         SetCVar("graphicsGroundClutter", 1)
     else
