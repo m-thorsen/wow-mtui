@@ -38,17 +38,6 @@ function MTUI.moveAlertFrame()
 end
 
 function MTUI.applyDefaultAuctionHouseFilters()
-    AUCTION_HOUSE_DEFAULT_FILTERS = {
-        [Enum.AuctionHouseFilter.UncollectedOnly] = false,
-        [Enum.AuctionHouseFilter.UsableOnly] = false,
-        [Enum.AuctionHouseFilter.CurrentExpansionOnly] = true,
-        [Enum.AuctionHouseFilter.UpgradesOnly] = false,
-        [Enum.AuctionHouseFilter.PoorQuality] = false,
-        [Enum.AuctionHouseFilter.CommonQuality] = true,
-        [Enum.AuctionHouseFilter.UncommonQuality] = true,
-        [Enum.AuctionHouseFilter.RareQuality] = true,
-        [Enum.AuctionHouseFilter.EpicQuality] = true,
-        [Enum.AuctionHouseFilter.LegendaryQuality] = true,
-        [Enum.AuctionHouseFilter.ArtifactQuality] = true,
-    }
+    AUCTION_HOUSE_DEFAULT_FILTERS[Enum.AuctionHouseFilter.CurrentExpansionOnly] = true
+    AUCTION_HOUSE_DEFAULT_FILTERS[Enum.AuctionHouseFilter.PoorQuality] = false
 end
