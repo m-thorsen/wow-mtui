@@ -19,6 +19,18 @@
         "MoneyWonAlertSystem",
         "HonorAwardedAlertSystem",
         "EntitlementDeliveredAlertSystem",
-        "TooltipDataProcessor"
+        "TooltipDataProcessor",
+        "AUCTION_HOUSE_DEFAULT_FILTERS",
+        "AUCTION_HOUSE_FILTER_UNCOLLECTED_ONLY",
+        "AUCTION_HOUSE_FILTER_USABLE_ONLY",
+        "AUCTION_HOUSE_FILTER_CURRENTEXPANSION_ONLY",
+        "AUCTION_HOUSE_FILTER_UPGRADES_ONLY",
+        "AUCTION_HOUSE_FILTER_RUNECARVING",
+        "AUCTION_HOUSE_FILTER_CATEGORY_EQUIPMENT",
+        "AUCTION_HOUSE_FILTER_CATEGORY_RARITY",
+        "Settings",
+        "CreateSettingsListSectionHeaderInitializer",
+        "AuctionHouseFrame",
+        "AuctionHouseFilterButtonMixin"
     ]
 }
