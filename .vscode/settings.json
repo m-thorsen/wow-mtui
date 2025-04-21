@@ -1,36 +1,42 @@
 {
-    "Lua.runtime.version": "Lua 5.1",
-    "Lua.runtime.builtin": {
-        "basic": "disable",
-        "debug": "disable",
-        "io": "disable",
-        "math": "disable",
-        "os": "disable",
-        "package": "disable",
-        "string": "disable",
-        "table": "disable",
-        "utf8": "disable"
-    },
-    "Lua.workspace.library": [
-        "~\\.vscode\\extensions\\ketho.wow-api-0.18.2\\Annotations"
-    ],
-    "Lua.diagnostics.globals": [
-        "AlertFrame",
-        "MoneyWonAlertSystem",
-        "HonorAwardedAlertSystem",
-        "EntitlementDeliveredAlertSystem",
-        "TooltipDataProcessor",
-        "AUCTION_HOUSE_DEFAULT_FILTERS",
-        "AUCTION_HOUSE_FILTER_UNCOLLECTED_ONLY",
-        "AUCTION_HOUSE_FILTER_USABLE_ONLY",
-        "AUCTION_HOUSE_FILTER_CURRENTEXPANSION_ONLY",
-        "AUCTION_HOUSE_FILTER_UPGRADES_ONLY",
-        "AUCTION_HOUSE_FILTER_RUNECARVING",
-        "AUCTION_HOUSE_FILTER_CATEGORY_EQUIPMENT",
-        "AUCTION_HOUSE_FILTER_CATEGORY_RARITY",
-        "Settings",
-        "CreateSettingsListSectionHeaderInitializer",
-        "AuctionHouseFrame",
-        "AuctionHouseFilterButtonMixin"
-    ]
+  "Lua.runtime.version": "Lua 5.1",
+  "Lua.runtime.builtin": {
+    "basic": "disable",
+    "debug": "disable",
+    "io": "disable",
+    "math": "disable",
+    "os": "disable",
+    "package": "disable",
+    "string": "disable",
+    "table": "disable",
+    "utf8": "disable"
+  },
+  "Lua.workspace.library": [
+    "~\\.vscode\\extensions\\ketho.wow-api-0.20.1\\Annotations\\Core",
+    "~\\.vscode\\extensions\\ketho.wow-api-0.20.1\\Annotations\\Libraries",
+    "~\\.vscode\\extensions\\ketho.wow-api-0.20.1\\Annotations\\Lua",
+    "~\\.vscode\\extensions\\ketho.wow-api-0.20.1\\Annotations\\FrameXML\\Manual"
+  ],
+  "Lua.diagnostics.globals": [
+    "AlertFrame",
+    "MoneyWonAlertSystem",
+    "HonorAwardedAlertSystem",
+    "EntitlementDeliveredAlertSystem",
+    "TooltipDataProcessor",
+    "AUCTION_HOUSE_DEFAULT_FILTERS",
+    "AUCTION_HOUSE_FILTER_UNCOLLECTED_ONLY",
+    "AUCTION_HOUSE_FILTER_USABLE_ONLY",
+    "AUCTION_HOUSE_FILTER_CURRENTEXPANSION_ONLY",
+    "AUCTION_HOUSE_FILTER_UPGRADES_ONLY",
+    "AUCTION_HOUSE_FILTER_RUNECARVING",
+    "AUCTION_HOUSE_FILTER_CATEGORY_EQUIPMENT",
+    "AUCTION_HOUSE_FILTER_CATEGORY_RARITY",
+    "Settings",
+    "CreateSettingsListSectionHeaderInitializer",
+    "AuctionHouseFrame",
+    "AuctionHouseFilterButtonMixin",
+    "GRAY_FONT_COLOR",
+    "GREEN_FONT_COLOR",
+    "RAID_CLASS_COLORS"
+  ]
 }
